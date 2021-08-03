@@ -1,0 +1,58 @@
+.cardImage {
+  max-height: 142px;
+  width: 100%;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card {
+  box-shadow: 1px 1px 3px #8c868670;
+  border-radius: 10px 10px 10px 10px;
+  margin: auto;
+  margin-bottom: 30px;
+  flex-basis: 22%;
+  & .card-content {
+    padding: 0px 10px;
+
+    > .name {
+      margin-top: 10px;
+    }
+
+    & p {
+      font-size: 12px;
+      max-height: 60px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+  }
+
+  & .card-content-2 {
+    padding: 0px 10px;
+    > div {
+      display: flex;
+      justify-content: space-between;
+      height: 50px;
+      align-items: center;
+    }
+  }
+
+  &:hover .camp-actions {
+    display: block;
+  }
+}
+
+.progress-container {
+  height: 10px;
+  border-radius: 10px 10px;
+  background-color: rgba(4, 216, 213, 0.46);
+  margin: 10px auto;
+}
+
+.camp-actions {
+  display: none;
+}

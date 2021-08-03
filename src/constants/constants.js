@@ -1,0 +1,3 @@
+const USER_DATA_LOADED = "USER_DATA_LOADED";
+
+export { USER_DATA_LOADED };

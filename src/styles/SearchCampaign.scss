@@ -1,0 +1,45 @@
+.search-bar {
+  display: flex;
+  justify-content: center;
+
+  .form-control {
+    max-width: 300px;
+    min-width: 300px;
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+
+//   responsive
+
+@media screen and (max-width: 980px) {
+  .search-bar {
+    margin: 40px 0px;
+
+    .form-control {
+      max-width: 200px;
+      min-width: 45%;
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .search-bar {
+    .form-control {
+      width: 50%;
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+}

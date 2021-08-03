@@ -1,0 +1,104 @@
+.header-fixed {
+  box-shadow: 0 1px 1px #ccc;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background: #fff;
+  z-index: 1;
+  padding-top: 0.5rem;
+}
+
+.header-limiter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.header-limiter a {
+  color: #000000;
+  text-decoration: none;
+  margin: 0px 10px;
+  line-height: 1;
+}
+
+.linkButton {
+  text-transform: capitalize !important;
+  color: #000000 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+
+  padding: 0px !important;
+
+  .MuiButton-label {
+    margin-bottom: 3px;
+  }
+
+  .MuiButton-endIcon {
+    margin-left: 0px !important;
+  }
+
+  &:hover,
+  .MuiButton-root:hover {
+    background-color: transparent !important;
+    color: #608bd2;
+  }
+
+  &:focus-visible {
+    outline: -webkit-focus-ring-color auto 1px;
+    padding: 10px 8px !important;
+  }
+}
+
+.sideheader {
+  min-width: 17rem;
+  width: 100%;
+  height: 100%;
+
+  a {
+    color: #000000;
+    text-decoration: none;
+    line-height: 1;
+  }
+}
+
+.headerTopRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4rem;
+}
+
+.dropdownarrow {
+  position: relative;
+}
+
+.campaignfor-menu ul {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  a {
+    margin: 5px 0px;
+    color: #000000;
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .header-limiter {
+    padding: 0.33rem;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .header-limiter {
+    padding: 0.16rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .header-limiter {
+    padding: 0px;
+  }
+}
