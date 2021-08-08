@@ -30,20 +30,6 @@ export const ChooseACause = ({ handleChange, seletedCause = "" }) => {
           </NativeSelect>
           <FormHelperText>Some important helper text</FormHelperText>
         </FormControl>
-
-        {/* <FormControl>
-          <NativeSelect
-            value={seletedCause}
-            onChange={handleChange}
-            placeholder="Choose a Cause for a Campaign "
-            input={<OutlinedInput name="receivingAccount" />}
-          >
-            <option value="">Choose a Cause for a Campaign</option>
-            <option value={"HealthCare"}>HealthCare</option>
-            <option value={"Feeding"}>Feeding</option>
-            <option value={"Animal Shelter"}>Animal Shelter</option>
-          </NativeSelect>
-        </FormControl> */}
       </div>
     </div>
   );

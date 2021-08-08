@@ -121,17 +121,15 @@ export const CreateCampaign = ({ history }) => {
     <div className="top-section">
       <section className="host">
         <div className="create-campaign">
-          <div className="stepper">
-            <Stepper activeStep={activeStep} alternativeLabel>
-              {steps.map((label) => {
-                return (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
-          </div>
+          <Stepper className="stepper" activeStep={activeStep} alternativeLabel>
+            {steps.map((label) => {
+              return (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
           <div className="campaign-form">{getContent()}</div>
           <div className="flex-bar">
             <Button

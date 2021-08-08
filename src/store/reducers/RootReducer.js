@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import userReducer from "./UserReducer";
+import { AlertReducer } from "./AlertReducer";
+import { AuthReducer } from "./AuthReducer";
 
 const rootReducer = combineReducers({
-  // Define a top-level state field named `todos`, handled by `todosReducer`
-  // identifier : Reducer,
-  user: userReducer,
+  alerts: AlertReducer,
+  auth: AuthReducer,
 });
 
 export default rootReducer;

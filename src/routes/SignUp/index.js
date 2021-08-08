@@ -1,81 +1,138 @@
+import { useEffect, useState } from "react";
 import "styles/Signup.scss";
-import {
-  Grid,
-  Button,
-  Box,
-  Link,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Button, Box, TextField, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
+import { requestUserRegistration } from "store/actions/AuthActions";
+import Loader from "components/Shared/Loader";
+import { Link } from "react-router-dom";
 
-export const SignUp = () => {
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+};
+
+const SignUp = ({ loading, isAuthenticated, user, dispatch, history }) => {
+  useEffect(() => {
+    if (isAuthenticated && user.sessionToken) {
+      history.push(`/profile/${user.objectId}`);
+    }
+  }, [isAuthenticated]);
+
+  const [state, setLocalState] = useState(initialState);
+
+  const handleChange = (evnt) => {
+    const { name, value } = evnt.target;
+    setLocalState({ ...state, [name]: value });
+  };
+
+  const handleSubmit = (evnt) => {
+    evnt.preventDefault();
+    setLocalState({ ...state });
+    const { submitted, ...userPayload } = state;
+    dispatch(
+      requestUserRegistration({ ...userPayload, username: state.email })
+    );
+  };
+
   return (
-    <div className="signup">
-      <div className="signup-form">
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <br />
-        <form noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: "70vh" }}
+    >
+      {loading ? (
+        <Loader />
+      ) : (
+        <Grid item lg={4} md={4} xs={12} className="signup-form">
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <br />
+          <form noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={state.firstName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  value={state.lastName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={state.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="off"
+                  value={state.password}
+                  onChange={handleChange}
+                  margin="normal"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
+            <Box my={3}>
+              <Button
+                type="submit"
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          <Box my={3}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Sign Up
-            </Button>
-          </Box>
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                Sign Up
+              </Button>
+            </Box>
 
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2">
-                Already have an account? Sign in
-              </Link>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link to="/signin">Already have an account? Sign in</Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </div>
+          </form>
+        </Grid>
+      )}
+    </Grid>
   );
 };
+
+const mapStateToProps = ({ auth }) => {
+  return { ...auth };
+};
+
+export default connect(mapStateToProps)(SignUp);

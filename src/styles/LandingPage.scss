@@ -4,7 +4,8 @@
   margin: 0 auto;
 }
 
-.hero {
+.hero,
+.second-hero {
   position: relative;
   width: 100%;
   min-height: 70vh;
@@ -13,7 +14,8 @@
   align-items: center;
   flex-direction: column;
 }
-.hero::before {
+.heroimage::before,
+.second-hero::before {
   content: "";
   position: absolute;
   top: 0;

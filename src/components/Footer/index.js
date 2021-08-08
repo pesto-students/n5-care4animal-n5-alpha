@@ -4,6 +4,7 @@ import Logo from "assets/images/Logo.png";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -28,9 +29,9 @@ export default function Footer() {
           <div>
             <h4>CAUSES</h4>
           </div>
-          <a href="/createcampaign/HealthCare">HealthCare</a>
-          <a href="/createcampaign/Feeding">Feeding</a>
-          <a href="/createcampaign/Animal_Shelter"> Animal Shelter</a>
+          <Link to="/createcampaign/HealthCare">HealthCare</Link>
+          <Link to="/createcampaign/Feeding">Feeding</Link>
+          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
         </section>
 
         {/* <section className="footercolumn">

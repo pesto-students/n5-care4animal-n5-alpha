@@ -1,23 +1,25 @@
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { LandingPage } from "./LandingPage/LandingPage";
-import { SignIn } from "./SignIn";
-import { SignUp } from "./SignUp";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 import { SearchCampagin } from "./SearchCampaign";
 import { CampaignDetails } from "./CampaignDetails";
 import { CreateCampaign } from "./CreateCampaign";
 import { Profile } from "./Profile";
+import { PrivateRoute, PublicRoute } from "containers";
+
 export const Routes = () => (
-  <Router>
-    <Route path="/" exact component={LandingPage}></Route>
-    <Route path="/signin" exact component={SignIn}></Route>
-    <Route path="/signup" exact component={SignUp}></Route>
-    <Route path="/search" exact component={SearchCampagin}></Route>
-    <Route path="/details/:id" exact component={CampaignDetails}></Route>{" "}
-    <Route path="/Profile/:id" exact component={Profile}></Route>
-    <Route
+  <Switch>
+    <PublicRoute path="/signin" exact component={SignIn} />
+    <PublicRoute path="/signup" exact component={SignUp} />
+    <PublicRoute path="/search" exact component={SearchCampagin} />
+    <PublicRoute path="/details/:id?" exact component={CampaignDetails} />{" "}
+    <PrivateRoute path="/profile/:id?" exact component={Profile} />
+    <PrivateRoute
       path="/createcampaign/:causeid?"
       exact
       component={CreateCampaign}
-    ></Route>
-  </Router>
+    />
+    <Route path="/" exact component={LandingPage} />
+  </Switch>
 );

@@ -1,8 +1,8 @@
 import { call, spawn, all } from "redux-saga/effects";
+import watchUserAuthentication from "./AuthSaga";
 
 export default function* rootSaga() {
-  // const sagas = [saga1, saga2, saga3];
-  const sagas = [];
+  const sagas = [watchUserAuthentication];
   yield all(
     sagas.map((saga) =>
       spawn(function* () {

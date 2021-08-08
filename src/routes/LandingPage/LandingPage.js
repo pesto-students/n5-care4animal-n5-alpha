@@ -1,10 +1,10 @@
 import React from "react";
 import "styles/LandingPage.scss";
 import { Box } from "@material-ui/core";
-import { HowItWorks } from "containers/HowItWorks/HowItWorksSection";
-import { SectionInfo } from "containers/InfoSection/InfoSection-";
-import { TrendingCampaigns } from "containers/TrendingCampaignSection.js/TrendingCampaigns";
-import { Hero } from "containers/Hero/hero";
+import { HowItWorks } from "containers";
+import { InfoSection } from "containers";
+import { TrendingCampaigns } from "containers";
+import { Hero } from "containers";
 
 export const LandingPage = ({ history }) => {
   const showDetails = (id) => {
@@ -17,8 +17,14 @@ export const LandingPage = ({ history }) => {
 
   return (
     <>
-      <section className="hero">
-        <Hero showStartCampaign={showStartCampaign} />
+      <section className="hero heroimage">
+        <Hero
+          data={{
+            h3: "Be the voice for a voiceless?",
+            subtitle1: "They need hero like you. Be their HERO",
+          }}
+          showStartCampaign={showStartCampaign}
+        />
       </section>
       <div className="top-section">
         <section className="host">
@@ -28,7 +34,7 @@ export const LandingPage = ({ history }) => {
           <hr className="c4a-divider" />
         </Box>
         <section className="host">
-          <SectionInfo />
+          <InfoSection />
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />

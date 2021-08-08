@@ -5,12 +5,18 @@ import reportWebVitals from "./reportWebVitals";
 import { rootStore as RootStore } from "store/RootStore";
 import { Provider } from "react-redux";
 import "styles/App.scss";
+import { BrowserRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={RootStore}>
-      <App />
-    </Provider>
+    <CookiesProvider>
+      <BrowserRouter>
+        <Provider store={RootStore}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

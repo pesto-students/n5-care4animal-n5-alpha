@@ -23,6 +23,7 @@ footer > p {
 .main {
   min-height: 70vh;
   margin-top: 4rem;
+  background-color: #f4f6f8;
 }
 
 :root {
@@ -38,6 +39,11 @@ footer > p {
   margin: 0.25rem 0.25rem 0 0.25rem;
   position: relative;
   padding: 1.5rem;
+}
+
+.main-snackbar {
+  position: fixed !important;
+  top: 57px !important;
 }
 
 @media screen and (max-width: 1400px) {

@@ -2,7 +2,7 @@ import { Box, Hidden } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
 import image4 from "assets/images/hero1.jpg";
 
-export const SectionInfo = () => {
+const InfoSection = () => {
   return (
     <>
       <section className="section group">
@@ -46,3 +46,5 @@ export const SectionInfo = () => {
     </>
   );
 };
+
+export default InfoSection;

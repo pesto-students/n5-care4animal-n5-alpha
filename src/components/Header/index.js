@@ -17,14 +17,24 @@ import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Menu from "@material-ui/core/Menu";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { requestLogout } from "store/actions/AuthActions";
+import { useCookies } from "react-cookie";
 
-export default function Header() {
+function Header({ isAuthenticated, user, dispatch }) {
   const anchor = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [cookies, removeCookie] = useCookies(["_userSession"]);
 
   const [state, setState] = useState({
     openDrawer: false,
   });
+
+  const logoutUser = () => {
+    removeCookie("_userSession");
+    dispatch(requestLogout(user.sessionToken));
+  };
 
   const toggleDrawer = (openDrawr) => {
     setState({
@@ -72,7 +82,9 @@ export default function Header() {
               <ListItemIcon>
                 <WebAssetIcon />
               </ListItemIcon>
-              <ListItemText primary={<a href="/search">Browse campaigns</a>} />
+              <ListItemText
+                primary={<Link to="/search">Browse campaigns</Link>}
+              />
             </ListItem>
             <Divider />
             <ListItem button>
@@ -86,7 +98,7 @@ export default function Header() {
               <ListItemIcon>
                 <LockOpenIcon />
               </ListItemIcon>
-              <ListItemText primary={<a href="/profile/1">Profile</a>} />
+              <ListItemText primary={<Link to="/profile/1">Profile</Link>} />
             </ListItem>
             <Divider />
 
@@ -94,14 +106,14 @@ export default function Header() {
               <ListItemIcon>
                 <LockOpenIcon />
               </ListItemIcon>
-              <ListItemText primary={<a href="/signin">Sign In</a>} />
+              <ListItemText primary={<Link to="/signin">Sign In</Link>} />
             </ListItem>
             <Divider />
             <ListItem button>
               <ListItemIcon>
                 <LockIcon />
               </ListItemIcon>
-              <ListItemText primary={<a href="/signout">Sign Out</a>} />
+              <ListItemText primary={<Link to="/signout">Sign Out</Link>} />
             </ListItem>
             <Divider />
           </List>
@@ -115,14 +127,15 @@ export default function Header() {
       <header className="header-fixed">
         <div className="header-limiter">
           <h1>
-            <a href="/">
-              <img className="logo" src={Logo} alt="Brand Logo" />
-            </a>
+            <Link to="/">
+              {" "}
+              <img className="logo" src={Logo} alt="Brand Logo" />{" "}
+            </Link>
           </h1>
           <Hidden mdUp>{getSideMenu()}</Hidden>
           <Hidden smDown>
             <nav>
-              <a href="/search">Browse campaigns</a>
+              <Link to="/search">Browse campaigns </Link>
               <Button
                 component="a"
                 tabIndex={0}
@@ -133,8 +146,14 @@ export default function Header() {
               >
                 Campaign For
               </Button>
-              <a href="/profile/1">Profile</a>
-              <a href="/signin">Sign In</a>
+              <Link to="/profile">Profile</Link>
+              {isAuthenticated ? (
+                <Link to="/" onClick={logoutUser}>
+                  Sign Out
+                </Link>
+              ) : (
+                <Link to="/signin">Sign In</Link>
+              )}
             </nav>
           </Hidden>
         </div>
@@ -152,11 +171,17 @@ export default function Header() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <a href="/createcampaign/HealthCare">HealthCare</a>
-          <a href="/createcampaign/Feeding">Feeding</a>
-          <a href="/createcampaign/Animal_Shelter"> Animal Shelter</a>
+          <Link to="/createcampaign/HealthCare">HealthCare</Link>
+          <Link to="/createcampaign/Feeding">Feeding</Link>
+          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
         </Menu>
       )}
     </React.Fragment>
   );
 }
+
+const mapStateToProps = ({ auth }) => {
+  return { ...auth };
+};
+
+export default connect(mapStateToProps)(Header);

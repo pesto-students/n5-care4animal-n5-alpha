@@ -3,7 +3,7 @@ import ShareCampaign from "assets/images/shareacampaign.svg";
 import StartCampaignIcon from "assets/images/startacampaign.svg";
 import WithDrawIcon from "assets/images/withdrawamt.svg";
 
-export const HowItWorks = () => {
+const HowItWorks = () => {
   return (
     <section className="host">
       <section className="section-title section-container">
@@ -48,3 +48,5 @@ export const HowItWorks = () => {
     </section>
   );
 };
+
+export default HowItWorks;

@@ -1,35 +1,28 @@
-.campaign-details {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 50% calc(50% - 30px);
-  grid-template-areas:
-    "image1 details1"
-    "more1 more1";
-  column-gap: 30px;
-  row-gap: 30px;
-}
-.camp-image {
+.campaign-image {
   grid-area: image1;
   min-height: 400px;
 
   & img {
     height: 400px;
-    width: 100%;
+    width: 90%;
   }
 }
-.camp-details {
-  grid-area: details1;
-}
-.camp-more {
-  grid-area: more1;
+
+.camp-more p {
+  font-size: 1.5rem;
+  line-height: 3rem;
 }
 
 .raised {
-  font-size: 42px;
+  font-size: 2rem;
+}
+
+.goal {
+  font-size: 1.5rem;
 }
 
 .donors {
-  font-size: 28px;
+  font-size: 1.5rem;
 }
 
 .actions {
@@ -47,18 +40,9 @@
 }
 
 @media screen and (max-width: 1400px) {
-  .camp-image {
-    grid-area: image1;
-    min-height: 400px;
-  }
 }
 
 @media screen and (max-width: 980px) {
-  .camp-image {
-    grid-area: image1;
-    min-height: 400px;
-  }
-
   .actions {
     height: 100px;
     > button {
@@ -68,20 +52,5 @@
 
   .donate-amount {
     width: 100%;
-  }
-}
-
-@media screen and (max-width: 680px) {
-  .campaign-details {
-    grid-template-columns: 100%;
-    grid-template-areas:
-      "image1"
-      "details1"
-      "more1";
-  }
-
-  .camp-image {
-    grid-area: image1;
-    min-height: 400px;
   }
 }

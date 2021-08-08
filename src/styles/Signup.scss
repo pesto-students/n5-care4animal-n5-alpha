@@ -1,9 +1,3 @@
-.signup {
-  margin: 5rem auto auto auto;
-  text-align: center;
-  max-width: 500px;
-}
-
 .signup-form {
   text-align: center;
   border-radius: 10px;
@@ -11,8 +5,14 @@
   border: 1px solid #0a0a0a36;
 }
 
+@media screen and (max-width: 980px) {
+  .signup-form {
+    margin: 5rem 2rem !important;
+  }
+}
+
 @media screen and (max-width: 680px) {
-  .signup {
-    margin: 5rem 1rem;
+  .signup-form {
+    margin: 5rem 1rem !important;
   }
 }
