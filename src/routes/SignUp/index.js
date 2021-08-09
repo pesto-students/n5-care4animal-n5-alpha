@@ -13,13 +13,7 @@ const initialState = {
   password: "",
 };
 
-const SignUp = ({ loading, isAuthenticated, user, dispatch, history }) => {
-  useEffect(() => {
-    if (isAuthenticated && user.sessionToken) {
-      history.push(`/profile/${user.objectId}`);
-    }
-  }, [isAuthenticated]);
-
+const SignUp = ({ loading, dispatch }) => {
   const [state, setLocalState] = useState(initialState);
 
   const handleChange = (evnt) => {

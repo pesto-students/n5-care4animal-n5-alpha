@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "styles/SearchCampaign.scss";
 
@@ -6,12 +6,18 @@ import { SearchBar } from "./SearchBar";
 import { Box, Container, Grid, Typography } from "@material-ui/core";
 import { CampaignList } from "containers";
 import { Hero } from "containers";
+import { connect } from "react-redux";
+import { loadAllCampaignsAction } from "store/actions/CampaignActions";
 
-export const SearchCampagin = ({ history }) => {
+const SearchCampagin = ({ campaigns = [], history, dispatch }) => {
   const [searchCriteria, setCriteria] = useState();
 
   const [selectedCategories, setCategories] = useState([]);
   const categories = ["Healthcare", "Animal Shelter", "Feeding"];
+
+  useEffect(() => {
+    dispatch(loadAllCampaignsAction());
+  }, [searchCriteria]);
 
   const handleChange = (event) => {
     setCategories(event.target.value);
@@ -66,10 +72,16 @@ export const SearchCampagin = ({ history }) => {
           </Box>
 
           <Grid item xs={12}>
-            <CampaignList list={[0, 1, 2, 3, 4]} showDetails={showDetails} />
+            <CampaignList list={campaigns} showDetails={showDetails} />
           </Grid>
         </Container>
       </Box>
     </>
   );
 };
+
+const mapStateToProps = ({ campaign }) => {
+  return { ...campaign };
+};
+
+export default connect(mapStateToProps)(SearchCampagin);

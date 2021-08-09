@@ -2,8 +2,13 @@ import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { SectionHeader } from "components/Shared/SectionHeader";
+import { connect } from "react-redux";
 
-export const ChooseACause = ({ handleChange, seletedCause = "" }) => {
+const ChooseACause = ({
+  categories = [],
+  handleChange,
+  selectedCause = "",
+}) => {
   return (
     <div>
       <SectionHeader
@@ -16,7 +21,7 @@ export const ChooseACause = ({ handleChange, seletedCause = "" }) => {
       <div>
         <FormControl>
           <NativeSelect
-            value={seletedCause}
+            value={selectedCause}
             onChange={handleChange}
             inputProps={{
               name: "campaign-cause",
@@ -24,13 +29,21 @@ export const ChooseACause = ({ handleChange, seletedCause = "" }) => {
             }}
           >
             <option value="">Choose a Cause for a Campaign</option>
-            <option value={"HealthCare"}>HealthCare</option>
-            <option value={"Feeding"}>Feeding</option>
-            <option value={"Animal Shelter"}>Animal Shelter</option>
+            {categories.map((category) => (
+              <option key={category.objectId} value={category.objectId}>
+                {" "}
+                {category.name}
+              </option>
+            ))}
           </NativeSelect>
-          <FormHelperText>Some important helper text</FormHelperText>
         </FormControl>
       </div>
     </div>
   );
 };
+
+const mapStateToProps = ({ category }) => {
+  return { categories: category.categories || [] };
+};
+
+export default connect(mapStateToProps)(ChooseACause);

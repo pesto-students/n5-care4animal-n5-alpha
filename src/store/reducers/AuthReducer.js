@@ -2,17 +2,15 @@ import { userConstants } from "appconstants/actions";
 const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
+  LOGIN_FAILED,
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REGISTER_FAILURE,
+  REGISTER_FAILED,
   GET_USER_DETAILS,
 } = userConstants;
-// temp - change it to cookie based auto login
-let user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = { isAuthenticated: false, loading: false, user };
+const initialState = { isAuthenticated: false, loading: false, user: {} };
 
 export function AuthReducer(state = initialState, action) {
   switch (action.type) {
@@ -20,10 +18,6 @@ export function AuthReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        // isAuthenticated: false,
-        // user: {
-        //   ...action.payload,
-        // },
       };
 
     case LOGIN_REQUEST:
@@ -36,10 +30,10 @@ export function AuthReducer(state = initialState, action) {
       return {
         isAuthenticated: true,
         loading: false,
-        user: action.user,
+        user: action.payload,
       };
 
-    case LOGIN_FAILURE:
+    case LOGIN_FAILED:
       return {
         ...state,
         loading: false,
@@ -55,10 +49,10 @@ export function AuthReducer(state = initialState, action) {
       return {
         loading: false,
         isAuthenticated: true,
-        user: action.user,
+        user: action.payload,
       };
 
-    case REGISTER_FAILURE:
+    case REGISTER_FAILED:
       return {
         ...state,
         loading: false,

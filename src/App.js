@@ -4,7 +4,7 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import { Routes } from "routes";
 import { connect } from "react-redux";
-import { clear } from "store/actions/AlertActions";
+import { clearAlertAction } from "store/actions/AlertActions";
 
 import ErrorBoundary from "errorhandling/ErrorBoundary";
 import { Snackbar } from "@material-ui/core";
@@ -13,8 +13,13 @@ import { useCookies } from "react-cookie";
 import { requestAutoLogin } from "store/actions/AuthActions";
 import { useLocation, useHistory } from "react-router-dom";
 import MainLoader from "components/Loaders/MainLoader";
+import { getCategory } from "store/actions/CategoryActions";
 
 function App({ alert, loading, isAuthenticated, user, dispatch }) {
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
+
   const location = useLocation();
   const history = useHistory();
   const [cookies, setCookie, removeCookie] = useCookies(["_userSession"]);
@@ -65,11 +70,11 @@ function App({ alert, loading, isAuthenticated, user, dispatch }) {
   }, [isAuthenticated, user, loading]);
 
   const closeSnackBar = () => {
-    dispatch(clear());
+    dispatch(clearAlertAction());
   };
 
   const showAlerts = (message, type) => {
-    setTimeout(() => dispatch(clear()), 2000);
+    setTimeout(() => dispatch(clearAlertAction()), 2000);
 
     return (
       <Snackbar

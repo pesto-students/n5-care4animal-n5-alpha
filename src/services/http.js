@@ -1,7 +1,16 @@
 import { API_ERROR_MSG } from "appconstants/messages";
 import { APPLICATION_ID, REST_KEY, HOST_URL } from "appconstants/_appkeys";
 
-export default async function httpRequest({
+const getDefaultHeader = () => {
+  return {
+    headers: {
+      "X-Parse-Application-Id": APPLICATION_ID,
+      "X-Parse-REST-API-Key": REST_KEY,
+      "Content-Type": "application/json",
+    },
+  };
+};
+export async function uploadImageResource({
   method,
   requestUrl,
   sessionToken,
@@ -9,14 +18,35 @@ export default async function httpRequest({
 }) {
   const url = HOST_URL + requestUrl;
   const requestHeader = {
-    headers: {
-      "X-Parse-Application-Id": APPLICATION_ID,
-      "X-Parse-REST-API-Key": REST_KEY,
-      "X-Parse-Session-Token": sessionToken,
-      "Content-Type": "application/json",
-    },
-    method,
+    ...getDefaultHeader(),
   };
+  requestHeader.headers["Content-Type"] = "image/*";
+  requestHeader.method = method;
+  const formData = new FormData();
+  formData.append(payload.name, payload);
+  requestHeader.body = formData;
+
+  if (sessionToken) {
+    requestHeader.headers["X-Parse-Session-Token"] = sessionToken;
+  }
+  const apiResponse = await fetch(url, requestHeader);
+  return await apiResponse.json();
+}
+
+export default async function httpRequest({
+  method,
+  requestUrl,
+  sessionToken,
+  payload = {},
+}) {
+  const url = HOST_URL + requestUrl;
+
+  const requestHeader = { ...getDefaultHeader() };
+  requestHeader.method = method;
+
+  if (sessionToken) {
+    requestHeader.headers["X-Parse-Session-Token"] = sessionToken;
+  }
 
   if (method !== "GET") {
     requestHeader.body = JSON.stringify(payload);

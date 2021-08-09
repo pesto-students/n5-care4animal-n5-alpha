@@ -1,8 +1,19 @@
 import { SectionHeader } from "components/Shared/SectionHeader";
 import { NavLink } from "react-router-dom";
 import { CampaignList } from "containers";
+import { connect } from "react-redux";
+import { useEffect } from "react";
+import { loadAllCampaignsAction } from "store/actions/CampaignActions";
 
-const TrendingCampaigns = ({ showDetails }) => {
+const TrendingCampaigns = ({ campaigns = [], showDetails, dispatch }) => {
+  console.log("campaigns", campaigns);
+  useEffect(() => {
+    dispatch(loadAllCampaignsAction());
+  }, []);
+
+  if (!campaigns.length) {
+    return "";
+  }
   return (
     <>
       <section className="section-title section-container">
@@ -14,7 +25,7 @@ const TrendingCampaigns = ({ showDetails }) => {
         />
       </section>
       <br />
-      <CampaignList list={[0, 1, 2, 3]} showDetails={showDetails} />
+      <CampaignList list={campaigns} showDetails={showDetails} />
       <br />
       <section className="view-more">
         <NavLink to="/search">View More..</NavLink>
@@ -23,4 +34,8 @@ const TrendingCampaigns = ({ showDetails }) => {
   );
 };
 
-export default TrendingCampaigns;
+const mapStateToProps = ({ campaign }) => {
+  return { ...campaign };
+};
+
+export default connect(mapStateToProps)(TrendingCampaigns);

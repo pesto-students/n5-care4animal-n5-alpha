@@ -1,28 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "styles/CreateCampaign.scss";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import { ChooseACause } from "./cause-selector";
-import { MoreDetailsForm } from "./more-details-form";
-import { FileUploader } from "./file-uploader";
+import ChooseACause from "./ChooseACause";
+import { MoreDetailsForm } from "./MoreDetails";
+import { FileUploader } from "./FileUploader";
+import { connect } from "react-redux";
+import {
+  createCampaignAction,
+  createCampaignCompletedAction,
+  resetReducer,
+} from "store/actions/CampaignActions";
+import { generateCampaignPayload } from "utils.js/payloadCreator";
+import Loader from "components/Shared/Loader";
 
-export const CreateCampaign = ({ history }) => {
+const CreateCampaign = ({
+  loading,
+  campaign = "",
+  user,
+  history,
+  dispatch,
+}) => {
+  useEffect(() => {
+    if (campaign) {
+      setState({ ...state, submitted: false });
+      dispatch(resetReducer());
+      history.push(`/profile/${user.objectId}`);
+    }
+  }, [, campaign]);
+
   const [state, setState] = useState({
     activeStep: 0,
-    seletedCause: "",
-    goalAmount: "",
+    submitted: false,
+  });
+  const [campaignFile, setFile] = useState();
+
+  const [campaignState, setCampaignState] = useState({
+    selectedCause: "",
+    goalAmount: 0,
     name: "",
     description: "",
-    campaignImage: "",
-    proofFile: "",
   });
 
   const { activeStep } = state;
 
   const handleNext = () => {
-    setState({ ...state, activeStep: activeStep + 1 });
+    if (activeStep === 2 && !state.submitted && !campaign) {
+      setState({ ...state, submitted: true });
+      const campaignPayload = generateCampaignPayload(campaignState, user);
+      dispatch(
+        createCampaignAction({
+          campaign: campaignPayload,
+          campaignFile,
+          sessionToken: user.sessionToken,
+        })
+      );
+    } else {
+      setState({ ...state, activeStep: activeStep + 1 });
+    }
   };
 
   const handleBack = () => {
@@ -35,33 +72,40 @@ export const CreateCampaign = ({ history }) => {
   const onCauseSelect = (event) => {
     // if (event.target.value) {
     let localState = {
-      ...state,
-      seletedCause: event.target.value,
+      ...campaignState,
+      selectedCause: event.target.value,
     };
-    setState(localState);
+    setCampaignState(localState);
     // }
   };
 
   const handleInputChange = (value, name) => {
-    let localState = { ...state };
-    localState[name] = value;
-    setState(localState);
+    let localState = { ...campaignState };
+
+    if (name === "goalAmount") {
+      localState[name] = +value;
+    } else {
+      localState[name] = value;
+    }
+    setCampaignState(localState);
   };
 
   const handleFileChange = (event) => {
-    let localState = { ...state };
-    const slFile = event.target.files;
-    localState.proofFile = slFile[0];
-    setState(localState);
+    const slFile = event.target.files[0];
+    slFile.arrayBuffer().then((buffer) => setFile(buffer));
   };
 
   const getContent = () => {
+    if (loading) {
+      return <Loader />;
+    }
+
     switch (activeStep) {
       case 0:
         return (
           <ChooseACause
             handleChange={onCauseSelect}
-            seletedCause={state.seletedCause}
+            selectedCause={campaignState.selectedCause}
           />
         );
 
@@ -69,7 +113,7 @@ export const CreateCampaign = ({ history }) => {
         return (
           <MoreDetailsForm
             handleInputChange={handleInputChange}
-            detailState={state}
+            detailState={campaignState}
           />
         );
 
@@ -98,19 +142,22 @@ export const CreateCampaign = ({ history }) => {
 
     switch (activeStep) {
       case 0:
-        shouldDisable = !state.seletedCause;
+        shouldDisable = !campaignState.selectedCause;
         break;
 
       case 1:
-        shouldDisable = !state.goalAmount || !state.description;
+        shouldDisable =
+          !campaignState.goalAmount ||
+          !campaignState.name ||
+          !campaignState.description;
         break;
 
       case 2:
-        shouldDisable = !state.campaignImage;
+        shouldDisable = !campaignFile;
         break;
 
       default:
-        shouldDisable = false;
+        shouldDisable = true;
         break;
     }
 
@@ -133,7 +180,7 @@ export const CreateCampaign = ({ history }) => {
           <div className="campaign-form">{getContent()}</div>
           <div className="flex-bar">
             <Button
-              // disabled={activeStep === 0}
+              disabled={state.submitted}
               onClick={handleBack}
               className="backButton"
               size="large"
@@ -156,3 +203,9 @@ export const CreateCampaign = ({ history }) => {
     </div>
   );
 };
+
+const mapStateToProps = ({ campaign, auth }) => {
+  return { ...campaign, user: auth.user };
+};
+
+export default connect(mapStateToProps)(CreateCampaign);

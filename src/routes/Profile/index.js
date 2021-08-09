@@ -1,11 +1,22 @@
 import { Box, Container, Grid, Tab, Tabs } from "@material-ui/core";
 import { AccountProfileDetails } from "containers/Account";
 import { AccountProfile } from "containers/Account";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CampaignList } from "containers";
-import { SettingsPassword } from "containers/Account";
+import { connect } from "react-redux";
+import { loadUserCampainsAction } from "store/actions/CampaignActions";
 
-export const Profile = () => {
+const Profile = ({ dispatch, user, campaigns }) => {
+  useEffect(() => {
+    if (user && user.objectId) {
+      dispatch(
+        loadUserCampainsAction({
+          sessionToken: user.sessionToken,
+          userId: user.objectId,
+        })
+      );
+    }
+  }, []);
   const [selectedTab, setTab] = useState("Campaigns");
 
   const handleChange = (event, newValue) => {
@@ -24,18 +35,18 @@ export const Profile = () => {
 
     switch (selectedTabKey) {
       case "Campaigns":
-        tabContent = <CampaignList list={[0, 1, 2, 3]} />;
+        tabContent = <CampaignList list={campaigns} />;
         break;
 
       case "Settings":
         tabContent = (
           <Grid container spacing={3}>
-            <Grid item lg={6} md={6} xs={12}>
+            <Grid item xs={12}>
               <AccountProfileDetails />
             </Grid>
-            <Grid item lg={6} md={6} xs={12}>
+            {/* <Grid item lg={6} md={6} xs={12}>
               <SettingsPassword />
-            </Grid>
+            </Grid> */}
           </Grid>
         );
         break;
@@ -60,9 +71,7 @@ export const Profile = () => {
             <Grid item lg={4} md={6} xs={12}>
               <AccountProfile />
             </Grid>
-            <Grid item lg={8} md={6} xs={12}>
-              <AccountProfileDetails />
-            </Grid>
+            <Grid item lg={8} md={6} xs={12}></Grid>
           </Grid>
         </Container>
         <br />
@@ -90,3 +99,9 @@ export const Profile = () => {
     </>
   );
 };
+
+const mapStateToProps = ({ campaign, auth }) => {
+  return { ...campaign, user: auth.user };
+};
+
+export default connect(mapStateToProps)(Profile);

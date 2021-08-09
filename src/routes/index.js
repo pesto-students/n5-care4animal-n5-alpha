@@ -2,10 +2,10 @@ import { Route, Switch } from "react-router-dom";
 import { LandingPage } from "./LandingPage/LandingPage";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { SearchCampagin } from "./SearchCampaign";
+import SearchCampagin from "./SearchCampaign";
 import { CampaignDetails } from "./CampaignDetails";
-import { CreateCampaign } from "./CreateCampaign";
-import { Profile } from "./Profile";
+import CreateCampaign from "./CreateCampaign";
+import Profile from "./Profile";
 import { PrivateRoute, PublicRoute } from "containers";
 
 export const Routes = () => (

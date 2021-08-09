@@ -2,16 +2,16 @@ import { alertConstants } from "appconstants/actions";
 
 const { SUCCESS, ERROR, CLEAR } = alertConstants;
 
-export { success, error, clear };
+export { successAlertAction, errorAlertAction, clearAlertAction };
 
-function success(message) {
+function successAlertAction(message) {
   return { type: SUCCESS, message };
 }
 
-function error(message) {
+function errorAlertAction(message) {
   return { type: ERROR, message };
 }
 
-function clear() {
+function clearAlertAction() {
   return { type: CLEAR };
 }

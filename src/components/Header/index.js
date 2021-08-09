@@ -43,12 +43,8 @@ function Header({ isAuthenticated, user, dispatch }) {
     });
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const toggleMenu = (event) => {
+    anchorEl ? setAnchorEl(null) : setAnchorEl(event.currentTarget);
   };
 
   const getSideMenu = () => {
@@ -141,7 +137,7 @@ function Header({ isAuthenticated, user, dispatch }) {
                 tabIndex={0}
                 disableRipple={true}
                 className="linkButton"
-                onClick={handleClick}
+                onClick={toggleMenu}
                 endIcon={<ArrowDropDown className="dropdownarrow" />}
               >
                 Campaign For
@@ -169,11 +165,17 @@ function Header({ isAuthenticated, user, dispatch }) {
           anchor="bottom"
           keepMounted
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={toggleMenu}
         >
-          <Link to="/createcampaign/HealthCare">HealthCare</Link>
-          <Link to="/createcampaign/Feeding">Feeding</Link>
-          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
+          <Link to="/createcampaign/HealthCare" onClick={toggleMenu}>
+            HealthCare
+          </Link>
+          <Link to="/createcampaign/Feeding" onClick={toggleMenu}>
+            Feeding
+          </Link>
+          <Link to="/createcampaign/Animal_Shelter" onClick={toggleMenu}>
+            Animal Shelter
+          </Link>
         </Menu>
       )}
     </React.Fragment>
