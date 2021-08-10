@@ -3,7 +3,7 @@ import "styles/LandingPage.scss";
 import { Box } from "@material-ui/core";
 import { HowItWorks } from "containers";
 import { InfoSection } from "containers";
-import { TrendingCampaigns } from "containers";
+import TrendingCampaigns from "containers/TrendingCampaignSection";
 import { Hero } from "containers";
 
 export const LandingPage = ({ history }) => {

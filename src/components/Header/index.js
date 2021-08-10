@@ -20,19 +20,17 @@ import Menu from "@material-ui/core/Menu";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { requestLogout } from "store/actions/AuthActions";
-import { useCookies } from "react-cookie";
+import Category from "components/Category";
 
-function Header({ isAuthenticated, user, dispatch }) {
+function Header({ isAuthenticated, user, categories, dispatch }) {
   const anchor = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [cookies, removeCookie] = useCookies(["_userSession"]);
 
   const [state, setState] = useState({
     openDrawer: false,
   });
 
   const logoutUser = () => {
-    removeCookie("_userSession");
     dispatch(requestLogout(user.sessionToken));
   };
 
@@ -167,23 +165,15 @@ function Header({ isAuthenticated, user, dispatch }) {
           open={Boolean(anchorEl)}
           onClose={toggleMenu}
         >
-          <Link to="/createcampaign/HealthCare" onClick={toggleMenu}>
-            HealthCare
-          </Link>
-          <Link to="/createcampaign/Feeding" onClick={toggleMenu}>
-            Feeding
-          </Link>
-          <Link to="/createcampaign/Animal_Shelter" onClick={toggleMenu}>
-            Animal Shelter
-          </Link>
+          <Category categoryList={categories} callBack={toggleMenu} />
         </Menu>
       )}
     </React.Fragment>
   );
 }
 
-const mapStateToProps = ({ auth }) => {
-  return { ...auth };
+const mapStateToProps = ({ auth, category }) => {
+  return { ...auth, ...category };
 };
 
 export default connect(mapStateToProps)(Header);

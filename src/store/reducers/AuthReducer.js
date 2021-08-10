@@ -40,7 +40,9 @@ export function AuthReducer(state = initialState, action) {
       };
 
     case LOGOUT:
-      return {};
+      return {
+        loggedOut: true,
+      };
 
     case REGISTER_REQUEST:
       return { loading: true, ...state };

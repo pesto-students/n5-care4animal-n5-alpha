@@ -1,6 +1,14 @@
 import httpRequest, { uploadImageResource } from "./http";
 import { CAMPAIGN_API } from "appconstants/constants";
 
+const getCampaignDetails = (sessionToken, campaignId) => {
+  return httpRequest({
+    method: "GET",
+    requestUrl: CAMPAIGN_API.GET_CAMPAIGN + `/${campaignId}`,
+    sessionToken,
+  });
+};
+
 const getAllCampaigns = (sessionToken, userId) => {
   return httpRequest({
     method: "POST",
@@ -35,12 +43,10 @@ const updateCampaign = (sessionToken, campaignId, campaign) => {
   });
 };
 
-const uploadImage = (sessionToken, payload) => {
+const uploadImage = (payload) => {
   return uploadImageResource({
-    method: "POST",
-    requestUrl: CAMPAIGN_API.UPLOAD_FILE,
-    sessionToken,
-    payload: payload,
+    requestUrl: CAMPAIGN_API.UPLOAD_FILE + `/${payload.name}`,
+    payload: payload.file,
   });
 };
 
@@ -50,4 +56,5 @@ export {
   createCampaign,
   updateCampaign,
   uploadImage,
+  getCampaignDetails,
 };

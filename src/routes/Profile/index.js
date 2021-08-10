@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CampaignList } from "containers";
 import { connect } from "react-redux";
 import { loadUserCampainsAction } from "store/actions/CampaignActions";
+import { NO_USER_CAMPAIGN } from "appconstants/messages";
 
 const Profile = ({ dispatch, user, campaigns }) => {
   useEffect(() => {
@@ -35,7 +36,12 @@ const Profile = ({ dispatch, user, campaigns }) => {
 
     switch (selectedTabKey) {
       case "Campaigns":
-        tabContent = <CampaignList list={campaigns} />;
+        tabContent =
+          campaigns && campaigns.length ? (
+            <CampaignList list={campaigns} />
+          ) : (
+            <h2> {NO_USER_CAMPAIGN} </h2>
+          );
         break;
 
       case "Settings":

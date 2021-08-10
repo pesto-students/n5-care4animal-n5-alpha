@@ -3,7 +3,7 @@ import { LandingPage } from "./LandingPage/LandingPage";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import SearchCampagin from "./SearchCampaign";
-import { CampaignDetails } from "./CampaignDetails";
+import CampaignDetails from "./CampaignDetails";
 import CreateCampaign from "./CreateCampaign";
 import Profile from "./Profile";
 import { PrivateRoute, PublicRoute } from "containers";

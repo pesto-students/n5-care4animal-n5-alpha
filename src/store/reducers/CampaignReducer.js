@@ -23,6 +23,7 @@ const initialState = {
   campaign: "",
   selectedCampaign: null,
   loading: false,
+  submitted: false,
 };
 
 const campaignReducer = (state = initialState, action) => {
@@ -31,6 +32,7 @@ const campaignReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        submitted: true,
       };
 
     case CREATE_CAMPAIGN_COMPLETED:
@@ -38,12 +40,14 @@ const campaignReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         campaign: action.payload.objectId,
+        submitted: true,
       };
 
     case CREATE_CAMPAIGN_FAILED:
       return {
         ...state,
         loading: false,
+        submitted: false,
       };
 
     case LOAD_USER_CAMPAIGNS:
@@ -83,7 +87,7 @@ const campaignReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        campaign: action.campaign,
+        campaign: action.payload,
       };
 
     case RESET_REDUCER:
@@ -91,6 +95,7 @@ const campaignReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         campaign: "",
+        submitted: false,
       };
     default:
       return state;

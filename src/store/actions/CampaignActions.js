@@ -60,19 +60,21 @@ function loadUserCampainsCompletedAction(payload) {
   };
 }
 
-function getCampaignDetailAction(params) {
+function getCampaignDetailAction(payload) {
   return {
     type: GET_CAMPAIGN_DETAILS,
+    payload,
   };
 }
 
-function getCampaignDetailCompletedAction(params) {
+function getCampaignDetailCompletedAction(payload) {
   return {
     type: GET_CAMPAIGN_DETAILS_COMPLETED,
+    payload,
   };
 }
 
-function resetReducer(params) {
+function resetReducer() {
   return {
     type: RESET_REDUCER,
   };

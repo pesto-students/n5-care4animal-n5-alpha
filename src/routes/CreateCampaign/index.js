@@ -10,7 +10,6 @@ import { FileUploader } from "./FileUploader";
 import { connect } from "react-redux";
 import {
   createCampaignAction,
-  createCampaignCompletedAction,
   resetReducer,
 } from "store/actions/CampaignActions";
 import { generateCampaignPayload } from "utils.js/payloadCreator";
@@ -19,13 +18,13 @@ import Loader from "components/Shared/Loader";
 const CreateCampaign = ({
   loading,
   campaign = "",
+  submitted,
   user,
   history,
   dispatch,
 }) => {
   useEffect(() => {
     if (campaign) {
-      setState({ ...state, submitted: false });
       dispatch(resetReducer());
       history.push(`/profile/${user.objectId}`);
     }
@@ -33,7 +32,6 @@ const CreateCampaign = ({
 
   const [state, setState] = useState({
     activeStep: 0,
-    submitted: false,
   });
   const [campaignFile, setFile] = useState();
 
@@ -47,8 +45,7 @@ const CreateCampaign = ({
   const { activeStep } = state;
 
   const handleNext = () => {
-    if (activeStep === 2 && !state.submitted && !campaign) {
-      setState({ ...state, submitted: true });
+    if (activeStep === 2 && !submitted && !campaign) {
       const campaignPayload = generateCampaignPayload(campaignState, user);
       dispatch(
         createCampaignAction({
@@ -91,15 +88,21 @@ const CreateCampaign = ({
   };
 
   const handleFileChange = (event) => {
-    const slFile = event.target.files[0];
-    slFile.arrayBuffer().then((buffer) => setFile(buffer));
+    const selectedFile = event.target.files[0];
+
+    var reader = new FileReader();
+    reader.onloadend = async function () {
+      const base64Response = await fetch(reader.result);
+      const blob = await base64Response.blob();
+      setFile({
+        file: blob,
+        name: selectedFile.name,
+      });
+    };
+    reader.readAsDataURL(selectedFile);
   };
 
   const getContent = () => {
-    if (loading) {
-      return <Loader />;
-    }
-
     switch (activeStep) {
       case 0:
         return (
@@ -176,28 +179,34 @@ const CreateCampaign = ({
                 </Step>
               );
             })}
-          </Stepper>
-          <div className="campaign-form">{getContent()}</div>
-          <div className="flex-bar">
-            <Button
-              disabled={state.submitted}
-              onClick={handleBack}
-              className="backButton"
-              size="large"
-            >
-              Back
-            </Button>
+          </Stepper>{" "}
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <div className="campaign-form">{getContent()}</div>
+              <div className="flex-bar">
+                <Button
+                  disabled={submitted}
+                  onClick={handleBack}
+                  className="backButton"
+                  size="large"
+                >
+                  Back
+                </Button>
 
-            <Button
-              disabled={shouldNextDisabled()}
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              size="large"
-            >
-              {stepActions()}
-            </Button>
-          </div>
+                <Button
+                  disabled={shouldNextDisabled()}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  size="large"
+                >
+                  {stepActions()}
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </div>

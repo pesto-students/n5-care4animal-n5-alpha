@@ -3,25 +3,33 @@ import { ProgressBar } from "components/Campaign/ProgressBar";
 import { Box, Button, CardMedia, Container, Grid } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import TextField from "@material-ui/core/TextField";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getCampaignDetailAction } from "store/actions/CampaignActions";
+import Loader from "components/Shared/Loader";
 
-const mockCamp = {
-  id: "object12345",
-  name: "I want to help ill animals.",
-  description:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  goalAmount: 200000,
-  raisedAmount: 50000,
-  noOfDonors: 27,
-  image: "https://source.unsplash.com/900x600/?cow,dog,cat",
-  createdAt: new Date(),
-  startTs: new Date(),
-  endTs: new Date() + 10,
-  user: {
-    name: "Kishor",
-  },
-};
+const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
+  let { id } = useParams();
 
-export const CampaignDetails = () => {
+  useEffect(() => {
+    if (!campaign && id) {
+      dispatch(
+        getCampaignDetailAction({
+          campaignId: id,
+        })
+      );
+    }
+  }, [campaign]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!loading && campaign === undefined) {
+    history.goBack();
+  }
+
   return (
     <Box
       sx={{
@@ -34,29 +42,30 @@ export const CampaignDetails = () => {
         <Grid container spacing={3}>
           <Grid item lg={6} md={6} xs={12}>
             <CardMedia
-              image={mockCamp.image}
+              image={
+                campaign.image
+                  ? campaign.image.url
+                  : "https://source.unsplash.com/900x600/?cow,dog,cat"
+              }
               className="campaign-image"
-              title={mockCamp.name}
+              title={campaign.name}
             />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
-            <h2> {mockCamp.name}</h2>
+            <h2> {campaign.name}</h2>
             <br />
-            <span className="raised">{mockCamp.raisedAmount} </span>out of{" "}
-            <span className="goal">{mockCamp.goalAmount}</span>
+            <span className="raised">{campaign.raisedAmount} </span>out of{" "}
+            <span className="goal">{campaign.goalAmount}</span>
             <br />
             <ProgressBar
               progress={
-                (mockCamp.raisedAmount / mockCamp.goalAmount) * 100 + "%"
+                (campaign.raisedAmount / campaign.goalAmount) * 100 + "%"
               }
             />
             <div>
-              <span className="donors">{mockCamp.noOfDonors}</span> Donors
+              <span className="donors">{campaign.noOfDonors}</span> Donors
               <div>
-                <span className="donors">
-                  {mockCamp.startTs.getDate() + 15}
-                </span>{" "}
-                days left
+                <span className="donors">{campaign.createdAt}</span> days left
               </div>
             </div>
             <TextField
@@ -81,7 +90,7 @@ export const CampaignDetails = () => {
             <div className="camp-more">
               <h2> About Campaign</h2>
               <br />
-              <p> {mockCamp.description} </p>
+              <p> {campaign.description} </p>
             </div>{" "}
           </Grid>
         </Grid>
@@ -89,3 +98,11 @@ export const CampaignDetails = () => {
     </Box>
   );
 };
+
+const mapStateToProps = ({ auth, campaign }) => {
+  return {
+    ...campaign,
+  };
+};
+
+export default connect(mapStateToProps)(CampaignDetails);

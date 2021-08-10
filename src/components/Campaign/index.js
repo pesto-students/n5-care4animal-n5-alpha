@@ -3,13 +3,12 @@ import "styles/Campaign.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Chip } from "@material-ui/core";
 import { ProgressBar } from "./ProgressBar";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -29,19 +28,24 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
         <CardMedia
           className={`${classes.media} campaign-img`}
           image={
-            campaign.image || "https://source.unsplash.com/900x600/?cow,dog,cat"
+            campaign.image
+              ? campaign.image.url
+              : "https://source.unsplash.com/900x600/?cow,dog,cat"
           }
           title={campaign.name}
         />
         <CardContent>
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="h3"
-            onClick={() => showDetails(campaign.id)}
-          >
-            {campaign.name}
-          </Typography>
+          <Link to={`/details/${campaign.objectId}`}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="h3"
+              className="campaign-title"
+              onClick={() => showDetails(campaign.objectId)}
+            >
+              {campaign.name}
+            </Typography>
+          </Link>
 
           <div className="card-row">
             <div className="c-info">
@@ -71,16 +75,6 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
           </div>
         </CardContent>
       </CardActionArea>
-      {/* <div className="overlay"></div>
-      <CardActions>
-        <Typography variant="subtitle1" component="h2">
-          {mockCamp.description}
-        </Typography>
-        <br />
-        <Button size="small" variant="contained" color="primary">
-          Learn More
-        </Button>
-      </CardActions> */}
     </Card>
   );
 };

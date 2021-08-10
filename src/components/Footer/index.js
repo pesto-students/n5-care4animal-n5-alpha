@@ -4,9 +4,10 @@ import Logo from "assets/images/Logo.png";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Category from "components/Category";
 
-export default function Footer() {
+function Footer({ categories, callBack }) {
   return (
     <footer>
       <hr />
@@ -29,21 +30,20 @@ export default function Footer() {
           <div>
             <h4>CAUSES</h4>
           </div>
-          <Link to="/createcampaign/HealthCare">HealthCare</Link>
-          <Link to="/createcampaign/Feeding">Feeding</Link>
-          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
+          {}
+          <Category categoryList={categories} callBack={() => {}} />
         </section>
-
-        {/* <section className="footercolumn">
-          <div>
-            <h4>ENGAGE</h4>
-          </div>
-          <a href="#">Know More</a>
-          <a href="#">FAQ</a>
-        </section> */}
       </div>
       <hr />
       <p>Copyright © 2010-2021. All Rights Reserved by Care4Animal</p>
     </footer>
   );
 }
+
+const mapStateToProps = ({ category }) => {
+  return {
+    ...category,
+  };
+};
+
+export default connect(mapStateToProps)(Footer);

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { loadAllCampaignsAction } from "store/actions/CampaignActions";
 
 const TrendingCampaigns = ({ campaigns = [], showDetails, dispatch }) => {
-  console.log("campaigns", campaigns);
   useEffect(() => {
     dispatch(loadAllCampaignsAction());
   }, []);
@@ -19,7 +18,7 @@ const TrendingCampaigns = ({ campaigns = [], showDetails, dispatch }) => {
       <section className="section-title section-container">
         <SectionHeader
           data={{
-            h5: "TRENDING CAMPAIGNS",
+            h4: "TRENDING CAMPAIGNS",
             subtitle1: "View the Campaigns that are most active right now",
           }}
         />

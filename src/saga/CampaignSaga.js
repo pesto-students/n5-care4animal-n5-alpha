@@ -7,6 +7,7 @@ import { put, all, call, takeLatest } from "redux-saga/effects";
 import {
   createCampaign,
   getAllCampaigns,
+  getCampaignDetails,
   getUserCampaign,
   uploadImage,
 } from "services/campaignService";
@@ -17,10 +18,27 @@ import {
   errorAlertAction,
 } from "store/actions/AlertActions";
 import {
+  campaignCreationFailedAction,
   createCampaignCompletedAction,
+  getCampaignDetailCompletedAction,
   loadAllCampaignsCompletedAction,
   loadUserCampainsCompletedAction,
 } from "store/actions/CampaignActions";
+
+function* loadCampaignDetailsSaga(action) {
+  const { sessionToken, campaignId } = action.payload;
+  const { data, error } = yield call(
+    getCampaignDetails,
+    sessionToken,
+    campaignId
+  );
+
+  if (data) {
+    yield all([put(getCampaignDetailCompletedAction(data))]);
+  } else {
+    yield all([put(getCampaignDetailCompletedAction())]);
+  }
+}
 
 function* loadAllCampaign(params) {
   const { data, error } = yield call(getAllCampaigns);
@@ -48,23 +66,41 @@ function* loadUserCampaignSaga(action) {
 function* createCampaignSaga(action) {
   // upload a file
   const { campaignFile, campaign, sessionToken } = action.payload;
-  // const response = yield call(uploadImage, sessionToken, {
-  //   file: campaignFile,
-  //   name: campaignFile.name,
-  // });
+  const { data: result, error: errorData } = yield call(
+    uploadImage,
+    campaignFile
+  );
 
   // add file into payload and create a payload
-  const { data, error } = yield call(createCampaign, sessionToken, campaign);
+  if (result) {
+    const campaignPayload = {
+      ...campaign,
+      image: {
+        __type: "File",
+        ...result,
+      },
+    };
+    const { data, error } = yield call(
+      createCampaign,
+      sessionToken,
+      campaignPayload
+    );
 
-  if (data) {
+    if (data) {
+      yield all([
+        put(createCampaignCompletedAction(data)),
+        put(successAlertAction(CAMPAIGN_CREATED_SUCCESS)),
+      ]);
+    } else if (error) {
+      yield all([
+        put(campaignCreationFailedAction()),
+        put(errorAlertAction(CAMPAIGN_CREATION_FAILED)),
+      ]);
+    }
+  } else {
     yield all([
-      put(createCampaignCompletedAction(data)),
-      put(successAlertAction(CAMPAIGN_CREATED_SUCCESS)),
-    ]);
-  } else if (error) {
-    yield all([
-      put(createCampaignCompletedAction()),
-      put(errorAlertAction(CAMPAIGN_CREATION_FAILED)),
+      put(campaignCreationFailedAction()),
+      put(errorAlertAction(errorData)),
     ]);
   }
 }
@@ -73,4 +109,8 @@ export default function* watchCampaignSaga() {
   yield takeLatest(campaignConstants.CREATE_CAMPAIGN, createCampaignSaga);
   yield takeLatest(campaignConstants.LOAD_USER_CAMPAIGNS, loadUserCampaignSaga);
   yield takeLatest(campaignConstants.LOAD_ALL_CAMPAIGNS, loadAllCampaign);
+  yield takeLatest(
+    campaignConstants.GET_CAMPAIGN_DETAILS,
+    loadCampaignDetailsSaga
+  );
 }
