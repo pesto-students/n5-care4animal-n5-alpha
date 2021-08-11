@@ -1,3 +1,15 @@
+nav {
+  margin-top: 0.5rem;
+
+  * {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  a {
+    margin: 0px 1rem !important;
+  }
+}
+
 .header-fixed {
   box-shadow: 0 1px 1px #ccc;
   position: fixed;
@@ -82,23 +94,35 @@
     margin: 5px 0px;
     color: #000000;
     text-decoration: none;
+    min-width: 80px;
   }
 }
 
-@media screen and (max-width: 1400px) {
-  .header-limiter {
-    padding: 0.33rem;
-  }
-}
+.mobile-cateogry-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: space-around;
+  width: calc(100% - 71px) !important;
+  margin-left: 70px !important;
 
-@media screen and (max-width: 980px) {
-  .header-limiter {
-    padding: 0.16rem;
+  a {
+    border-bottom: 1px solid #80808080;
+    padding: 7px 0px;
   }
 }
 
 @media screen and (max-width: 680px) {
-  .header-limiter {
-    padding: 0px;
+  nav {
+    margin-top: 0rem;
+  }
+  .logo {
+    margin-top: 0.5rem;
+  }
+
+  .headerTopRow {
+    .logo {
+      margin-top: 0rem;
+    }
   }
 }

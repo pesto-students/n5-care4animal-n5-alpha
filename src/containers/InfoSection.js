@@ -1,6 +1,5 @@
 import { Box, Hidden } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
-import image4 from "assets/images/hero1.jpg";
 
 const InfoSection = () => {
   return (
@@ -17,7 +16,11 @@ const InfoSection = () => {
         </div>
         <Hidden smDown>
           <div className="col span_1_of_2 section-title ">
-            <img className="img" src={image4} alt="features"></img>
+            <img
+              className="img"
+              src={"https://source.unsplash.com/76HhAKI5JXI"}
+              alt="features"
+            ></img>
           </div>
         </Hidden>
       </section>
@@ -39,7 +42,11 @@ const InfoSection = () => {
         </div>
         <Hidden smDown>
           <div className="col span_1_of_2 section-title ">
-            <img className="img" src={image4} alt="features"></img>
+            <img
+              className="img"
+              src={"https://source.unsplash.com/PcEOcfaT8s0"}
+              alt="features"
+            ></img>
           </div>
         </Hidden>
       </section>

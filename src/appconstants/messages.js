@@ -8,3 +8,9 @@ export const CAMPAIGN_CREATION_FAILED = "Failed to create a campaign.";
 
 export const NO_USER_CAMPAIGN = "You have not created any campaigns yet.";
 export const NO_CAMPAIGNS_IN_SYSTEM = "We are working on this. ";
+
+export const PROFILE_PIC_UPDATE_SUCCESS =
+  "Profile picture updated successfully.!";
+export const PROFILE_PIC_UPDATE_FAILURE =
+  "Could not update the profile picture.!";
+export const PROFILE_UPDATE_SUCCESS = "Profile updated successfully.!";

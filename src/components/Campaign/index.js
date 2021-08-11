@@ -9,7 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import { Chip } from "@material-ui/core";
 import { ProgressBar } from "./ProgressBar";
 import { Link } from "react-router-dom";
-
+import Currency from "components/Shared/Currency";
+import Moment from "react-moment";
+import moment from "moment";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -49,7 +51,10 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
 
           <div className="card-row">
             <div className="c-info">
-              <span>{campaign.goalAmount}</span> <br />
+              <span>
+                <Currency value={campaign.goalAmount} />
+              </span>{" "}
+              <br />
               Required
             </div>
 
@@ -59,7 +64,11 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
               Raised
             </div>
             <div className="c-info">
-              <span>15 </span>
+              <span>
+                <Moment diff={campaign.createdAt} unit="days">
+                  {moment().add(30, "d")}
+                </Moment>
+              </span>
               <br />
               Days Left
             </div>

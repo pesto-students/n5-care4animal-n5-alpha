@@ -17,3 +17,8 @@ export const CAMPAIGN_API = {
   GET_ALL_USER_CAMPAIGNS: "functions/getCampaignInfoByUserId",
   UPLOAD_FILE: "files",
 };
+
+export const USER_API = {
+  CLASS_NAME: "users",
+  UPLOAD_FILE: "files",
+};

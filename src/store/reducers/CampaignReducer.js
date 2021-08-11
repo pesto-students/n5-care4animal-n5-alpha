@@ -93,6 +93,7 @@ const campaignReducer = (state = initialState, action) => {
     case RESET_REDUCER:
       return {
         ...state,
+        campaigns: [],
         loading: false,
         campaign: "",
         submitted: false,

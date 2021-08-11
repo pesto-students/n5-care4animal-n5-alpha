@@ -24,10 +24,11 @@ const CreateCampaign = ({
   dispatch,
 }) => {
   useEffect(() => {
-    if (campaign) {
-      dispatch(resetReducer());
+    if (campaign && submitted) {
       history.push(`/profile/${user.objectId}`);
     }
+
+    return () => dispatch(resetReducer());
   }, [, campaign]);
 
   const [state, setState] = useState({
@@ -88,18 +89,20 @@ const CreateCampaign = ({
   };
 
   const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
+    if (event.target.files) {
+      const selectedFile = event.target.files[0];
 
-    var reader = new FileReader();
-    reader.onloadend = async function () {
-      const base64Response = await fetch(reader.result);
-      const blob = await base64Response.blob();
-      setFile({
-        file: blob,
-        name: selectedFile.name,
-      });
-    };
-    reader.readAsDataURL(selectedFile);
+      var reader = new FileReader();
+      reader.onloadend = async function () {
+        const base64Response = await fetch(reader.result);
+        const blob = await base64Response.blob();
+        setFile({
+          file: blob,
+          name: selectedFile.name,
+        });
+      };
+      reader.readAsDataURL(selectedFile);
+    }
   };
 
   const getContent = () => {
@@ -128,14 +131,11 @@ const CreateCampaign = ({
   };
 
   const stepActions = () => {
-    if (activeStep === 0) {
+    if (activeStep < 2) {
       return "Next";
     }
-    if (activeStep === 1) {
-      return "Create a Campaign";
-    }
 
-    return "Save and Finish";
+    return "Create a Campaign";
   };
 
   const steps = ["Cause", "More details", "Upload Image & Proofs"];

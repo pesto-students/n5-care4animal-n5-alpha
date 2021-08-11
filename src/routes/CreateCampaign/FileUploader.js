@@ -8,7 +8,7 @@ export const FileUploader = ({ handleFileChange }) => {
     <section>
       <SectionHeader
         data={{
-          h4: "Congratualation! Your Campaign is Created.",
+          h4: "One last thing and you are good to go.",
         }}
       />
       <br />

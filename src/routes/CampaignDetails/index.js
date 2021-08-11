@@ -6,21 +6,31 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { getCampaignDetailAction } from "store/actions/CampaignActions";
+import {
+  getCampaignDetailAction,
+  resetReducer,
+} from "store/actions/CampaignActions";
 import Loader from "components/Shared/Loader";
+import Currency from "components/Shared/Currency";
+import Moment from "react-moment";
+import moment from "moment";
 
 const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
   let { id } = useParams();
 
   useEffect(() => {
-    if (!campaign && id) {
+    if (id) {
       dispatch(
         getCampaignDetailAction({
           campaignId: id,
         })
       );
     }
-  }, [campaign]);
+
+    return () => {
+      dispatch(resetReducer());
+    };
+  }, []);
 
   if (loading) {
     return <Loader />;
@@ -54,8 +64,13 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
           <Grid item lg={6} md={6} xs={12}>
             <h2> {campaign.name}</h2>
             <br />
-            <span className="raised">{campaign.raisedAmount} </span>out of{" "}
-            <span className="goal">{campaign.goalAmount}</span>
+            <span className="raised">
+              <Currency value={campaign.raisedAmount} />{" "}
+            </span>
+            out of{" "}
+            <span className="goal">
+              <Currency value={campaign.goalAmount} />
+            </span>
             <br />
             <ProgressBar
               progress={
@@ -65,7 +80,12 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
             <div>
               <span className="donors">{campaign.noOfDonors}</span> Donors
               <div>
-                <span className="donors">{campaign.createdAt}</span> days left
+                <span className="donors">
+                  <Moment diff={campaign.createdAt} unit="days">
+                    {moment().add(30, "d")}
+                  </Moment>
+                </span>{" "}
+                days left
               </div>
             </div>
             <TextField

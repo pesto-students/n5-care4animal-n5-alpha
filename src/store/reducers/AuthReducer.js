@@ -8,6 +8,9 @@ const {
   REGISTER_SUCCESS,
   REGISTER_FAILED,
   GET_USER_DETAILS,
+  UPDATE_USER_PROFILE,
+  UPLOAD_PROFILE_PIC,
+  UPLOAD_USER_COMPLETE,
 } = userConstants;
 
 const initialState = { isAuthenticated: false, loading: false, user: {} };
@@ -55,6 +58,19 @@ export function AuthReducer(state = initialState, action) {
       };
 
     case REGISTER_FAILED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPLOAD_PROFILE_PIC:
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case UPLOAD_USER_COMPLETE:
       return {
         ...state,
         loading: false,

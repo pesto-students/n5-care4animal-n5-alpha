@@ -8,128 +8,125 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
+import statesList from "./StatesList";
 
-const states = [
-  {
-    value: "karnataka",
-    label: "Karnataka",
-  },
-  {
-    value: "goa",
-    label: "Goa",
-  },
-  {
-    value: "maharastra",
-    label: "Maharastra",
-  },
-];
-
-const AccountProfileDetails = (props) => {
+const AccountProfileDetails = ({ user = {}, onSubmitChanges }) => {
+  const { firstName, lastName, email, username, phone, state, country } = user;
   const [values, setValues] = useState({
-    firstName: "Kishor",
-    lastName: "Patil",
-    email: "alpha@care4animal.co",
-    phone: "",
-    state: "Karntaka",
-    country: "India",
+    firstName,
+    lastName,
+    email,
+    username,
+    phone,
+    state,
+    country,
   });
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
+    if (event.target.name === "email") {
+      setValues({
+        ...values,
+        email: event.target.value,
+        username: event.target.value,
+      });
+    } else {
+      setValues({
+        ...values,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
   return (
-    <form autoComplete="off" noValidate {...props}>
-      <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.firstName}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Email Address"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-              >
-                {states.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
+    <form autoComplete="off" noValidate>
+      <CardHeader title="Profile" />
+      <CardContent>
+        <Grid container spacing={3}>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              helperText="Please specify the first name"
+              label="First name"
+              name="firstName"
+              onChange={handleChange}
+              required
+              value={values.firstName}
+            />
           </Grid>
-        </CardContent>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
-          }}
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Last name"
+              name="lastName"
+              onChange={handleChange}
+              required
+              value={values.lastName}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Email Address"
+              name="email"
+              onChange={handleChange}
+              required
+              value={values.email}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Phone Number"
+              name="phone"
+              onChange={handleChange}
+              value={values.phone}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Country"
+              name="country"
+              onChange={handleChange}
+              required
+              value={values.country}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              label="Select State"
+              name="state"
+              onChange={handleChange}
+              required
+              select
+              SelectProps={{ native: true }}
+              value={values.state}
+            >
+              {statesList.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
+      </CardContent>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          p: 2,
+        }}
+      >
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => onSubmitChanges(values)}
         >
-          <Button color="primary" variant="contained">
-            Save details
-          </Button>
-        </Box>
-      </Card>
+          Save details
+        </Button>
+      </Box>
     </form>
   );
 };

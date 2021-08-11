@@ -1,5 +1,19 @@
 .loader {
   width: 300px;
+
+  margin: auto;
+  position: relative;
+  top: 87%;
+  left: 50%;
+  transform: translate(-49%, 40%);
+}
+
+.align-center {
+  margin: auto;
+  position: relative;
+  top: 87%;
+  left: 50%;
+  transform: translate(-49%, 40%);
 }
 
 .loader path {

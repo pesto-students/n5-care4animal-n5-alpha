@@ -6,8 +6,15 @@ import { CampaignList } from "containers";
 import { connect } from "react-redux";
 import { loadUserCampainsAction } from "store/actions/CampaignActions";
 import { NO_USER_CAMPAIGN } from "appconstants/messages";
+import Loader from "components/Shared/Loader";
+import {
+  updateUserProfileAction,
+  uploadProfilePicAction,
+} from "store/actions/UserActions";
 
-const Profile = ({ dispatch, user, campaigns }) => {
+const Profile = ({ loading, dispatch, user, campaigns }) => {
+  const [userProfilePic, setProfilePic] = useState();
+
   useEffect(() => {
     if (user && user.objectId) {
       dispatch(
@@ -18,10 +25,49 @@ const Profile = ({ dispatch, user, campaigns }) => {
       );
     }
   }, []);
+
+  const onSubmitChanges = (userDetails) => {
+    dispatch(
+      updateUserProfileAction({
+        sessionToken: user.sessionToken,
+        userId: user.objectId,
+        userPayload: userDetails,
+      })
+    );
+  };
+
   const [selectedTab, setTab] = useState("Campaigns");
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
+  };
+
+  const handleFileChange = (event) => {
+    if (event.target.files) {
+      const selectedFile = event.target.files[0];
+
+      var reader = new FileReader();
+      reader.onloadend = async function () {
+        const base64Response = await fetch(reader.result);
+        const blob = await base64Response.blob();
+
+        const profileImageData = {
+          file: blob,
+          name: selectedFile.name,
+        };
+
+        setProfilePic(base64Response);
+
+        dispatch(
+          uploadProfilePicAction({
+            profileImageData,
+            sessionToken: user.sessionToken,
+            userId: user.objectId,
+          })
+        );
+      };
+      reader.readAsDataURL(selectedFile);
+    }
   };
 
   const a11yProps = (index) => {
@@ -44,15 +90,12 @@ const Profile = ({ dispatch, user, campaigns }) => {
           );
         break;
 
-      case "Settings":
+      case "Donations":
         tabContent = (
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <AccountProfileDetails />
+              {/* List of user donations made towards campaign */}
             </Grid>
-            {/* <Grid item lg={6} md={6} xs={12}>
-              <SettingsPassword />
-            </Grid> */}
           </Grid>
         );
         break;
@@ -62,6 +105,10 @@ const Profile = ({ dispatch, user, campaigns }) => {
     }
     return tabContent;
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -75,9 +122,18 @@ const Profile = ({ dispatch, user, campaigns }) => {
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
-              <AccountProfile />
+              <AccountProfile
+                user={user}
+                userImage={userProfilePic}
+                handleFileChange={handleFileChange}
+              />
             </Grid>
-            <Grid item lg={8} md={6} xs={12}></Grid>
+            <Grid item lg={8} md={6} xs={12}>
+              <AccountProfileDetails
+                user={user}
+                onSubmitChanges={onSubmitChanges}
+              />
+            </Grid>
           </Grid>
         </Container>
         <br />
@@ -90,7 +146,7 @@ const Profile = ({ dispatch, user, campaigns }) => {
             aria-label="simple tabs example"
           >
             <Tab label="Your Campaigns" value="Campaigns" {...a11yProps(0)} />
-            <Tab label="Settings" value="Settings" {...a11yProps(2)} />
+            <Tab label="Donations" value="Donations" {...a11yProps(2)} />
           </Tabs>
         </Container>
         <br />
@@ -107,7 +163,7 @@ const Profile = ({ dispatch, user, campaigns }) => {
 };
 
 const mapStateToProps = ({ campaign, auth }) => {
-  return { ...campaign, user: auth.user };
+  return { campaigns: campaign.campaigns, user: auth.user };
 };
 
 export default connect(mapStateToProps)(Profile);

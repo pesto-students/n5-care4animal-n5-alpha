@@ -13,8 +13,8 @@ export const Routes = () => (
     <PublicRoute path="/signin" exact component={SignIn} />
     <PublicRoute path="/signup" exact component={SignUp} />
     <PublicRoute path="/search" exact component={SearchCampagin} />
-    <PublicRoute path="/details/:id?" exact component={CampaignDetails} />{" "}
-    <PrivateRoute path="/profile/:id?" exact component={Profile} />
+    <PublicRoute path="/details/:id" exact component={CampaignDetails} />{" "}
+    <PrivateRoute path="/profile/:id" exact component={Profile} />
     <PrivateRoute
       path="/createcampaign/:causeid?"
       exact
