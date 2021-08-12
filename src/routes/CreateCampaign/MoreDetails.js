@@ -1,9 +1,7 @@
 import TextField from "@material-ui/core/TextField";
 import { SectionHeader } from "components/Shared/SectionHeader";
 
-export const MoreDetailsForm = ({ handleInputChange, detailState }) => {
-  const { goalAmount, name, description } = detailState;
-
+export const MoreDetailsForm = ({ formik }) => {
   return (
     <section>
       <SectionHeader
@@ -12,48 +10,49 @@ export const MoreDetailsForm = ({ handleInputChange, detailState }) => {
         }}
       />
       <div>
-        <form className={""} noValidate>
+        <form onSubmit={formik.handleSubmit} noValidate autoComplete="off">
           <TextField
-            margin="normal"
             type="number"
-            required
+            margin="normal"
             fullWidth
-            value={goalAmount}
-            onChange={(event) =>
-              handleInputChange(event.target.value, "goalAmount")
-            }
             id="goalAmount"
             label="How much you want to raise"
             name="goalAmount"
             autoFocus
+            value={formik.values.goalAmount}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.goalAmount && Boolean(formik.errors.goalAmount)
+            }
+            helperText={formik.touched.goalAmount && formik.errors.goalAmount}
           />
-
           <TextField
             margin="normal"
-            required
             fullWidth
-            value={name}
-            onChange={(event) => handleInputChange(event.target.value, "name")}
             id="name"
             label="Campaign Name"
             name="name"
-            helperText="Write a clear, brief title that helps people quickly understand the goal of your campaign."
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
           />
-
           <TextField
             margin="normal"
-            required
             fullWidth
             multiline
             rows={4}
-            value={description}
-            onChange={(event) =>
-              handleInputChange(event.target.value, "description")
-            }
-            id="description"
-            label="Tell more about the Campaign"
             name="description"
-            helperText="maximum 250 words."
+            label="Tell more about the Campaign"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
           />
         </form>
       </div>

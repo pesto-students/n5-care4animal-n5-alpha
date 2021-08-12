@@ -68,7 +68,9 @@ const SignUp = ({ loading, dispatch }) => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={formik.values.firstName}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={
                     formik.touched.firstName && Boolean(formik.errors.firstName)
                   }
@@ -84,7 +86,9 @@ const SignUp = ({ loading, dispatch }) => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  value={formik.values.lastName}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={
                     formik.touched.lastName && Boolean(formik.errors.lastName)
                   }
@@ -102,6 +106,7 @@ const SignUp = ({ loading, dispatch }) => {
                   id="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                 />
@@ -117,6 +122,7 @@ const SignUp = ({ loading, dispatch }) => {
                   autoComplete="off"
                   value={formik.values.password}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={
                     formik.touched.password && Boolean(formik.errors.password)
                   }

@@ -4,11 +4,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { SectionHeader } from "components/Shared/SectionHeader";
 import { connect } from "react-redux";
 
-const ChooseACause = ({
-  categories = [],
-  handleChange,
-  selectedCause = "",
-}) => {
+const ChooseACause = ({ categories = [], formik }) => {
   return (
     <div>
       <SectionHeader
@@ -21,11 +17,16 @@ const ChooseACause = ({
       <div>
         <FormControl>
           <NativeSelect
-            value={selectedCause}
-            onChange={handleChange}
+            value={formik.values.selectedCause}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.selectedCause &&
+              Boolean(formik.errors.selectedCause)
+            }
             inputProps={{
-              name: "campaign-cause",
-              id: "campaign-cause",
+              name: "selectedCause",
+              id: "selectedCause",
             }}
           >
             <option value="">Choose a Cause for a Campaign</option>
@@ -36,6 +37,7 @@ const ChooseACause = ({
               </option>
             ))}
           </NativeSelect>
+          <FormHelperText error>{formik.errors.selectedCause}</FormHelperText>
         </FormControl>
       </div>
     </div>

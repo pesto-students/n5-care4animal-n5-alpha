@@ -14,6 +14,40 @@ import {
 } from "store/actions/CampaignActions";
 import { generateCampaignPayload } from "utils.js/payloadCreator";
 import Loader from "components/Shared/Loader";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { requestLogin } from "store/actions/AuthActions";
+
+const validationSchema = yup.object({
+  selectedCause: yup
+    .string("Cause for a campaign")
+    .required("Please select a cause"),
+  goalAmount: yup
+    .number("Enter the goal amount to raise for your campaign")
+    .min(500, "Goal amount should be ₹500 minimum")
+    .required("Goal amount is required"),
+  name: yup
+    .string(
+      "Write a clear, brief title that helps people quickly understand the goal of your campaign."
+    )
+    .min(10, "Name should have minimum 10 characters")
+    .max(150, "Name should have maximun 150 characters")
+    .required("Campaign name is required"),
+  description: yup
+    .string(
+      "Write good description about you campaign, what you are doing and the purpose behind it."
+    )
+    .min(1000, "Description should have minimum 1000 characters")
+    .max(10000, "Description should have maximun 10000 characters")
+    .required("Description is must while creating a campaign"),
+});
+
+const initialState = {
+  selectedCause: "",
+  goalAmount: "",
+  name: "",
+  description: "",
+};
 
 const CreateCampaign = ({
   loading,
@@ -36,18 +70,23 @@ const CreateCampaign = ({
   });
   const [campaignFile, setFile] = useState();
 
-  const [campaignState, setCampaignState] = useState({
-    selectedCause: "",
-    goalAmount: 0,
-    name: "",
-    description: "",
+  const formik = useFormik({
+    initialValues: initialState,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      if (values.email && values.password) {
+        dispatch(
+          requestLogin({ email: values.email, password: values.password })
+        );
+      }
+    },
   });
 
   const { activeStep } = state;
 
   const handleNext = () => {
     if (activeStep === 2 && !submitted && !campaign) {
-      const campaignPayload = generateCampaignPayload(campaignState, user);
+      const campaignPayload = generateCampaignPayload(formik.values, user);
       dispatch(
         createCampaignAction({
           campaign: campaignPayload,
@@ -65,27 +104,6 @@ const CreateCampaign = ({
       return history.goBack();
     }
     setState({ ...state, activeStep: activeStep - 1 });
-  };
-
-  const onCauseSelect = (event) => {
-    // if (event.target.value) {
-    let localState = {
-      ...campaignState,
-      selectedCause: event.target.value,
-    };
-    setCampaignState(localState);
-    // }
-  };
-
-  const handleInputChange = (value, name) => {
-    let localState = { ...campaignState };
-
-    if (name === "goalAmount") {
-      localState[name] = +value;
-    } else {
-      localState[name] = value;
-    }
-    setCampaignState(localState);
   };
 
   const handleFileChange = (event) => {
@@ -108,20 +126,10 @@ const CreateCampaign = ({
   const getContent = () => {
     switch (activeStep) {
       case 0:
-        return (
-          <ChooseACause
-            handleChange={onCauseSelect}
-            selectedCause={campaignState.selectedCause}
-          />
-        );
+        return <ChooseACause formik={formik} />;
 
       case 1:
-        return (
-          <MoreDetailsForm
-            handleInputChange={handleInputChange}
-            detailState={campaignState}
-          />
-        );
+        return <MoreDetailsForm formik={formik} />;
 
       case 2:
         return <FileUploader handleFileChange={handleFileChange} />;
@@ -142,17 +150,13 @@ const CreateCampaign = ({
 
   const shouldNextDisabled = () => {
     let shouldDisable = false;
-
     switch (activeStep) {
       case 0:
-        shouldDisable = !campaignState.selectedCause;
+        shouldDisable = !formik.values.selectedCause;
         break;
 
       case 1:
-        shouldDisable =
-          !campaignState.goalAmount ||
-          !campaignState.name ||
-          !campaignState.description;
+        shouldDisable = !formik.isValid;
         break;
 
       case 2:

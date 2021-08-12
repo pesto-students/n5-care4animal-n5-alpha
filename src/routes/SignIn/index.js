@@ -28,7 +28,6 @@ const validationSchema = yup.object({
 const initialState = {
   email: "",
   password: "",
-  submitted: false,
 };
 
 const SignIn = ({ loading, dispatch }) => {
@@ -73,6 +72,7 @@ const SignIn = ({ loading, dispatch }) => {
                 id="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
@@ -87,6 +87,7 @@ const SignIn = ({ loading, dispatch }) => {
                 autoComplete="off"
                 value={formik.values.password}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
                 }
