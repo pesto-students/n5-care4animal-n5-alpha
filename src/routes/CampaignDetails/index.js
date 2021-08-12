@@ -101,8 +101,7 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
               </Button>
 
               <Button variant="contained" color="primary">
-                <ShareIcon />
-                Share this campaign
+                <ShareIcon /> &nbsp; Share this campaign
               </Button>
             </div>
           </Grid>

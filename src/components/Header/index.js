@@ -54,6 +54,10 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   };
 
   const logoutUser = () => {
+    setAnchorEl({
+      anchorEl: "",
+      menuName: "",
+    });
     dispatch(requestLogout(user.sessionToken));
   };
 
@@ -80,7 +84,6 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
     toggleSubmenu(!openSubMenu);
   };
 
-  console.log("menuState.anchorEl", menuState);
   const getSideMenu = () => {
     return (
       <nav>
