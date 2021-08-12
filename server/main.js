@@ -27,12 +27,32 @@ Parse.Cloud.define("getCampaignInfoByUserId", async (request) => {
   return resultCampaignInfo;
 });
 
+function getCategoryPointer(category) {
+  return {
+    __type: "Pointer",
+    className: "CampaignCategory",
+    objectId: category,
+  };
+}
+
 Parse.Cloud.define("searchCampaignInfo", async (request) => {
   const { searchKey, categories } = request.params;
 
   const campaignQuery = new Parse.Query("CampaignInfo");
-  
-  campaignQuery.
-  
-  return params;
+  if (searchKey) {
+    campaignQuery.fullText("name", searchKey);
+  }
+  if (categories) {
+    categoriesQuery = [];
+    categories.forEach((categoryId) => {
+      categoriesQuery.push(getCategoryPointer(categoryId));
+    });
+    campaignQuery.containedIn("categoryRef", categoriesQuery);
+  }
+
+  const queryResult = await campaignQuery.find();
+  return {
+    queryResult,
+    length: queryResult ? queryResult.length : 0,
+  };
 });
