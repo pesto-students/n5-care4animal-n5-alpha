@@ -10,8 +10,8 @@ import { PrivateRoute, PublicRoute } from "containers";
 
 export const Routes = () => (
   <Switch>
-    <PublicRoute path="/signin" exact component={SignIn} />
-    <PublicRoute path="/signup" exact component={SignUp} />
+    <PublicRoute path="/signin" type="guest" exact component={SignIn} />
+    <PublicRoute path="/signup" type="guest" exact component={SignUp} />
     <PublicRoute path="/search" exact component={SearchCampagin} />
     <PublicRoute path="/details/:id" exact component={CampaignDetails} />{" "}
     <PrivateRoute path="/profile/:id" exact component={Profile} />
