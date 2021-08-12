@@ -44,8 +44,6 @@ const SignIn = ({ loading, dispatch }) => {
     },
   });
 
-  const [state, setLocalState] = useState(initialState);
-
   return (
     <Grid
       container
@@ -102,6 +100,7 @@ const SignIn = ({ loading, dispatch }) => {
                 variant="contained"
                 color="primary"
                 className={""}
+                disabled={!formik.isValid}
               >
                 Sign In
               </Button>
