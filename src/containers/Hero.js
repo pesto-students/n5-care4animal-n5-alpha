@@ -11,7 +11,7 @@ const Hero = ({ data, showStartCampaign }) => {
           <Button
             className="hero-button"
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={showStartCampaign}
           >
             Start a Campaign{" "}

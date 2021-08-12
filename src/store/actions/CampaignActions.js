@@ -13,7 +13,7 @@ const {
 
   GET_CAMPAIGN_DETAILS,
   GET_CAMPAIGN_DETAILS_COMPLETED,
-
+  SEARCH_CAMPAIGNS,
   RESET_REDUCER,
 } = campaignConstants;
 
@@ -74,6 +74,13 @@ function getCampaignDetailCompletedAction(payload) {
   };
 }
 
+function searchCampaignsAction(payload) {
+  return {
+    type: SEARCH_CAMPAIGNS,
+    payload,
+  };
+}
+
 function resetReducer() {
   return {
     type: RESET_REDUCER,
@@ -90,5 +97,6 @@ export {
   loadUserCampainsCompletedAction,
   getCampaignDetailAction,
   getCampaignDetailCompletedAction,
+  searchCampaignsAction,
   resetReducer,
 };

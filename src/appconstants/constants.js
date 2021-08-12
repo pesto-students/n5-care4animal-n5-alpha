@@ -16,6 +16,7 @@ export const CAMPAIGN_API = {
   GET_ALL_CAMPAIGNS: "functions/getCampaignInfo",
   GET_ALL_USER_CAMPAIGNS: "functions/getCampaignInfoByUserId",
   UPLOAD_FILE: "files",
+  SEARCH_CAMPAIAGNS: "functions/searchCampaignInfo",
 };
 
 export const USER_API = {

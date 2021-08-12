@@ -1,14 +1,13 @@
 .campaign-image {
-  grid-area: image1;
-  min-height: 400px;
+  min-height: 500px;
 
   & img {
-    height: 400px;
+    height: 500px;
     width: 90%;
   }
 }
 
-.camp-more p {
+.camp-more {
   font-size: 1.5rem;
   line-height: 3rem;
 }

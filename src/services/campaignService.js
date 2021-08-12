@@ -1,6 +1,14 @@
 import httpRequest, { uploadImageResource } from "./http";
 import { CAMPAIGN_API } from "appconstants/constants";
 
+const searchCampaignsByCriteria = (payload) => {
+  return httpRequest({
+    method: "POST",
+    requestUrl: CAMPAIGN_API.SEARCH_CAMPAIAGNS,
+    payload,
+  });
+};
+
 const getCampaignDetails = (sessionToken, campaignId) => {
   return httpRequest({
     method: "GET",
@@ -57,4 +65,5 @@ export {
   updateCampaign,
   uploadImage,
   getCampaignDetails,
+  searchCampaignsByCriteria,
 };

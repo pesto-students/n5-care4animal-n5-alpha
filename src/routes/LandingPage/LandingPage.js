@@ -15,6 +15,10 @@ export const LandingPage = ({ history }) => {
     history.push(`/createcampaign`);
   };
 
+  const showSearchPage = () => {
+    history.push(`/search`);
+  };
+
   return (
     <>
       <section className="hero heroimage">
@@ -34,7 +38,10 @@ export const LandingPage = ({ history }) => {
           <hr className="c4a-divider" />
         </Box>
         <section className="host">
-          <InfoSection />
+          <InfoSection
+            showStartCampaign={showStartCampaign}
+            showSearchPage={showSearchPage}
+          />
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />

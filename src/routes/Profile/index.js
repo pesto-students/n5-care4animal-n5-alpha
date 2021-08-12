@@ -121,6 +121,7 @@ const Profile = ({ loading, dispatch, user, campaigns }) => {
       >
         <Container maxWidth="lg">
           <Grid container spacing={3}>
+            <Grid item xs={12}></Grid>
             <Grid item lg={4} md={6} xs={12}>
               <AccountProfile
                 user={user}
@@ -142,20 +143,22 @@ const Profile = ({ loading, dispatch, user, campaigns }) => {
           {" "}
           <Tabs
             value={selectedTab}
+            variant="fullWidth"
             onChange={handleChange}
-            aria-label="simple tabs example"
+            aria-label="Account tabs"
           >
             <Tab label="Your Campaigns" value="Campaigns" {...a11yProps(0)} />
-            <Tab label="Donations" value="Donations" {...a11yProps(2)} />
-          </Tabs>
+            <Tab label="Donations" value="Donations" {...a11yProps(1)} />
+          </Tabs>{" "}
         </Container>
-        <br />
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
-            <Grid item lg={12} xs={12}>
-              {getSelectedTab(selectedTab)}
+          <Box py={2}>
+            <Grid container spacing={3}>
+              <Grid item lg={12} xs={12}>
+                {getSelectedTab(selectedTab)}
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Container>
       </Box>
     </>

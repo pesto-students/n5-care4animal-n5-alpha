@@ -42,14 +42,15 @@ Parse.Cloud.define("searchCampaignInfo", async (request) => {
   if (searchKey) {
     campaignQuery.fullText("name", searchKey);
   }
-  if (categories) {
+  if (categories && categories.length) {
     categoriesQuery = [];
     categories.forEach((categoryId) => {
       categoriesQuery.push(getCategoryPointer(categoryId));
     });
     campaignQuery.containedIn("categoryRef", categoriesQuery);
   }
-
+  campaignQuery.include("categoryRef");
+  campaignQuery.include("userRef");
   const queryResult = await campaignQuery.find();
   return {
     queryResult,

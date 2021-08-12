@@ -10,6 +10,7 @@ import {
   getCampaignDetails,
   getUserCampaign,
   uploadImage,
+  searchCampaignsByCriteria,
 } from "services/campaignService";
 import { campaignConstants } from "appconstants/actions";
 
@@ -24,6 +25,16 @@ import {
   loadAllCampaignsCompletedAction,
   loadUserCampainsCompletedAction,
 } from "store/actions/CampaignActions";
+
+function* searchCampaignSaga(action) {
+  const { data, error } = yield call(searchCampaignsByCriteria, action.payload);
+
+  if (data) {
+    yield all([put(loadAllCampaignsCompletedAction(data.result.queryResult))]);
+  } else {
+    yield all([put(loadAllCampaignsCompletedAction([]))]);
+  }
+}
 
 function* loadCampaignDetailsSaga(action) {
   const { sessionToken, campaignId } = action.payload;
@@ -113,4 +124,5 @@ export default function* watchCampaignSaga() {
     campaignConstants.GET_CAMPAIGN_DETAILS,
     loadCampaignDetailsSaga
   );
+  yield takeLatest(campaignConstants.SEARCH_CAMPAIGNS, searchCampaignSaga);
 }

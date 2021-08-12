@@ -7,17 +7,15 @@ import { Box, Container, Grid, Typography } from "@material-ui/core";
 import { CampaignList } from "containers";
 import { Hero } from "containers";
 import { connect } from "react-redux";
-import { loadAllCampaignsAction } from "store/actions/CampaignActions";
+import {
+  loadAllCampaignsAction,
+  searchCampaignsAction,
+} from "store/actions/CampaignActions";
 
-const SearchCampagin = ({ campaigns = [], history, dispatch }) => {
+const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
   const [searchCriteria, setCriteria] = useState();
 
   const [selectedCategories, setCategories] = useState([]);
-  const categories = ["Healthcare", "Animal Shelter", "Feeding"];
-
-  useEffect(() => {
-    dispatch(loadAllCampaignsAction());
-  }, [searchCriteria]);
 
   const handleChange = (event) => {
     setCategories(event.target.value);
@@ -27,7 +25,12 @@ const SearchCampagin = ({ campaigns = [], history, dispatch }) => {
   };
 
   const triggerSearch = () => {
-    return false;
+    dispatch(
+      searchCampaignsAction({
+        searchKey: searchCriteria,
+        categories: selectedCategories,
+      })
+    );
   };
 
   const showDetails = (id) => {
@@ -80,8 +83,8 @@ const SearchCampagin = ({ campaigns = [], history, dispatch }) => {
   );
 };
 
-const mapStateToProps = ({ campaign }) => {
-  return { ...campaign };
+const mapStateToProps = ({ campaign, category }) => {
+  return { ...campaign, ...category };
 };
 
 export default connect(mapStateToProps)(SearchCampagin);

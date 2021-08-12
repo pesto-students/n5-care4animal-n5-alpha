@@ -44,6 +44,7 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
               component="h3"
               className="campaign-title"
               onClick={() => showDetails(campaign.objectId)}
+              noWrap={true}
             >
               {campaign.name}
             </Typography>
