@@ -12,7 +12,7 @@ import {
   uploadProfilePicAction,
 } from "store/actions/UserActions";
 
-const Profile = ({ loading, dispatch, user, campaigns }) => {
+const Profile = ({ loading, dispatch, user, campaigns, history }) => {
   const [userProfilePic, setProfilePic] = useState();
 
   useEffect(() => {
@@ -77,6 +77,10 @@ const Profile = ({ loading, dispatch, user, campaigns }) => {
     };
   };
 
+  const showDetails = (id) => {
+    history.push(`/details/${id}`);
+  };
+
   const getSelectedTab = (selectedTabKey) => {
     let tabContent = <div>No tab selected.</div>;
 
@@ -84,7 +88,7 @@ const Profile = ({ loading, dispatch, user, campaigns }) => {
       case "Campaigns":
         tabContent =
           campaigns && campaigns.length ? (
-            <CampaignList list={campaigns} />
+            <CampaignList list={campaigns} showDetails={showDetails} />
           ) : (
             <h2> {NO_USER_CAMPAIGN} </h2>
           );

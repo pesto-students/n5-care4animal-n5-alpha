@@ -27,8 +27,9 @@ import moment from "moment";
 import InfoIcon from "@material-ui/icons/Info";
 import UpdateIcon from "@material-ui/icons/Update";
 import CommentIcon from "@material-ui/icons/Comment";
-import LocalActivityIcon from "@material-ui/icons/LocalActivity";
 import ShareIcon from "@material-ui/icons/Share";
+import PeopleIcon from "@material-ui/icons/People";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
   let { id } = useParams();
@@ -99,6 +100,36 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
     };
   };
 
+  const getRaisedInfo = () => {
+    if (campaign.raisedAmount === 0) {
+      return (
+        <>
+          <span className="goal">
+            <Currency value={campaign.raisedAmount} />{" "}
+          </span>
+          raised out of &nbsp;
+          <span className="goal">
+            <Currency value={campaign.goalAmount} />
+          </span>{" "}
+          goal
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Box py={1}>
+            <Typography variant="h5" component="h5">
+              Be the first one to donate
+            </Typography>
+          </Box>
+          <span className="goal">
+            Goal Amount :&nbsp; <Currency value={campaign.goalAmount} />
+          </span>
+        </>
+      );
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -109,9 +140,11 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          <Grid xs={12}>
-            <Box py={4} px={1}>
-              <h2> {campaign.name}</h2>
+          <Grid item xs={12}>
+            <Box py={2} px={1}>
+              <Typography align="center" variant="h3" component="h3">
+                {campaign.name}
+              </Typography>
             </Box>
           </Grid>
           <Grid item lg={8} md={8} xs={12}>
@@ -124,62 +157,7 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
               className="campaign-image"
               title={campaign.name}
             />
-          </Grid>
-          <Grid item lg={4} md={4} xs={12}>
-            <Box p={4}>
-              <span className="goal">
-                <Currency value={campaign.raisedAmount} />{" "}
-              </span>
-              out of &nbsp;
-              <span className="goal">
-                <Currency value={campaign.goalAmount} />
-              </span>
-              <Box py={2}>
-                <ProgressBar
-                  progress={
-                    (campaign.raisedAmount / campaign.goalAmount) * 100 + "%"
-                  }
-                />
-              </Box>
-              <Grid container spacing={3}>
-                <Grid item md={6} sm={3} xs={6}>
-                  <span className="donors">{campaign.noOfDonors}</span> Donors
-                </Grid>
-                <Grid item md={6} sm={3} xs={6}>
-                  <span className="donors">
-                    <Moment diff={campaign.createdAt} unit="days">
-                      {moment(campaign.createdAt).add(30, "d")}
-                    </Moment>
-                  </span>{" "}
-                  days left
-                </Grid>
-              </Grid>
-              <Grid item md={12} sm={6} xs={12}>
-                <Box py={2}>
-                  <TextField
-                    fullWidth
-                    id="standard-required"
-                    label="Amount to Donate"
-                    placeholder="Enter Amount you want to donate"
-                  />
-                </Box>
-              </Grid>
-              <Grid container spacing={3}>
-                <Grid item md={12} sm={6} xs={12}>
-                  <Button fullWidth color="secondary" variant="contained">
-                    Pay with Razor Pay
-                  </Button>{" "}
-                </Grid>
-                <Grid item md={12} sm={6} xs={12}>
-                  <Button fullWidth color="primary" variant="contained">
-                    <ShareIcon /> &nbsp; Spread the word
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
 
-          <Grid item lg={8} md={8} xs={12}>
             <Box py={4}>
               <Tabs
                 variant="fullWidth"
@@ -214,13 +192,103 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
               </Grid>
             </Box>
           </Grid>
+
           <Grid item lg={4} md={4} xs={12}>
+            <Grid container spacing={3}>
+              <Grid item md={12} sm={6} xs={12}>
+                <Button
+                  fullWidth
+                  className="hero-button primary-btn"
+                  variant="contained"
+                >
+                  <FavoriteIcon /> &nbsp; Pay with Razor Pay
+                </Button>{" "}
+              </Grid>
+              <Grid item md={12} sm={6} xs={12}>
+                <Button fullWidth variant="outlined" color="primary">
+                  <ShareIcon /> &nbsp; Spread the word
+                </Button>
+              </Grid>
+              <Grid item md={12} sm={6} xs={12}>
+                <Typography align="center">
+                  Every Social media share can bring ₹5000
+                </Typography>
+              </Grid>
+            </Grid>
+            <Box p={4}>
+              {getRaisedInfo()}
+              <Box py={2}>
+                <ProgressBar
+                  progress={
+                    (campaign.raisedAmount / campaign.goalAmount) * 100 + "%"
+                  }
+                />
+              </Box>
+              <Grid container spacing={3}>
+                <Grid item md={6} sm={3} xs={6}>
+                  <Typography>
+                    <span className="donors">{campaign.noOfDonors}</span> Donors
+                  </Typography>
+                </Grid>
+                <Grid item md={6} sm={3} xs={6}>
+                  <Typography align="right">
+                    <span className="donors">
+                      <Moment diff={campaign.createdAt} unit="days">
+                        {moment(campaign.createdAt).add(30, "d")}
+                      </Moment>
+                    </span>{" "}
+                    days left
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              {/* <Grid item md={12} sm={6} xs={12}>
+                <Box py={2}>
+                  <TextField
+                    fullWidth
+                    id="standard-required"
+                    label="Amount to Donate"
+                    placeholder="Enter Amount you want to donate"
+                  />
+                </Box>
+              </Grid> */}
+            </Box>
+            <Box pb={4}>
+              <hr />
+            </Box>
+            <Box px={4}>
+              <Card>
+                <CardContent>
+                  <Grid container spacing={3}>
+                    <Box pt={1} ml={2}>
+                      <PeopleIcon />
+                    </Box>
+
+                    <Box ml={2}>
+                      <Typography
+                        variant="h5"
+                        color="textSecondary"
+                        component="h5"
+                      >
+                        Campaign Team
+                      </Typography>
+                    </Box>
+                  </Grid>
+
+                  <Box py={2}>
+                    <hr />
+                  </Box>
+                  <Typography variant="h6" color="textSecondary" component="h6">
+                    Name of the creator
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
             <Box p={4}>
               <Typography
                 gutterBottom
                 variant="h6"
                 component="h3"
-                className="campaign-title"
                 noWrap={true}
               >
                 Recent Activities on Campaign
@@ -229,13 +297,22 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
               <Box py={2}>
                 <Card>
                   <CardContent>
-                    <Typography
-                      variant="h5"
-                      color="textSecondary"
-                      component="h5"
-                    >
-                      Top Donors
-                    </Typography>
+                    <Grid container spacing={3}>
+                      <Box pt={1} ml={2}>
+                        <PeopleIcon />
+                      </Box>
+
+                      <Box ml={2}>
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                          component="h5"
+                        >
+                          Top Donors
+                        </Typography>
+                      </Box>
+                    </Grid>
+
                     <Box py={2}>
                       <hr />
                     </Box>
@@ -250,6 +327,8 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
                 </Card>
               </Box>
             </Box>
+
+            <Box></Box>
           </Grid>
         </Grid>
       </Container>

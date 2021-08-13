@@ -25,7 +25,10 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
   const classes = useStyles();
 
   return (
-    <Card className={`${classes.root} campaign-card`}>
+    <Card
+      className={`${classes.root} campaign-card`}
+      onClick={() => showDetails(campaign.objectId)}
+    >
       <CardActionArea>
         <CardMedia
           className={`${classes.media} campaign-img`}
@@ -37,18 +40,15 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
           title={campaign.name}
         />
         <CardContent>
-          <Link to={`/details/${campaign.objectId}`}>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="h3"
-              className="campaign-title"
-              onClick={() => showDetails(campaign.objectId)}
-              noWrap={true}
-            >
-              {campaign.name}
-            </Typography>
-          </Link>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="h3"
+            className="campaign-title"
+            noWrap={true}
+          >
+            {campaign.name}
+          </Typography>
 
           <div className="card-row">
             <div className="c-info">
@@ -67,7 +67,7 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
             <div className="c-info">
               <span>
                 <Moment diff={campaign.createdAt} unit="days">
-                  {moment().add(30, "d")}
+                  {moment(campaign.createdAt).add(30, "d")}
                 </Moment>
               </span>
               <br />

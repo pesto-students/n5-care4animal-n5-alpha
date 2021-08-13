@@ -13,6 +13,9 @@ import {
 } from "store/actions/CampaignActions";
 
 const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
+  useEffect(() => {
+    dispatch(loadAllCampaignsAction());
+  }, []);
   const [searchCriteria, setCriteria] = useState();
 
   const [selectedCategories, setCategories] = useState([]);

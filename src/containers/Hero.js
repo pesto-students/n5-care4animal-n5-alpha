@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
 
 const Hero = ({ data, showStartCampaign }) => {
@@ -6,17 +6,15 @@ const Hero = ({ data, showStartCampaign }) => {
     <div className="hero-content">
       <SectionHeader data={{ ...data }} />
       {showStartCampaign && (
-        <>
-          <br />
+        <Box py={4}>
           <Button
-            className="hero-button"
+            className="hero-button primary-btn"
             variant="contained"
-            color="secondary"
             onClick={showStartCampaign}
           >
             Start a Campaign{" "}
           </Button>
-        </>
+        </Box>
       )}
     </div>
   );
