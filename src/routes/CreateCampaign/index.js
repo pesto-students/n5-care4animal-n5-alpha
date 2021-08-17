@@ -17,6 +17,7 @@ import Loader from "components/Shared/Loader";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { requestLogin } from "store/actions/AuthActions";
+import { Box } from "@material-ui/core";
 
 const validationSchema = yup.object({
   selectedCause: yup
@@ -188,7 +189,9 @@ const CreateCampaign = ({
             <Loader />
           ) : (
             <>
-              <div className="campaign-form">{getContent()}</div>
+              <Box py={4} textAlign="center">
+                {getContent()}
+              </Box>
               <div className="flex-bar">
                 <Button
                   disabled={submitted}

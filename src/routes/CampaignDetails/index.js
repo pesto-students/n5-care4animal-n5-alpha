@@ -11,15 +11,12 @@ import {
   Typography,
   CardContent,
   Card,
+  Avatar,
 } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  getCampaignDetailAction,
-  resetReducer,
-} from "store/actions/CampaignActions";
+import { resetReducer } from "store/actions/CampaignActions";
 import Loader from "components/Shared/Loader";
 import Currency from "components/Shared/Currency";
 import Moment from "react-moment";
@@ -36,6 +33,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { errorAlertAction } from "store/actions/AlertActions";
 import useMakePayment from "hooks/useMakePayment";
+import useLoadCampaignDetails from "hooks/useLoadCampaignDetails";
 
 const validationSchema = yup.object({
   amount: yup
@@ -45,19 +43,14 @@ const validationSchema = yup.object({
     .max(100000, "Minimum ₹100000 should be the donation amount."),
 });
 
-const CampaignDetails = ({
-  isAuthenticated,
-  user,
-  campaign,
-  loading = true,
-  dispatch,
-  history,
-}) => {
+const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
   let { id } = useParams();
   const [selectedTab, setTab] = useState("About");
   const [open, setOpen] = useState(false);
   const { status, paymentInProgress, makePayment } = useMakePayment();
+  const [isLoading, campaign, loadDetails] = useLoadCampaignDetails();
 
+  console.log("paymentInProgress", paymentInProgress);
   const formik = useFormik({
     initialValues: {
       amount: 100,
@@ -65,7 +58,6 @@ const CampaignDetails = ({
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (values.amount) {
-        // amount, campaignInfoId, donorUserId;
         makePayment(
           user.sessionToken,
           {
@@ -81,25 +73,15 @@ const CampaignDetails = ({
   });
 
   useEffect(() => {
-    if (id) {
-      dispatch(
-        getCampaignDetailAction({
-          campaignId: id,
-        })
-      );
+    if (id && !isLoading) {
+      //  call load campaign details hool
+      loadDetails(user.sessionToken, id);
     }
+  }, [id]);
 
-    return () => {
-      dispatch(resetReducer());
-    };
-  }, []);
-
-  if (loading || paymentInProgress) {
+  if (paymentInProgress || isLoading) {
+    console.table(paymentInProgress, isLoading);
     return <Loader />;
-  }
-
-  if (!loading && campaign === undefined) {
-    history.goBack();
   }
 
   const handleDonateClick = () => {
@@ -185,9 +167,35 @@ const CampaignDetails = ({
     }
   };
 
+  const getCreatorDetails = (userRef) => {
+    return (
+      <Grid container>
+        <Avatar
+          sx={{
+            height: 34,
+            width: 34,
+          }}
+          src={
+            userRef.image
+              ? userRef.image.url
+              : "https://source.unsplash.com/900x600/?person"
+          }
+        />
+        <Box pl={2}>
+          <Typography color="textPrimary" gutterBottom variant="h6">
+            {`${userRef.firstName} ${userRef.lastName}`}
+          </Typography>
+        </Box>
+      </Grid>
+    );
+  };
   const handleClose = () => {
     setOpen(false);
   };
+
+  if (!isLoading && campaign === undefined) {
+    return history.goBack();
+  }
 
   return (
     <Box
@@ -308,17 +316,6 @@ const CampaignDetails = ({
                   </Typography>
                 </Grid>
               </Grid>
-
-              {/* <Grid item md={12} sm={6} xs={12}>
-                <Box py={2}>
-                  <TextField
-                    fullWidth
-                    id="standard-required"
-                    label="Amount to Donate"
-                    placeholder="Enter Amount you want to donate"
-                  />
-                </Box>
-              </Grid> */}
             </Box>
             <Box pb={4}>
               <hr />
@@ -345,9 +342,7 @@ const CampaignDetails = ({
                   <Box py={2}>
                     <hr />
                   </Box>
-                  <Typography variant="h6" color="textSecondary" component="h6">
-                    Name of the creator
-                  </Typography>
+                  {campaign.userRef && getCreatorDetails(campaign.userRef)}
                 </CardContent>
               </Card>
             </Box>
@@ -403,11 +398,10 @@ const CampaignDetails = ({
   );
 };
 
-const mapStateToProps = ({ auth, campaign }) => {
+const mapStateToProps = ({ auth }) => {
   return {
     isAuthenticated: auth.isAuthenticated,
     user: auth.user,
-    ...campaign,
   };
 };
 

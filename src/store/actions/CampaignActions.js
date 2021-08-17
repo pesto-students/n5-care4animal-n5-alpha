@@ -11,8 +11,6 @@ const {
   LOAD_USER_CAMPAIGNS,
   LOAD_USER_CAMPAIGNS_COMPLETED,
 
-  GET_CAMPAIGN_DETAILS,
-  GET_CAMPAIGN_DETAILS_COMPLETED,
   SEARCH_CAMPAIGNS,
   RESET_REDUCER,
 } = campaignConstants;
@@ -60,20 +58,6 @@ function loadUserCampainsCompletedAction(payload) {
   };
 }
 
-function getCampaignDetailAction(payload) {
-  return {
-    type: GET_CAMPAIGN_DETAILS,
-    payload,
-  };
-}
-
-function getCampaignDetailCompletedAction(payload) {
-  return {
-    type: GET_CAMPAIGN_DETAILS_COMPLETED,
-    payload,
-  };
-}
-
 function searchCampaignsAction(payload) {
   return {
     type: SEARCH_CAMPAIGNS,
@@ -95,8 +79,6 @@ export {
   loadAllCampaignsCompletedAction,
   loadUserCampainsAction,
   loadUserCampainsCompletedAction,
-  getCampaignDetailAction,
-  getCampaignDetailCompletedAction,
   searchCampaignsAction,
   resetReducer,
 };

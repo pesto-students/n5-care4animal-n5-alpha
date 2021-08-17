@@ -20,6 +20,16 @@ Parse.Cloud.define("getCampaignInfo", async (request) => {
   return resultCampaignInfo;
 });
 
+Parse.Cloud.define("CampaignInfoById", async (request) => {
+  const { campaignId } = request.params;
+  const queryCampaignInfo = new Parse.Query("CampaignInfo");
+  queryCampaignInfo.equalTo("objectId", campaignId);
+  queryCampaignInfo.include("categoryRef");
+  queryCampaignInfo.include("userRef");
+  const resultCampaignInfo = await queryCampaignInfo.find();
+  return resultCampaignInfo;
+});
+
 Parse.Cloud.define("getCampaignInfoByUserId", async (request) => {
   const userId = request.params.userId;
   const queryCampaignInfo = new Parse.Query("CampaignInfo");

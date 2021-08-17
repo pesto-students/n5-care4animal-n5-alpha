@@ -21,7 +21,6 @@ import {
 import {
   campaignCreationFailedAction,
   createCampaignCompletedAction,
-  getCampaignDetailCompletedAction,
   loadAllCampaignsCompletedAction,
   loadUserCampainsCompletedAction,
 } from "store/actions/CampaignActions";
@@ -33,21 +32,6 @@ function* searchCampaignSaga(action) {
     yield all([put(loadAllCampaignsCompletedAction(data.result.queryResult))]);
   } else {
     yield all([put(loadAllCampaignsCompletedAction([]))]);
-  }
-}
-
-function* loadCampaignDetailsSaga(action) {
-  const { sessionToken, campaignId } = action.payload;
-  const { data, error } = yield call(
-    getCampaignDetails,
-    sessionToken,
-    campaignId
-  );
-
-  if (data) {
-    yield all([put(getCampaignDetailCompletedAction(data))]);
-  } else {
-    yield all([put(getCampaignDetailCompletedAction())]);
   }
 }
 
@@ -120,9 +104,5 @@ export default function* watchCampaignSaga() {
   yield takeLatest(campaignConstants.CREATE_CAMPAIGN, createCampaignSaga);
   yield takeLatest(campaignConstants.LOAD_USER_CAMPAIGNS, loadUserCampaignSaga);
   yield takeLatest(campaignConstants.LOAD_ALL_CAMPAIGNS, loadAllCampaign);
-  yield takeLatest(
-    campaignConstants.GET_CAMPAIGN_DETAILS,
-    loadCampaignDetailsSaga
-  );
   yield takeLatest(campaignConstants.SEARCH_CAMPAIGNS, searchCampaignSaga);
 }

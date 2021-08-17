@@ -12,7 +12,7 @@ export const CATEGORY_API = {
 export const CAMPAIGN_API = {
   CREATE_CAMPAIGN: "classes/CampaignInfo",
   UPDATE_USER_CAMPAIGN: "classes/CampaignInfo",
-  GET_CAMPAIGN: "classes/CampaignInfo",
+  GET_CAMPAIGN: "functions/CampaignInfoById",
   GET_ALL_CAMPAIGNS: "functions/getCampaignInfo",
   GET_ALL_USER_CAMPAIGNS: "functions/getCampaignInfoByUserId",
   UPLOAD_FILE: "files",
