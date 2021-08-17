@@ -16,7 +16,7 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
             />
             <Box py={4}>
               <Button
-                className="primary-btn"
+                className="primary-btn btn rounded-btn"
                 variant="contained"
                 onClick={showStartCampaign}
               >
@@ -53,9 +53,8 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
             />
             <Box py={4}>
               <Button
-                className="primary-btn"
+                className="primary-btn btn rounded-btn "
                 variant="contained"
-                color="secondary"
                 onClick={showSearchPage}
               >
                 Donate Now{" "}

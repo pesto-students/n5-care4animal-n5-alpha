@@ -46,16 +46,23 @@ footer > p {
   top: 57px !important;
 }
 
+.btn {
+  color: #fff !important;
+  background-color: #01bfbd !important;
+}
+
 .primary-btn {
   min-width: 300px;
   min-height: 50px !important;
-  color: #fff !important;
   font-size: 20px !important;
   font-weight: 700 !important;
-  background-color: #01bfbd !important;
   border-radius: 4px !important;
   position: relative !important;
   z-index: 2;
+}
+
+.rounded-btn {
+  border-radius: 25px !important;
 }
 
 @media screen and (max-width: 1400px) {

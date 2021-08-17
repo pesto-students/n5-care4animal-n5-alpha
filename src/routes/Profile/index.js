@@ -90,7 +90,9 @@ const Profile = ({ loading, dispatch, user, campaigns, history }) => {
           campaigns && campaigns.length ? (
             <CampaignList list={campaigns} showDetails={showDetails} />
           ) : (
-            <h2> {NO_USER_CAMPAIGN} </h2>
+            <Box py={10} textAlign="center">
+              <h2> {NO_USER_CAMPAIGN} </h2>;
+            </Box>
           );
         break;
 
@@ -156,7 +158,7 @@ const Profile = ({ loading, dispatch, user, campaigns, history }) => {
           </Tabs>{" "}
         </Container>
         <Container maxWidth="lg">
-          <Box py={2}>
+          <Box py={6}>
             <Grid container spacing={3}>
               <Grid item lg={12} xs={12}>
                 {getSelectedTab(selectedTab)}

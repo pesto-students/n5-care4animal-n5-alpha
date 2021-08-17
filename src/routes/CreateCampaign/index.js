@@ -37,7 +37,7 @@ const validationSchema = yup.object({
     .string(
       "Write good description about you campaign, what you are doing and the purpose behind it."
     )
-    .min(1000, "Description should have minimum 1000 characters")
+    .min(500, "Description should have minimum 500 characters")
     .max(10000, "Description should have maximun 10000 characters")
     .required("Description is must while creating a campaign"),
 });

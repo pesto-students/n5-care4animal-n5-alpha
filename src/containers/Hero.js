@@ -8,7 +8,7 @@ const Hero = ({ data, showStartCampaign }) => {
       {showStartCampaign && (
         <Box py={4}>
           <Button
-            className="hero-button primary-btn"
+            className="hero-button primary-btn btn "
             variant="contained"
             onClick={showStartCampaign}
           >

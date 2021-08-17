@@ -30,10 +30,55 @@ import CommentIcon from "@material-ui/icons/Comment";
 import ShareIcon from "@material-ui/icons/Share";
 import PeopleIcon from "@material-ui/icons/People";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import PaymentDialog from "components/PaymentDialog";
 
-const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { errorAlertAction } from "store/actions/AlertActions";
+import useMakePayment from "hooks/useMakePayment";
+
+const validationSchema = yup.object({
+  amount: yup
+    .number("Should be a valid number.")
+    .required("Please enter amount")
+    .min(100, "Minimum ₹100 should be the donation amount.")
+    .max(100000, "Minimum ₹100000 should be the donation amount."),
+});
+
+const CampaignDetails = ({
+  isAuthenticated,
+  user,
+  campaign,
+  loading = true,
+  dispatch,
+  history,
+}) => {
   let { id } = useParams();
   const [selectedTab, setTab] = useState("About");
+  const [open, setOpen] = useState(false);
+  const { status, paymentInProgress, makePayment } = useMakePayment();
+
+  const formik = useFormik({
+    initialValues: {
+      amount: 100,
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      if (values.amount) {
+        // amount, campaignInfoId, donorUserId;
+        makePayment(
+          user.sessionToken,
+          {
+            amount: values.amount,
+            campaignInfoId: campaign.objectId,
+            donorUserId: user.objectId,
+          },
+          user
+        );
+        handleClose();
+      }
+    },
+  });
 
   useEffect(() => {
     if (id) {
@@ -49,13 +94,23 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
     };
   }, []);
 
-  if (loading) {
+  if (loading || paymentInProgress) {
     return <Loader />;
   }
 
   if (!loading && campaign === undefined) {
     history.goBack();
   }
+
+  const handleDonateClick = () => {
+    if (isAuthenticated) {
+      // open donation modal
+      setOpen(true);
+    } else {
+      history.push("/signin");
+      dispatch(errorAlertAction("Please Login to Donate"));
+    }
+  };
 
   const getSelectedTab = (selectedTabKey) => {
     let tabContent = <div>No tab selected.</div>;
@@ -76,7 +131,7 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
       case "Comments":
         tabContent = (
           <Grid item xs={12}>
-            <Box py={4}>
+            <Box py={10} textAlign="center">
               <h1>This feature is coming Soon</h1>
             </Box>
           </Grid>
@@ -130,6 +185,10 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box
       sx={{
@@ -139,6 +198,8 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
       }}
     >
       <Container maxWidth="lg">
+        {open && <PaymentDialog formik={formik} handleClose={handleClose} />}
+
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box py={2} px={1}>
@@ -198,14 +259,20 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
               <Grid item md={12} sm={6} xs={12}>
                 <Button
                   fullWidth
-                  className="hero-button primary-btn"
+                  className="hero-button primary-btn btn"
                   variant="contained"
+                  onClick={handleDonateClick}
                 >
                   <FavoriteIcon /> &nbsp; Pay with Razor Pay
                 </Button>{" "}
               </Grid>
               <Grid item md={12} sm={6} xs={12}>
-                <Button fullWidth variant="outlined" color="primary">
+                <Button
+                  fullWidth
+                  className="hero-button primary-btn"
+                  variant="outlined"
+                  color="primary"
+                >
                   <ShareIcon /> &nbsp; Spread the word
                 </Button>
               </Grid>
@@ -338,6 +405,8 @@ const CampaignDetails = ({ campaign, loading = true, dispatch, history }) => {
 
 const mapStateToProps = ({ auth, campaign }) => {
   return {
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     ...campaign,
   };
 };

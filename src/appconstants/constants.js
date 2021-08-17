@@ -23,3 +23,9 @@ export const USER_API = {
   CLASS_NAME: "users",
   UPLOAD_FILE: "files",
 };
+
+export const FUND_RAISER_INFO = {
+  CREATE_ORDER: "functions/orders",
+  ORDER_SUCCESS: "functions/payment_success",
+  ORDER_FAILURE: "functions/payment_failed",
+};

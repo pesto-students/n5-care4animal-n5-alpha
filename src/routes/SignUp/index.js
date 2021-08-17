@@ -38,7 +38,7 @@ const SignUp = ({ loading, dispatch }) => {
     initialValues: initialState,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(requestUserRegistration({ ...values }));
+      dispatch(requestUserRegistration({ ...values, username: values.email }));
     },
   });
 

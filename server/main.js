@@ -1,3 +1,11 @@
+const PAYMENT_CREDENTIALS = {
+  RAZORPAY_KEY_ID: "rzp_test_NybzyAbZNToaGG",
+  RAZORPAY_SECRET: "7PMuXJzTwFSd0iX3A3Uo82Bo",
+};
+
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+
 Parse.Cloud.define("getCategoriesApi", async (request) => {
   const queryCategories = new Parse.Query("CampaignCategory");
   const resultsCategories = await queryCategories.find();
@@ -56,4 +64,110 @@ Parse.Cloud.define("searchCampaignInfo", async (request) => {
     queryResult,
     length: queryResult ? queryResult.length : 0,
   };
+});
+
+Parse.Cloud.define("orders", async (request) => {
+  const { amount, campaignInfoId, donorUserId } = request.params;
+
+  if (!amount || isNaN(amount) || !campaignInfoId || !donorUserId) {
+    throw new Error("Invalid details.");
+  }
+
+  try {
+    const instance = new Razorpay({
+      key_id: PAYMENT_CREDENTIALS.RAZORPAY_KEY_ID,
+      key_secret: PAYMENT_CREDENTIALS.RAZORPAY_SECRET,
+    });
+
+    const options = {
+      amount: amount * 100,
+      currency: "INR",
+    };
+
+    const order = await instance.orders.create(options);
+
+    if (!order) {
+      throw new Error("Could not create the order.");
+    }
+
+    const fundRaiserInfo = new Parse.Object("FundRaiserInfo", {
+      campaignInfoId,
+      donorUserId,
+      orderId: order.id,
+      amount: amount,
+      currency: order.currency,
+    });
+
+    const fundRaiseSaveResponse = await fundRaiserInfo.save();
+
+    if (!fundRaiseSaveResponse) {
+      throw new Error("Could not save the order.");
+    }
+
+    return {
+      ...order,
+      objectId: fundRaiseSaveResponse.objectId,
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+Parse.Cloud.define("payment_success", async (request, res) => {
+  try {
+    const { orderCreationId, paymentId, razorpayOrderId, razorpaySignature } =
+      request.params;
+
+    const shasum = crypto.createHmac(
+      "sha256",
+      PAYMENT_CREDENTIALS.RAZORPAY_SECRET
+    );
+    shasum.update(`${orderCreationId}|${paymentId}`);
+    const digest = shasum.digest("hex");
+
+    if (digest !== razorpaySignature) throw "Transaction not legit!";
+
+    const fundRaiserInfo = new Parse.Query("FundRaiserInfo");
+    fundRaiserInfo.equalTo("orderId", orderCreationId);
+
+    const fundRaiser = await fundRaiserInfo.first();
+
+    if (fundRaiser) {
+      fundRaiser.set("status", "success");
+      fundRaiser.set("paymentDetails", {
+        orderId: razorpayOrderId,
+        paymentId: paymentId,
+        signature: razorpaySignature,
+      });
+      const results = await fundRaiser.save();
+      if (results) {
+        return results;
+      }
+    } else {
+      throw new Error("Order did not match.");
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
+Parse.Cloud.define("payment_failed", async (request, res) => {
+  try {
+    const { objectId } = request.body;
+
+    const fundRaiserInfo = new Parse.Query("FundRaiserInfo");
+    fundRaiserInfo.equalTo("objectId", objectId);
+
+    const fundRaiserInfoObject = await fundRaiserInfo.find();
+
+    if (!fundRaiserInfoObject) throw "Invalid Order Details";
+
+    fundRaiserInfoObject.set("status", "failed");
+
+    await fundRaiserInfoObject.save();
+
+    return false;
+  } catch (error) {
+    throw error;
+  }
 });
