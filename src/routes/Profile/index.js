@@ -11,6 +11,8 @@ import {
   updateUserProfileAction,
   uploadProfilePicAction,
 } from "store/actions/UserActions";
+import useLoadDonations from "hooks/useLoadDonations";
+import DonationsTable from "components/Donations/DonationsTable";
 
 const Profile = ({ loading, dispatch, user, campaigns, history }) => {
   const [userProfilePic, setProfilePic] = useState();
@@ -101,6 +103,7 @@ const Profile = ({ loading, dispatch, user, campaigns, history }) => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               {/* List of user donations made towards campaign */}
+              <DonationsTable />
             </Grid>
           </Grid>
         );

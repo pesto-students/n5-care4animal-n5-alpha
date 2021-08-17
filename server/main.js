@@ -91,7 +91,11 @@ Parse.Cloud.define("orders", async (request) => {
     }
 
     const fundRaiserInfo = new Parse.Object("FundRaiserInfo", {
-      campaignInfoId,
+      campaignInfoRef: {
+        __type: "Pointer",
+        className: "CampaignInfo",
+        objectId: campaignInfoId,
+      },
       donorUserId,
       orderId: order.id,
       amount: amount,
@@ -129,6 +133,7 @@ Parse.Cloud.define("payment_success", async (request, res) => {
 
     const fundRaiserInfo = new Parse.Query("FundRaiserInfo");
     fundRaiserInfo.equalTo("orderId", orderCreationId);
+    fundRaiserInfo.include("campaignInfoRef");
 
     const fundRaiser = await fundRaiserInfo.first();
 
@@ -139,7 +144,20 @@ Parse.Cloud.define("payment_success", async (request, res) => {
         paymentId: paymentId,
         signature: razorpaySignature,
       });
+
       const results = await fundRaiser.save();
+
+      const campaignQuery = new Parse.Query("CampaignInfo");
+      campaignQuery.equalTo("objectId", fundRaiser.get("campaignInfoRef").id);
+      const compaign = await campaignQuery.first();
+      compaign.set(
+        "raisedAmount",
+        (compaign.get("raisedAmount") || 0) + fundRaiser.get("amount")
+      );
+      compaign.set("noOfDonors", (compaign.get("noOfDonors") || 0) + 1);
+
+      const saveRes = await compaign.save();
+
       if (results) {
         return results;
       }
@@ -153,7 +171,7 @@ Parse.Cloud.define("payment_success", async (request, res) => {
 
 Parse.Cloud.define("payment_failed", async (request, res) => {
   try {
-    const { objectId } = request.body;
+    const { objectId } = request.params;
 
     const fundRaiserInfo = new Parse.Query("FundRaiserInfo");
     fundRaiserInfo.equalTo("objectId", objectId);
@@ -170,4 +188,17 @@ Parse.Cloud.define("payment_failed", async (request, res) => {
   } catch (error) {
     throw error;
   }
+});
+
+Parse.Cloud.define("getorders", async (request) => {
+  const { userId } = request.params;
+
+  const fundRaiserInfo = new Parse.Query("FundRaiserInfo");
+
+  fundRaiserInfo.equalTo("donorUserId", userId);
+  fundRaiserInfo.include("campaignInfoRef");
+
+  const fundRaiserInfoObject = await fundRaiserInfo.find();
+
+  return fundRaiserInfoObject;
 });

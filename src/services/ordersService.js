@@ -1,6 +1,15 @@
 import httpRequest from "./http";
 import { FUND_RAISER_INFO } from "appconstants/constants";
 
+const getOrders = (sessionToken, payload) => {
+  return httpRequest({
+    method: "POST",
+    requestUrl: FUND_RAISER_INFO.GET_ORDERS,
+    sessionToken,
+    payload,
+  });
+};
+
 const createOrder = (sessionToken, payload) => {
   return httpRequest({
     method: "POST",
@@ -28,4 +37,4 @@ const handleOrderFailure = (sessionToken, payload) => {
   });
 };
 
-export { createOrder, handleOrderSuccess, handleOrderFailure };
+export { getOrders, createOrder, handleOrderSuccess, handleOrderFailure };
