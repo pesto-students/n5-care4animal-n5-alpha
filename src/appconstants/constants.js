@@ -14,6 +14,7 @@ export const CAMPAIGN_API = {
   UPDATE_USER_CAMPAIGN: "classes/CampaignInfo",
   GET_CAMPAIGN: "functions/CampaignInfoById",
   GET_ALL_CAMPAIGNS: "functions/getCampaignInfo",
+  GET_TRANDING_CAMPAIGNS: "functions/get_tranding_campaigns",
   GET_ALL_USER_CAMPAIGNS: "functions/getCampaignInfoByUserId",
   UPLOAD_FILE: "files",
   SEARCH_CAMPAIAGNS: "functions/searchCampaignInfo",

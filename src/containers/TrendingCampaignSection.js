@@ -3,11 +3,15 @@ import { NavLink } from "react-router-dom";
 import { CampaignList } from "containers";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import { loadAllCampaignsAction } from "store/actions/CampaignActions";
+import useLoadTrendingCampaigns from "hooks/useLoadTrendingCampaigns";
 
-const TrendingCampaigns = ({ campaigns = [], showDetails, dispatch }) => {
+const TrendingCampaigns = ({ showDetails }) => {
+  const [isLoading, campaigns, loadCampaigns] = useLoadTrendingCampaigns();
+
   useEffect(() => {
-    dispatch(loadAllCampaignsAction());
+    if (!isLoading && !campaigns.length) {
+      loadCampaigns();
+    }
   }, []);
 
   if (!campaigns.length) {
@@ -33,8 +37,4 @@ const TrendingCampaigns = ({ campaigns = [], showDetails, dispatch }) => {
   );
 };
 
-const mapStateToProps = ({ campaign }) => {
-  return { ...campaign };
-};
-
-export default connect(mapStateToProps)(TrendingCampaigns);
+export default TrendingCampaigns;

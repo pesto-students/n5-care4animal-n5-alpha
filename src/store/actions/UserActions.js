@@ -4,7 +4,7 @@ const {
   UPLOAD_PROFILE_PIC,
   UPLOAD_PROFILE_PIC_COMPLETED,
   UPDATE_USER_PROFILE,
-  UPLOAD_USER_COMPLETE,
+  UPDATE_USER_COMPLETE,
 } = userConstants;
 
 export {
@@ -27,5 +27,5 @@ function updateUserProfileAction(payload) {
 }
 
 function updateUserProfileCompleteAction() {
-  return { type: UPLOAD_USER_COMPLETE };
+  return { type: UPDATE_USER_COMPLETE };
 }

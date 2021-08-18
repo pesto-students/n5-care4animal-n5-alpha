@@ -60,8 +60,10 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
             </div>
 
             <div className="c-info">
-              <span>{(campaign.raisedAmount / campaign.goalAmount) * 100}</span>{" "}
-              <br />
+              <span>
+                {(campaign.raisedAmount / campaign.goalAmount).toFixed(4) * 100}
+              </span>{" "}
+              % <br />
               Raised
             </div>
             <div className="c-info">

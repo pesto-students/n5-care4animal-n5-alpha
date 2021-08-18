@@ -10,10 +10,15 @@ const {
   GET_USER_DETAILS,
   UPDATE_USER_PROFILE,
   UPLOAD_PROFILE_PIC,
-  UPLOAD_USER_COMPLETE,
+  UPDATE_USER_COMPLETE,
 } = userConstants;
 
-const initialState = { isAuthenticated: false, loading: false, user: {} };
+const initialState = {
+  isAuthenticated: false,
+  loading: false,
+  user: {},
+  updating: false,
+};
 
 export function AuthReducer(state = initialState, action) {
   switch (action.type) {
@@ -67,13 +72,13 @@ export function AuthReducer(state = initialState, action) {
     case UPDATE_USER_PROFILE:
       return {
         ...state,
-        loading: true,
+        updating: true,
       };
 
-    case UPLOAD_USER_COMPLETE:
+    case UPDATE_USER_COMPLETE:
       return {
         ...state,
-        loading: false,
+        updating: false,
       };
 
     default:

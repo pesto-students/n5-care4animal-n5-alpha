@@ -93,7 +93,8 @@ function App({ alert, loading, loggedOut, isAuthenticated, user, dispatch }) {
         <Header />
         <section className="main">
           {type && showAlerts(message, type)}
-          {loading || (cookies._userSession && !isAuthenticated) ? (
+          {(loading && !isAuthenticated) ||
+          (cookies._userSession && !isAuthenticated) ? (
             <MainLoader />
           ) : (
             <Routes />

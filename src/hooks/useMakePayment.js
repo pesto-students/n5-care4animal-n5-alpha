@@ -49,6 +49,7 @@ function useMakePayment() {
       dispatch(successAlertAction("Payment Successful"));
     }
     setPaymentProgressStatus(false);
+    setStatus("success");
   };
 
   const handleFailure = async (sessionToken, orderObjectId, response) => {
@@ -90,6 +91,7 @@ function useMakePayment() {
 
   const makePayment = async (sessionToken, params, user) => {
     setPaymentProgressStatus(true);
+    setStatus(false);
     if (typeof window.Razorpay === undefined) {
       const loadScriptResult = await loadScript(
         "https://checkout.razorpay.com/v1/checkout.js"

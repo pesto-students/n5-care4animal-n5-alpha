@@ -14,3 +14,4 @@ export const PROFILE_PIC_UPDATE_SUCCESS =
 export const PROFILE_PIC_UPDATE_FAILURE =
   "Could not update the profile picture.!";
 export const PROFILE_UPDATE_SUCCESS = "Profile updated successfully.!";
+export const NO_DONATIONS = "Your donations will be shown here.";

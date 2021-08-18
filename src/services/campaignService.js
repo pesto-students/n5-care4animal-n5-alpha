@@ -18,6 +18,13 @@ const getCampaignDetails = (sessionToken, payload) => {
   });
 };
 
+const getTrendinCampaigns = () => {
+  return httpRequest({
+    method: "POST",
+    requestUrl: CAMPAIGN_API.GET_TRANDING_CAMPAIGNS,
+  });
+};
+
 const getAllCampaigns = (sessionToken, userId) => {
   return httpRequest({
     method: "POST",
@@ -60,6 +67,7 @@ const uploadImage = (payload) => {
 };
 
 export {
+  getTrendinCampaigns,
   getAllCampaigns,
   getUserCampaign,
   createCampaign,

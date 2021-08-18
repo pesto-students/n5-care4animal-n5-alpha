@@ -11,12 +11,10 @@ import {
   updateUserProfileAction,
   uploadProfilePicAction,
 } from "store/actions/UserActions";
-import useLoadDonations from "hooks/useLoadDonations";
 import DonationsTable from "components/Donations/DonationsTable";
 
-const Profile = ({ loading, dispatch, user, campaigns, history }) => {
+const Profile = ({ updating, dispatch, user, campaigns, history }) => {
   const [userProfilePic, setProfilePic] = useState();
-
   useEffect(() => {
     if (user && user.objectId) {
       dispatch(
@@ -115,7 +113,7 @@ const Profile = ({ loading, dispatch, user, campaigns, history }) => {
     return tabContent;
   };
 
-  if (loading) {
+  if (updating) {
     return <Loader />;
   }
 
@@ -175,7 +173,11 @@ const Profile = ({ loading, dispatch, user, campaigns, history }) => {
 };
 
 const mapStateToProps = ({ campaign, auth }) => {
-  return { campaigns: campaign.campaigns, user: auth.user };
+  return {
+    campaigns: campaign.campaigns,
+    user: auth.user,
+    updating: auth.updating || campaign.loading,
+  };
 };
 
 export default connect(mapStateToProps)(Profile);

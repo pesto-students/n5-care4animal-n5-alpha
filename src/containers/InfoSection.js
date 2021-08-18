@@ -1,5 +1,6 @@
 import { Box, Button, Hidden, Typography } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
+import { Link } from "react-router-dom";
 
 const InfoSection = ({ showStartCampaign, showSearchPage }) => {
   return (
@@ -14,14 +15,10 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
                   "Throughout India, animals including dogs, cows, cats and donkeys live on the streets. Most cities don't have hospitals for owner-less animals, which means injured or ill animals often die from treatable conditions and some die because of hunger.",
               }}
             />
-            <Box py={4}>
-              <Button
-                className="primary-btn btn rounded-btn"
-                variant="contained"
-                onClick={showStartCampaign}
-              >
-                Start a Campaign{" "}
-              </Button>
+            <Box py={6}>
+              <Link to="/search" className="calltoAction calltoActionSec">
+                Start a Campaign
+              </Link>
             </Box>
           </Box>
         </div>
@@ -51,14 +48,10 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
                   "Overpopulation, poverty, pollution, superstition, apathy and ignorance all contribute to their plight. In a country where human misery and impoverishment remain high, the welfare of destitute animals is a low priority.",
               }}
             />
-            <Box py={4}>
-              <Button
-                className="primary-btn btn rounded-btn "
-                variant="contained"
-                onClick={showSearchPage}
-              >
-                Donate Now{" "}
-              </Button>
+            <Box py={6}>
+              <Link to="/search" className="calltoAction calltoActionSec">
+                Donate Now
+              </Link>
             </Box>
           </Box>
         </div>

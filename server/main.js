@@ -20,6 +20,15 @@ Parse.Cloud.define("getCampaignInfo", async (request) => {
   return resultCampaignInfo;
 });
 
+Parse.Cloud.define("get_tranding_campaigns", async (request) => {
+  const queryCampaignInfo = new Parse.Query("CampaignInfo").limit(4);
+  queryCampaignInfo.include("categoryRef");
+  queryCampaignInfo.include("userRef");
+  queryCampaignInfo.descending("raisedAmount");
+  const resultCampaignInfo = await queryCampaignInfo.find();
+  return resultCampaignInfo;
+});
+
 Parse.Cloud.define("CampaignInfoById", async (request) => {
   const { campaignId } = request.params;
   const queryCampaignInfo = new Parse.Query("CampaignInfo");
@@ -27,7 +36,21 @@ Parse.Cloud.define("CampaignInfoById", async (request) => {
   queryCampaignInfo.include("categoryRef");
   queryCampaignInfo.include("userRef");
   const resultCampaignInfo = await queryCampaignInfo.find();
-  return resultCampaignInfo;
+  let fundRiseQueryResult = "";
+  if (resultCampaignInfo) {
+    const fundRiseQuery = new Parse.Query("FundRaiserInfo");
+    fundRiseQuery.equalTo("campaignInfoRef", {
+      __type: "Pointer",
+      className: "CampaignInfo",
+      objectId: campaignId,
+    });
+    queryCampaignInfo.include("userRef");
+    fundRiseQueryResult = await fundRiseQuery.find();
+  }
+  return {
+    ...resultCampaignInfo,
+    donations: fundRiseQueryResult,
+  };
 });
 
 Parse.Cloud.define("getCampaignInfoByUserId", async (request) => {

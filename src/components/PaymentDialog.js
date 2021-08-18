@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Box, Grid, IconButton } from "@material-ui/core";
+import { Box, Chip, Grid, IconButton, InputAdornment } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useEffect } from "react";
 
@@ -20,7 +20,7 @@ export default function PaymentDialog({ formik, handleClose }) {
       open={true}
       onClose={handleClose}
       aria-labelledby="payment-dialog-title"
-      maxWidth="sm"
+      maxWidth="xs"
       fullWidth
     >
       <DialogTitle id="form-dialog-title">
@@ -40,6 +40,11 @@ export default function PaymentDialog({ formik, handleClose }) {
             onBlur={formik.handleBlur}
             error={formik.touched.amount && Boolean(formik.errors.amount)}
             helperText={formik.touched.amount && formik.errors.amount}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">₹</InputAdornment>
+              ),
+            }}
             margin="dense"
             id="amount"
             label="Amount to Donate"

@@ -1,5 +1,5 @@
 .campaign-image {
-  min-height: 500px;
+  min-height: 395px;
 
   & img {
     height: 500px;
@@ -36,6 +36,13 @@
 
 .donate-amount {
   width: 45%;
+}
+
+.cateogry-badge {
+  padding: 10px;
+    background-color: #01bfbd;
+    float: left;
+    margin: -8px -5px;
 }
 
 @media screen and (max-width: 1400px) {

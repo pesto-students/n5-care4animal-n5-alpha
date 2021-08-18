@@ -43,7 +43,7 @@ function Footer({ categories, callBack }) {
 
       <hr />
       <Box my={1.5}>
-        <p>Copyright © 2010-2021. All Rights Reserved by Care4Animal</p>
+        <p>Copyright ©2021. All Rights Reserved by Care4Animal</p>
       </Box>
     </footer>
   );

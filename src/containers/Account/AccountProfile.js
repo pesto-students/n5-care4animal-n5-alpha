@@ -26,6 +26,7 @@ const AccountProfile = ({
     <Box {...remianingProps}>
       <CardContent>
         <Box
+          textAlign="center"
           sx={{
             alignItems: "center",
             display: "flex",

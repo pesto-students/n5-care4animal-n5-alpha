@@ -12,6 +12,7 @@ import {
   CardContent,
   Card,
   Avatar,
+  Tooltip,
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -34,6 +35,8 @@ import { useFormik } from "formik";
 import { errorAlertAction } from "store/actions/AlertActions";
 import useMakePayment from "hooks/useMakePayment";
 import useLoadCampaignDetails from "hooks/useLoadCampaignDetails";
+import ShareThis from "components/ShareApp";
+import Badge from "@material-ui/core/Badge";
 
 const validationSchema = yup.object({
   amount: yup
@@ -50,7 +53,6 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
   const { status, paymentInProgress, makePayment } = useMakePayment();
   const [isLoading, campaign, loadDetails] = useLoadCampaignDetails();
 
-  console.log("paymentInProgress", paymentInProgress);
   const formik = useFormik({
     initialValues: {
       amount: 100,
@@ -73,14 +75,13 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
   });
 
   useEffect(() => {
-    if (id && !isLoading) {
+    if ((id && !isLoading) || status === "success") {
       //  call load campaign details hool
       loadDetails(user.sessionToken, id);
     }
-  }, [id]);
+  }, [id, status]);
 
   if (paymentInProgress || isLoading) {
-    console.table(paymentInProgress, isLoading);
     return <Loader />;
   }
 
@@ -138,14 +139,15 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
   };
 
   const getRaisedInfo = () => {
-    if (campaign.raisedAmount === 0) {
+    if (campaign.raisedAmount !== 0) {
       return (
         <>
           <span className="goal">
             <Currency value={campaign.raisedAmount} />{" "}
           </span>
+          <br />
           raised out of &nbsp;
-          <span className="goal">
+          <span className="">
             <Currency value={campaign.goalAmount} />
           </span>{" "}
           goal
@@ -217,6 +219,14 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
             </Box>
           </Grid>
           <Grid item lg={8} md={8} xs={12}>
+            {campaign.categoryRef && (
+              <Tooltip title="Campaign Cateogry" aria-label="Campaign Cateogry">
+                <span className="cateogry-badge" data="Campaign Cateogry">
+                  {campaign.categoryRef.name}
+                </span>
+              </Tooltip>
+            )}
+
             <CardMedia
               image={
                 campaign.image
@@ -275,18 +285,11 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
                 </Button>{" "}
               </Grid>
               <Grid item md={12} sm={6} xs={12}>
-                <Button
-                  fullWidth
-                  className="hero-button primary-btn"
-                  variant="outlined"
-                  color="primary"
-                >
-                  <ShareIcon /> &nbsp; Spread the word
-                </Button>
+                <ShareThis />
               </Grid>
               <Grid item md={12} sm={6} xs={12}>
                 <Typography align="center">
-                  Every Social media share can bring ₹5000
+                  Every Social media share can bring <Currency value={5000} />
                 </Typography>
               </Grid>
             </Grid>
@@ -302,7 +305,8 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
               <Grid container spacing={3}>
                 <Grid item md={6} sm={3} xs={6}>
                   <Typography>
-                    <span className="donors">{campaign.noOfDonors}</span> Donors
+                    <span className="donors">{campaign.noOfDonors}</span>{" "}
+                    {campaign.noOfDonors > 1 ? "Donations" : "Donation"}
                   </Typography>
                 </Grid>
                 <Grid item md={6} sm={3} xs={6}>
@@ -356,7 +360,7 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
                 Recent Activities on Campaign
               </Typography>
               <hr />
-              <Box py={2}>
+              {/* <Box py={2}>
                 <Card>
                   <CardContent>
                     <Grid container spacing={3}>
@@ -387,7 +391,7 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
                     </Typography>
                   </CardContent>
                 </Card>
-              </Box>
+              </Box> */}
             </Box>
 
             <Box></Box>

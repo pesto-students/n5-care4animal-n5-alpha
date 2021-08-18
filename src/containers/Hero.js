@@ -1,19 +1,16 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
+import { Link } from "react-router-dom";
 
 const Hero = ({ data, showStartCampaign }) => {
   return (
     <div className="hero-content">
       <SectionHeader data={{ ...data }} />
       {showStartCampaign && (
-        <Box py={4}>
-          <Button
-            className="hero-button primary-btn btn "
-            variant="contained"
-            onClick={showStartCampaign}
-          >
-            Start a Campaign{" "}
-          </Button>
+        <Box py={6}>
+          <Link to="/search" className="calltoAction">
+            Start a Campaign
+          </Link>
         </Box>
       )}
     </div>
