@@ -8,6 +8,7 @@ import {
   Toolbar,
   Container,
   Grid,
+  Box,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -180,16 +181,13 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   return (
     <React.Fragment key={anchor}>
       <AppBar position="fixed">
-        <Toolbar>
-          <Container maxWidth="lg">
+        <Container maxWidth="lg">
+          <Box px="1rem">
             <Grid container>
               <Grid item lg={6} md={6} sm={8} xs={8}>
-                <h1>
-                  <Link to="/">
-                    {" "}
-                    <img className="logo" src={Logo} alt="Brand Logo" />{" "}
-                  </Link>
-                </h1>
+                <Link to="/">
+                  <img className="logo" src={Logo} alt="Brand Logo" />{" "}
+                </Link>
               </Grid>
               <Grid item lg={6} md={6} sm={4} xs={4}>
                 <Grid container justifyContent="flex-end">
@@ -227,8 +225,8 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                 </Grid>
               </Grid>
             </Grid>
-          </Container>
-        </Toolbar>
+          </Box>
+        </Container>
       </AppBar>
       {
         <Menu

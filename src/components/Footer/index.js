@@ -12,18 +12,18 @@ function Footer({ categories }) {
   return (
     <footer>
       <hr />
-      <Box my={1.5}>
+      <Box my={2}>
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid item lg={9} md={8} sm={8} xs={12}>
-              <div>
+              <Box py={2}>
                 <img src={Logo} alt="logo" />
-              </div>
-              <div className="info">
+              </Box>
+              <Box py={2}>
                 Care4Animal is a unique platform for helping Voiceless animals
                 when they're in need of food, shelter or life-saving medical
                 treatment
-              </div>
+              </Box>
               <div className="socialIcons">
                 <FacebookIcon />
                 <InstagramIcon />
@@ -34,7 +34,6 @@ function Footer({ categories }) {
               <div>
                 <h4>CAUSES</h4>
               </div>
-              {}
               <Category categoryList={categories} callBack={() => {}} />
             </Grid>
           </Grid>
@@ -42,7 +41,7 @@ function Footer({ categories }) {
       </Box>
 
       <hr />
-      <Box my={1.5}>
+      <Box my={4}>
         <p>Copyright ©2021. All Rights Reserved by Care4Animal</p>
       </Box>
     </footer>

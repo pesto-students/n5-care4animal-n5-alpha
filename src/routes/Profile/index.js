@@ -128,7 +128,6 @@ const Profile = ({ updating, dispatch, user, campaigns, history }) => {
       >
         <Container maxWidth="lg">
           <Grid container spacing={3}>
-            <Grid item xs={12}></Grid>
             <Grid item lg={4} md={6} xs={12}>
               <AccountProfile
                 user={user}

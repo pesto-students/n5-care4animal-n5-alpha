@@ -1,10 +1,11 @@
 import React from "react";
 import "styles/LandingPage.scss";
-import { Box } from "@material-ui/core";
+import { Box, Container, Grid } from "@material-ui/core";
 import { HowItWorks } from "containers";
 import { InfoSection } from "containers";
 import TrendingCampaigns from "containers/TrendingCampaignSection";
 import { Hero } from "containers";
+import CountUp from "react-countup";
 
 export const LandingPage = ({ history }) => {
   const showDetails = (id) => {
@@ -30,23 +31,31 @@ export const LandingPage = ({ history }) => {
           showStartCampaign={showStartCampaign}
         />
       </section>
+
       <div className="top-section">
         <section className="host">
-          <TrendingCampaigns showDetails={showDetails} />
+          <Box py={4}>
+            <TrendingCampaigns showDetails={showDetails} />
+          </Box>
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />
         </Box>
+
         <section className="host">
-          <InfoSection
-            showStartCampaign={showStartCampaign}
-            showSearchPage={showSearchPage}
-          />
+          <Box py={4}>
+            <InfoSection
+              showStartCampaign={showStartCampaign}
+              showSearchPage={showSearchPage}
+            />
+          </Box>
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />
         </Box>
-        <HowItWorks />
+        <Box py={4}>
+          <HowItWorks />
+        </Box>
       </div>
     </>
   );

@@ -1,11 +1,12 @@
 // @import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 // @import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;900&display=swap");
 
 body,
 * {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif !important;
+  font-family: "Raleway", sans-serif;
 }
 
 body {
@@ -20,15 +21,21 @@ footer > p {
   margin: 0 auto;
 }
 
+$header-height: 6rem;
+
 .main {
   min-height: 70vh;
-  margin-top: 4rem;
+  margin-top: $header-height;
   background-color: #f4f6f8;
 }
 
-:root {
-  --link-color: #000000;
-  --link-hover-color: #608bd2;
+header {
+  div {
+    height: $header-height;
+    display: flex;
+    justify-items: center;
+    align-content: center;
+  }
 }
 
 .section-container {
@@ -54,12 +61,9 @@ footer > p {
   color: black !important;
   height: 48px;
   border-radius: 35px !important;
-  padding: 1.5rem 5rem;
+  padding: 1.5rem 2rem;
   font-size: x-large;
   font-weight: bolder;
-}
-
-.calltoActionSec {
 }
 
 .btn {
@@ -79,16 +83,4 @@ footer > p {
 
 .rounded-btn {
   border-radius: 25px !important;
-}
-
-@media screen and (max-width: 1400px) {
-}
-
-@media screen and (max-width: 980px) {
-}
-
-@media screen and (max-width: 680px) {
-  .main {
-    margin-top: 3rem;
-  }
 }

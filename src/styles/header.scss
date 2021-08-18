@@ -10,30 +10,6 @@ nav {
   }
 }
 
-.header-fixed {
-  box-shadow: 0 1px 1px #ccc;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  background: #fff;
-  z-index: 1;
-  padding-top: 0.5rem;
-}
-
-.header-limiter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-}
-
-.header-limiter a {
-  color: #000000;
-  text-decoration: none;
-  margin: 0px 10px;
-  line-height: 1;
-}
-
 .linkButton {
   text-transform: capitalize !important;
   color: #000000 !important;
@@ -112,12 +88,14 @@ nav {
   }
 }
 
-@media screen and (max-width: 680px) {
+.logo {
+  margin-top: 1.5rem;
+  height: 50px;
+}
+
+@media screen and (max-width: 960px) {
   nav {
     margin-top: 0rem;
-  }
-  .logo {
-    margin-top: 0.5rem;
   }
 
   .headerTopRow {

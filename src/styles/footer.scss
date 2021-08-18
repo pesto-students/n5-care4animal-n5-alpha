@@ -8,6 +8,16 @@
   margin: 10px;
 }
 
+footer {
+  * {
+    color: inherit;
+    text-decoration: none;
+  }
+  a {
+    margin: 0px 1rem !important;
+  }
+}
+
 @media screen and (max-width: 680px) {
   .info {
     text-align: center !important;
