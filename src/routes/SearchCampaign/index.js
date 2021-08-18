@@ -11,8 +11,15 @@ import {
   loadAllCampaignsAction,
   searchCampaignsAction,
 } from "store/actions/CampaignActions";
+import Loader from "components/Shared/Loader";
 
-const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
+const SearchCampagin = ({
+  loading,
+  campaigns = [],
+  history,
+  categories,
+  dispatch,
+}) => {
   useEffect(() => {
     dispatch(loadAllCampaignsAction());
   }, []);
@@ -22,6 +29,7 @@ const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
 
   const handleChange = (event) => {
     setCategories(event.target.value);
+    triggerSearch();
   };
   const handleCriteriaChange = (event) => {
     setCriteria(event.target.value);
@@ -38,6 +46,18 @@ const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
 
   const showDetails = (id) => {
     history.push(`/details/${id}`);
+  };
+
+  const renderCampaigns = () => {
+    return campaigns.length ? (
+      <CampaignList list={campaigns} showDetails={showDetails} />
+    ) : (
+      <Box textAlign="center" py={4}>
+        <Typography variant="h5">
+          No Campaigns Found. Modify the search query.
+        </Typography>
+      </Box>
+    );
   };
 
   return (
@@ -78,7 +98,7 @@ const SearchCampagin = ({ campaigns = [], history, categories, dispatch }) => {
           </Box>
 
           <Grid item xs={12}>
-            <CampaignList list={campaigns} showDetails={showDetails} />
+            {loading ? <Loader /> : renderCampaigns()}
           </Grid>
         </Container>
       </Box>

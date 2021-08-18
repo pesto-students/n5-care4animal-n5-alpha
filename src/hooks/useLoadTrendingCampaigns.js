@@ -7,7 +7,7 @@ export default function useLoadTrendingCampaigns() {
 
   const loadCampaigns = async () => {
     setLoadingStatus(true);
-    const { data, error } = await getTrendinCampaigns();
+    const { data } = await getTrendinCampaigns();
 
     if (data && data.result) {
       setCampaigns(data.result);

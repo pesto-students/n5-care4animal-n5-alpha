@@ -17,7 +17,6 @@ import {
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { resetReducer } from "store/actions/CampaignActions";
 import Loader from "components/Shared/Loader";
 import Currency from "components/Shared/Currency";
 import Moment from "react-moment";
@@ -25,7 +24,6 @@ import moment from "moment";
 import InfoIcon from "@material-ui/icons/Info";
 import UpdateIcon from "@material-ui/icons/Update";
 import CommentIcon from "@material-ui/icons/Comment";
-import ShareIcon from "@material-ui/icons/Share";
 import PeopleIcon from "@material-ui/icons/People";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PaymentDialog from "components/PaymentDialog";
@@ -36,7 +34,6 @@ import { errorAlertAction } from "store/actions/AlertActions";
 import useMakePayment from "hooks/useMakePayment";
 import useLoadCampaignDetails from "hooks/useLoadCampaignDetails";
 import ShareThis from "components/ShareApp";
-import Badge from "@material-ui/core/Badge";
 
 const validationSchema = yup.object({
   amount: yup

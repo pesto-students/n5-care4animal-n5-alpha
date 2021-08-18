@@ -7,7 +7,7 @@ export default function useLoadCampaignDetails(params) {
 
   const loadDetails = async (sessionToken, campaignId) => {
     setLoadingStatus(true);
-    const { data, error } = await getCampaignDetails(sessionToken, {
+    const { data } = await getCampaignDetails(sessionToken, {
       campaignId,
     });
 

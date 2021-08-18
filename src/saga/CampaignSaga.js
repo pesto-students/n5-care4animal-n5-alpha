@@ -7,7 +7,6 @@ import { put, all, call, takeLatest } from "redux-saga/effects";
 import {
   createCampaign,
   getAllCampaigns,
-  getCampaignDetails,
   getUserCampaign,
   uploadImage,
   searchCampaignsByCriteria,
@@ -26,7 +25,7 @@ import {
 } from "store/actions/CampaignActions";
 
 function* searchCampaignSaga(action) {
-  const { data, error } = yield call(searchCampaignsByCriteria, action.payload);
+  const { data } = yield call(searchCampaignsByCriteria, action.payload);
 
   if (data) {
     yield all([put(loadAllCampaignsCompletedAction(data.result.queryResult))]);
@@ -35,8 +34,8 @@ function* searchCampaignSaga(action) {
   }
 }
 
-function* loadAllCampaign(params) {
-  const { data, error } = yield call(getAllCampaigns);
+function* loadAllCampaign() {
+  const { data } = yield call(getAllCampaigns);
 
   if (data) {
     yield all([put(loadAllCampaignsCompletedAction(data.result))]);
@@ -46,7 +45,7 @@ function* loadAllCampaign(params) {
 }
 
 function* loadUserCampaignSaga(action) {
-  const { data, error } = yield call(
+  const { data } = yield call(
     getUserCampaign,
     action.sessionToken,
     action.userId

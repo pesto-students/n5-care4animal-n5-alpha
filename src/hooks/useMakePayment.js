@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  createOrder,
-  handleOrderSuccess,
-  handleOrderFailure,
-} from "services/ordersService";
+import { createOrder, handleOrderSuccess } from "services/ordersService";
 import logo from "assets/images/Logo.png";
 import {
   errorAlertAction,

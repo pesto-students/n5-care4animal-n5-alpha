@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "styles/Signup.scss";
 import { Grid, Button, Box, TextField, Typography } from "@material-ui/core";
 import { connect } from "react-redux";

@@ -6,9 +6,9 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { connect } from "react-redux";
 import Category from "components/Category";
-import { Box, Container, Grid, Tab, Tabs } from "@material-ui/core";
+import { Box, Container, Grid } from "@material-ui/core";
 
-function Footer({ categories, callBack }) {
+function Footer({ categories }) {
   return (
     <footer>
       <hr />

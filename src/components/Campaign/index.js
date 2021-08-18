@@ -8,7 +8,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { Chip } from "@material-ui/core";
 import { ProgressBar } from "./ProgressBar";
-import { Link } from "react-router-dom";
 import Currency from "components/Shared/Currency";
 import Moment from "react-moment";
 import moment from "moment";

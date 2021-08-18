@@ -6,7 +6,6 @@ import {
   Button,
   AppBar,
   Toolbar,
-  Typography,
   Container,
   Grid,
 } from "@material-ui/core";
@@ -241,7 +240,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           getContentAnchorEl={null}
           anchor="bottom"
           keepMounted
-          open={menuState.menuName == "campaigns"}
+          open={menuState.menuName === "campaigns"}
           onClose={toggleMenu}
         >
           <Category categoryList={categories} callBack={toggleMenu} />

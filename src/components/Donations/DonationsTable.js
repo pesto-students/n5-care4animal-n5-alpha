@@ -7,7 +7,6 @@ import moment from "moment";
 import { NO_DONATIONS } from "appconstants/messages";
 import { Box } from "@material-ui/core";
 import Currency from "components/Shared/Currency";
-import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 
 const DonationsTable = () => {

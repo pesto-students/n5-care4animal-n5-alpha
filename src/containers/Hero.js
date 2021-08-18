@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { SectionHeader } from "components/Shared/SectionHeader";
 import { Link } from "react-router-dom";
 

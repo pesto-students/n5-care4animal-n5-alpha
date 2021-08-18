@@ -1,7 +1,6 @@
 import { SectionHeader } from "components/Shared/SectionHeader";
 import { NavLink } from "react-router-dom";
 import { CampaignList } from "containers";
-import { connect } from "react-redux";
 import { useEffect } from "react";
 import useLoadTrendingCampaigns from "hooks/useLoadTrendingCampaigns";
 

@@ -10,7 +10,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import Category from "components/Category";
 
 export const SearchBar = ({
   handleChange,
