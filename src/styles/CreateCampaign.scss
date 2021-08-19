@@ -20,3 +20,13 @@
 .stepper {
   background-color: transparent !important;
 }
+
+.datePicker {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 10px;
+  border-bottom: 1px solid gray;
+  background: transparent;
+  width: 100%;
+}

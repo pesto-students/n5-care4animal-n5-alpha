@@ -5,40 +5,37 @@ import {
   Hidden,
   Button,
   AppBar,
-  Toolbar,
   Container,
   Grid,
   Box,
+  Collapse,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  IconButton,
 } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import CloseIcon from "@material-ui/icons/Close";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import WebAssetIcon from "@material-ui/icons/WebAsset";
-import Logo from "assets/images/LogoLight.png";
+import Logo from "assets/images/Logo.png";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import Menu from "@material-ui/core/Menu";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { requestLogout } from "store/actions/AuthActions";
 import Category from "components/Category";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Collapse from "@material-ui/core/Collapse";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 
 function Header({ isAuthenticated, user, categories, dispatch }) {
   const history = useHistory();
 
-  const anchor = useRef(null);
-  const [menuState, setAnchorEl] = React.useState({
+  const [menuState, setAnchorEl] = useState({
     anchorEl: "",
     menuName: "",
   });
@@ -91,7 +88,6 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           edge="start"
           color="inherit"
           aria-label="menu"
-          ref={anchor}
           onClick={(event) => toggleDrawer(true)}
         >
           <MenuIcon />
@@ -179,55 +175,55 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   };
 
   return (
-    <React.Fragment key={anchor}>
-      <AppBar position="sticky" color="primary">
-        <Container maxWidth="lg">
-          <Box px="1rem">
-            <Grid container>
-              <Grid item lg={6} md={6} sm={8} xs={8}>
-                <Link to="/">
-                  <img className="logo" src={Logo} alt="Brand Logo" />{" "}
-                </Link>
-              </Grid>
-              <Grid item lg={6} md={6} sm={4} xs={4}>
-                <Grid container justifyContent="flex-end">
-                  <Hidden mdUp>{getSideMenu()}</Hidden>
-                  <Hidden smDown>
-                    <nav>
-                      <Link to="/search">Browse campaigns </Link>
-                      <Button
+    <AppBar position="sticky" color="primary">
+      <Container maxWidth="lg">
+        <Box px="1rem">
+          <Grid container>
+            <Grid item lg={6} md={6} sm={8} xs={8}>
+              <Link to="/">
+                <img className="logo" src={Logo} alt="Brand Logo" />{" "}
+              </Link>
+            </Grid>
+            <Grid item lg={6} md={6} sm={4} xs={4}>
+              <Grid container justifyContent="flex-end">
+                <Hidden mdUp>{getSideMenu()}</Hidden>
+                <Hidden smDown>
+                  <nav>
+                    <Link to="/search">Browse campaigns </Link>
+                    <Button
+                      component={Link}
+                      to="/#"
+                      tabIndex={0}
+                      disableRipple={true}
+                      className="linkButton"
+                      onClick={(event) => toggleMenu(event, "campaigns")}
+                      endIcon={<ArrowDropDown className="dropdownarrow" />}
+                    >
+                      Campaign For
+                    </Button>
+
+                    {isAuthenticated ? (
+                      <IconButton
                         component={Link}
+                        to="/#"
                         tabIndex={0}
                         disableRipple={true}
                         className="linkButton"
-                        onClick={(event) => toggleMenu(event, "campaigns")}
-                        endIcon={<ArrowDropDown className="dropdownarrow" />}
+                        onClick={(event) => toggleMenu(event, "account")}
                       >
-                        Campaign For
-                      </Button>
-
-                      {isAuthenticated ? (
-                        <IconButton
-                          component={Link}
-                          tabIndex={0}
-                          disableRipple={true}
-                          className="linkButton"
-                          onClick={(event) => toggleMenu(event, "account")}
-                        >
-                          Welcome {user.firstName} &nbsp;
-                          <AccountCircle />
-                        </IconButton>
-                      ) : (
-                        <Link to="/signin">Sign In</Link>
-                      )}
-                    </nav>
-                  </Hidden>
-                </Grid>
+                        Welcome {user.firstName} &nbsp;
+                        <AccountCircle />
+                      </IconButton>
+                    ) : (
+                      <Link to="/signin">Sign In</Link>
+                    )}
+                  </nav>
+                </Hidden>
               </Grid>
             </Grid>
-          </Box>
-        </Container>
-      </AppBar>
+          </Grid>
+        </Box>
+      </Container>
       {
         <Menu
           id="simple-menu"
@@ -241,7 +237,9 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           open={menuState.menuName === "campaigns"}
           onClose={toggleMenu}
         >
-          <Category categoryList={categories} callBack={toggleMenu} />
+          <div>
+            <Category categoryList={categories} callBack={toggleMenu} />
+          </div>
         </Menu>
       }
       {isAuthenticated && menuState.anchorEl && (
@@ -257,15 +255,17 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           open={menuState.menuName === "account"}
           onClose={toggleMenu}
         >
-          <Link to={`/profile/${user.objectId}`} onClick={toggleMenu}>
-            Profile
-          </Link>
-          <Link to="/" onClick={logoutUser}>
-            Sign Out
-          </Link>
+          <div>
+            <Link to={`/profile/${user.objectId}`} onClick={toggleMenu}>
+              Profile
+            </Link>
+            <Link to="/" onClick={logoutUser}>
+              Sign Out
+            </Link>
+          </div>
         </Menu>
       )}
-    </React.Fragment>
+    </AppBar>
   );
 }
 

@@ -1,8 +1,14 @@
+header {
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgb(0, 0, 0 / 20%) !important;
+  background-color: #fff !important;
+}
+
 nav {
   margin-top: 0.5rem;
 
   * {
-    color: #ffffff;
+    color: #000000 !important;
     text-decoration: none;
   }
   a {
@@ -61,10 +67,11 @@ nav {
   position: relative;
 }
 
-.campaignfor-menu ul {
+.campaignfor-menu ul div {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 0px 10px;
+  min-width: 150px;
 
   a {
     margin: 5px 0px;
@@ -77,14 +84,14 @@ nav {
 .mobile-cateogry-menu {
   display: flex;
   flex-direction: column;
-  height: 100px;
+  height: 120px;
   justify-content: space-around;
   width: calc(100% - 71px) !important;
   margin-left: 70px !important;
 
   a {
     border-bottom: 1px solid #80808080;
-    padding: 7px 0px;
+    padding: 12px 0px;
   }
 }
 

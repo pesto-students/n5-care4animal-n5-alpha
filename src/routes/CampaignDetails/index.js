@@ -9,7 +9,6 @@ import {
   Tabs,
   Tab,
   Typography,
-  CardContent,
   Card,
   Avatar,
   Tooltip,
@@ -34,6 +33,7 @@ import { errorAlertAction } from "store/actions/AlertActions";
 import useMakePayment from "hooks/useMakePayment";
 import useLoadCampaignDetails from "hooks/useLoadCampaignDetails";
 import ShareThis from "components/ShareApp";
+import CampaignUpdates from "containers/CampaignUpdates";
 
 const validationSchema = yup.object({
   amount: yup
@@ -108,6 +108,14 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
         break;
 
       case "Updates":
+        tabContent = (
+          <Grid item xs={12}>
+            <Box py={10} textAlign="center">
+              <CampaignUpdates />
+            </Box>
+          </Grid>
+        );
+        break;
       case "Comments":
         tabContent = (
           <Grid item xs={12}>
@@ -211,7 +219,13 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
       }}
     >
       <Container maxWidth="lg">
-        {open && <PaymentDialog formik={formik} handleClose={handleClose} />}
+        {open && (
+          <PaymentDialog
+            formik={formik}
+            showConsentDialogue={campaign.userRef.objectId === user.objectId}
+            handleClose={handleClose}
+          />
+        )}
 
         <Box px="1rem">
           <Grid container spacing={3}>
@@ -320,9 +334,11 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
                   <Grid item md={6} sm={3} xs={6}>
                     <Typography align="right">
                       <span className="donors">
-                        <Moment diff={campaign.createdAt} unit="days">
-                          {moment(campaign.createdAt).add(30, "d")}
-                        </Moment>
+                        {campaign.endDate && (
+                          <Moment diff={moment()} unit="days">
+                            {moment(campaign.endDate.iso)}
+                          </Moment>
+                        )}
                       </span>{" "}
                       days left
                     </Typography>
@@ -352,51 +368,6 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
                   {campaign.userRef && getCreatorDetails(campaign.userRef)}
                 </Card>
               </Box>
-              <Box py={4}>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  component="h3"
-                  noWrap={true}
-                >
-                  Recent Activities on Campaign
-                </Typography>
-                <hr />
-                {/* <Box py={2}>
-                <Card>
-                  <CardContent>
-                    <Grid container spacing={3}>
-                      <Box pt={1} ml={2}>
-                        <PeopleIcon />
-                      </Box>
-
-                      <Box ml={2}>
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          component="h5"
-                        >
-                          Top Donors
-                        </Typography>
-                      </Box>
-                    </Grid>
-
-                    <Box py={2}>
-                      <hr />
-                    </Box>
-                    <Typography
-                      variant="h6"
-                      color="textSecondary"
-                      component="h6"
-                    >
-                      List of Top Donors
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Box> */}
-              </Box>
-
-              <Box></Box>
             </Grid>
           </Grid>
         </Box>

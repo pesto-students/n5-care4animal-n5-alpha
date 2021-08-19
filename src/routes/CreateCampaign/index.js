@@ -18,6 +18,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { requestLogin } from "store/actions/AuthActions";
 import { Box } from "@material-ui/core";
+import moment from "moment";
 
 const validationSchema = yup.object({
   selectedCause: yup
@@ -41,6 +42,9 @@ const validationSchema = yup.object({
     .min(500, "Description should have minimum 500 characters")
     .max(10000, "Description should have maximun 10000 characters")
     .required("Description is must while creating a campaign"),
+  endDate: yup
+    .date("Choose a date to end your campaign.")
+    .required("End date is required."),
 });
 
 const initialState = {
@@ -48,6 +52,7 @@ const initialState = {
   goalAmount: "",
   name: "",
   description: "",
+  endDate: moment().add(5, "days").toDate(),
 };
 
 const CreateCampaign = ({

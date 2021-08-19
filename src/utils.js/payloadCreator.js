@@ -2,6 +2,10 @@ function generateCampaignPayload(formData, user) {
   const { selectedCause, image, ...campaignData } = formData;
   let rawPayload = {
     ...campaignData,
+    endDate: {
+      __type: "Date",
+      iso: campaignData.endDate,
+    },
     categoryRef: {
       __type: "Pointer",
       className: "CampaignCategory",

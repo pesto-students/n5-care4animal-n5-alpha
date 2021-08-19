@@ -22,7 +22,8 @@ function Footer({ categories }) {
               <Box py={2}>
                 Care4Animal is a unique platform for helping Voiceless animals
                 when they're in need of food, shelter or life-saving medical
-                treatment
+                treatment. Become a proud member of our rescue team by making a
+                donation, sponsoring an animal and more.
               </Box>
               <div className="socialIcons">
                 <FacebookIcon />

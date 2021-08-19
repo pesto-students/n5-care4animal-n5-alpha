@@ -67,9 +67,11 @@ export const Campaign = ({ campaign, showDetails = () => {} }) => {
             </div>
             <div className="c-info">
               <span>
-                <Moment diff={campaign.createdAt} unit="days">
-                  {moment(campaign.createdAt).add(30, "d")}
-                </Moment>
+                {campaign.endDate && (
+                  <Moment diff={moment()} unit="days">
+                    {moment(campaign.endDate.iso)}
+                  </Moment>
+                )}
               </span>
               <br />
               Days Left

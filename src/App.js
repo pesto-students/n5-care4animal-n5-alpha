@@ -12,8 +12,8 @@ import { Alert } from "@material-ui/lab";
 import { useCookies } from "react-cookie";
 import { requestAutoLogin } from "store/actions/AuthActions";
 import { useLocation, useHistory } from "react-router-dom";
-import MainLoader from "components/Loaders/MainLoader";
 import { getCategory } from "store/actions/CategoryActions";
+import Loader from "components/Shared/Loader";
 
 function App({ alert, loading, loggedOut, isAuthenticated, user, dispatch }) {
   useEffect(() => {
@@ -95,7 +95,7 @@ function App({ alert, loading, loggedOut, isAuthenticated, user, dispatch }) {
           {type && showAlerts(message, type)}
           {(loading && !isAuthenticated) ||
           (cookies._userSession && !isAuthenticated) ? (
-            <MainLoader />
+            <Loader />
           ) : (
             <Routes />
           )}

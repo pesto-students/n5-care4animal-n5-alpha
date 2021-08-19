@@ -8,7 +8,7 @@ const Hero = ({ data, showStartCampaign }) => {
       <SectionHeader data={{ ...data }} />
       {showStartCampaign && (
         <Box py={6}>
-          <Link to="/search" className="calltoAction">
+          <Link to="/createcampaign" className="calltoAction">
             Start a Campaign
           </Link>
         </Box>

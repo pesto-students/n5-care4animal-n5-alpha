@@ -1,11 +1,10 @@
 import React from "react";
 import "styles/LandingPage.scss";
-import { Box, Container, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { HowItWorks } from "containers";
 import { InfoSection } from "containers";
 import TrendingCampaigns from "containers/TrendingCampaignSection";
 import { Hero } from "containers";
-import CountUp from "react-countup";
 
 export const LandingPage = ({ history }) => {
   const showDetails = (id) => {

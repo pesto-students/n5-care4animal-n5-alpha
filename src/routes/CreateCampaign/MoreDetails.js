@@ -1,5 +1,9 @@
 import TextField from "@material-ui/core/TextField";
 import { SectionHeader } from "components/Shared/SectionHeader";
+import { Box, InputAdornment, InputLabel } from "@material-ui/core";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 export const MoreDetailsForm = ({ formik }) => {
   return (
@@ -26,6 +30,11 @@ export const MoreDetailsForm = ({ formik }) => {
               formik.touched.goalAmount && Boolean(formik.errors.goalAmount)
             }
             helperText={formik.touched.goalAmount && formik.errors.goalAmount}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">₹</InputAdornment>
+              ),
+            }}
           />
           <TextField
             margin="normal"
@@ -54,6 +63,22 @@ export const MoreDetailsForm = ({ formik }) => {
             }
             helperText={formik.touched.description && formik.errors.description}
           />
+          <Box py={2} textAlign="left">
+            <InputLabel htmlFor="date-picker">
+              Choose a date to end your campaign.
+            </InputLabel>
+            <DatePicker
+              className="datePicker"
+              id="date-picker"
+              name="endDate"
+              label="Select campaign end date"
+              minDate={moment().add(5, "days").toDate()}
+              selected={formik.values.endDate}
+              onChange={(event) => {
+                formik.setFieldValue("endDate", event);
+              }}
+            />
+          </Box>
         </form>
       </div>
     </section>
