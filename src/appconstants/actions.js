@@ -38,4 +38,5 @@ export const campaignConstants = {
 export const categoryConstants = {
   LOAD_CATEGORY: "LOAD_CATEGORY",
   CATEGORY_LOADED: "CATEGORY_LOADED",
+  SET_CATEGORY_LOADED: "SET_CATEGORY_LOADED",
 };

@@ -62,6 +62,7 @@ const CreateCampaign = ({
   user,
   history,
   dispatch,
+  category,
 }) => {
   useEffect(() => {
     if (campaign && submitted) {
@@ -77,7 +78,9 @@ const CreateCampaign = ({
   const [campaignFile, setFile] = useState();
 
   const formik = useFormik({
-    initialValues: initialState,
+    initialValues: category
+      ? { ...initialState, selectedCause: category }
+      : initialState,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (values.email && values.password) {
@@ -225,8 +228,8 @@ const CreateCampaign = ({
   );
 };
 
-const mapStateToProps = ({ campaign, auth }) => {
-  return { ...campaign, user: auth.user };
+const mapStateToProps = ({ campaign, auth, category }) => {
+  return { ...campaign, user: auth.user, category: category.selectedCategory };
 };
 
 export default connect(mapStateToProps)(CreateCampaign);

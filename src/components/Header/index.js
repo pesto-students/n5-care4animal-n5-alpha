@@ -31,6 +31,7 @@ import { requestLogout } from "store/actions/AuthActions";
 import Category from "components/Category";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { setCategory } from "store/actions/CategoryActions";
 
 function Header({ isAuthenticated, user, categories, dispatch }) {
   const history = useHistory();
@@ -81,6 +82,18 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
     toggleSubmenu(!openSubMenu);
   };
 
+  const getCategories = () => {
+    return (
+      <Category
+        categoryList={categories}
+        callBack={(selectedCategory) => {
+          dispatch(setCategory(selectedCategory));
+          toggleMenu(false);
+        }}
+      />
+    );
+  };
+
   const getSideMenu = () => {
     return (
       <nav>
@@ -128,10 +141,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                 disablePadding
                 className="mobile-cateogry-menu"
               >
-                <Category
-                  categoryList={categories}
-                  callBack={() => toggleDrawer(false)}
-                />
+                {getCategories()}
               </List>
             </Collapse>
             {isAuthenticated ? (
@@ -237,9 +247,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           open={menuState.menuName === "campaigns"}
           onClose={toggleMenu}
         >
-          <div>
-            <Category categoryList={categories} callBack={toggleMenu} />
-          </div>
+          <div>{getCategories()}</div>
         </Menu>
       }
       {isAuthenticated && menuState.anchorEl && (

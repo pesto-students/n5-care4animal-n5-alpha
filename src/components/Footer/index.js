@@ -7,8 +7,9 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { connect } from "react-redux";
 import Category from "components/Category";
 import { Box, Container, Grid } from "@material-ui/core";
+import { setCategory } from "store/actions/CategoryActions";
 
-function Footer({ categories }) {
+function Footer({ categories, dispatch }) {
   return (
     <footer>
       <hr />
@@ -35,7 +36,12 @@ function Footer({ categories }) {
               <div>
                 <h4>CAUSES</h4>
               </div>
-              <Category categoryList={categories} callBack={() => {}} />
+              <Category
+                categoryList={categories}
+                callBack={(selectedCategory) =>
+                  dispatch(setCategory(selectedCategory))
+                }
+              />
             </Grid>
           </Grid>
         </Container>
