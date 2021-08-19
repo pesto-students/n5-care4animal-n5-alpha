@@ -16,7 +16,7 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
               }}
             />
             <Box py={6}>
-              <Link to="/search" className="calltoAction calltoActionSec">
+              <Link to="/search" className="calltoAction">
                 Start a Campaign
               </Link>
             </Box>
@@ -49,7 +49,7 @@ const InfoSection = ({ showStartCampaign, showSearchPage }) => {
               }}
             />
             <Box py={6}>
-              <Link to="/search" className="calltoAction calltoActionSec">
+              <Link to="/search" className="calltoAction">
                 Donate Now
               </Link>
             </Box>

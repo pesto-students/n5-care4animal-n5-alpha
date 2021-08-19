@@ -61,13 +61,3 @@ $time: 1s;
 .campaign-title {
   line-height: 1.4rem !important;
 }
-
-.campaign-card a {
-  color: #000000;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-    opacity: 1;
-    color: #608bd2;
-  }
-}

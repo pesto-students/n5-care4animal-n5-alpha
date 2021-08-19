@@ -15,6 +15,8 @@ import {
   updateUserProfileAction,
   updateUserProfileCompleteAction,
 } from "store/actions/UserActions";
+import { requestUserDetails } from "services/authService";
+
 const { UPLOAD_PROFILE_PIC, UPDATE_USER_PROFILE } = userConstants;
 
 export function* updateUserProfile(action) {
@@ -27,8 +29,10 @@ export function* updateUserProfile(action) {
     userPayload
   );
   if (data) {
+    const { data: userDeta } = yield call(requestUserDetails, sessionToken);
+
     yield all([
-      put(updateUserProfileCompleteAction()),
+      put(updateUserProfileCompleteAction(userDeta || null)),
       put(successAlertAction(message || PROFILE_UPDATE_SUCCESS)),
     ]);
   } else {
@@ -62,6 +66,10 @@ export function* uploadProfilePic(action) {
     };
 
     yield put(updateUserProfileAction(act));
+
+    const { data: userDeta } = yield call(requestUserDetails, sessionToken);
+
+    yield put(updateUserProfileCompleteAction(userDeta || null));
   } else {
     yield all([
       put(uploadProfilePicCompletedAction()),

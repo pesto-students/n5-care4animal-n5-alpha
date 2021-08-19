@@ -74,7 +74,7 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
   useEffect(() => {
     if ((id && !isLoading) || status === "success") {
       //  call load campaign details hool
-      loadDetails(user.sessionToken, id);
+      loadDetails(id);
     }
   }, [id, status]);
 

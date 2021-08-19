@@ -53,7 +53,7 @@ export default function PaymentDialog({ formik, handleClose }) {
           />
           <Box py={4} textAlign="center">
             <Button
-              className="btn rounded-btn "
+              className="rounded-btn "
               variant="contained"
               color="primary"
               disabled={!formik.isValid}

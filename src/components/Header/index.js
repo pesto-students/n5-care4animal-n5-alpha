@@ -180,7 +180,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
 
   return (
     <React.Fragment key={anchor}>
-      <AppBar position="fixed">
+      <AppBar position="sticky" color="primary">
         <Container maxWidth="lg">
           <Box px="1rem">
             <Grid container>

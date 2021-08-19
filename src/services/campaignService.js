@@ -9,11 +9,10 @@ const searchCampaignsByCriteria = (payload) => {
   });
 };
 
-const getCampaignDetails = (sessionToken, payload) => {
+const getCampaignDetails = (payload) => {
   return httpRequest({
     method: "POST",
     requestUrl: CAMPAIGN_API.GET_CAMPAIGN,
-    sessionToken,
     payload,
   });
 };

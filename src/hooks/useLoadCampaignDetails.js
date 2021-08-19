@@ -5,9 +5,9 @@ export default function useLoadCampaignDetails(params) {
   const [isLoading, setLoadingStatus] = useState(false);
   const [campaign, setCampaign] = useState([]);
 
-  const loadDetails = async (sessionToken, campaignId) => {
+  const loadDetails = async (campaignId) => {
     setLoadingStatus(true);
-    const { data } = await getCampaignDetails(sessionToken, {
+    const { data } = await getCampaignDetails({
       campaignId,
     });
 

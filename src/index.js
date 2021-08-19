@@ -8,18 +8,20 @@ import "styles/App.scss";
 import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import { theme } from "utils.js/theme";
+import { ThemeProvider } from "@material-ui/styles";
+import { CssBaseline } from "@material-ui/core";
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
       <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Provider store={RootStore}>
             <App />
           </Provider>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </CookiesProvider>
   </React.StrictMode>,

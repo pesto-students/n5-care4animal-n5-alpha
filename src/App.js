@@ -64,7 +64,7 @@ function App({ alert, loading, loggedOut, isAuthenticated, user, dispatch }) {
         path: "/",
       });
     }
-  }, [isAuthenticated, user, loading]);
+  }, [isAuthenticated, loading]);
 
   const closeSnackBar = () => {
     dispatch(clearAlertAction());

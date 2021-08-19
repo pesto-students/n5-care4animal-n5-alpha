@@ -26,6 +26,6 @@ function updateUserProfileAction(payload) {
   return { type: UPDATE_USER_PROFILE, payload };
 }
 
-function updateUserProfileCompleteAction() {
-  return { type: UPDATE_USER_COMPLETE };
+function updateUserProfileCompleteAction(payload) {
+  return { type: UPDATE_USER_COMPLETE, payload };
 }

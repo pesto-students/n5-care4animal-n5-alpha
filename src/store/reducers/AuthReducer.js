@@ -76,10 +76,18 @@ export function AuthReducer(state = initialState, action) {
       };
 
     case UPDATE_USER_COMPLETE:
-      return {
-        ...state,
-        updating: false,
-      };
+      if (!action.payload) {
+        return {
+          ...state,
+          updating: false,
+        };
+      } else {
+        return {
+          ...state,
+          updating: false,
+          user: action.payload,
+        };
+      }
 
     default:
       return state;
