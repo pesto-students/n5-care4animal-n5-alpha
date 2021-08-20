@@ -63,9 +63,9 @@ export const MoreDetailsForm = ({ formik }) => {
             }
             helperText={formik.touched.description && formik.errors.description}
           />
-          <Box py={2} textAlign="left">
+          <Box py={4} textAlign="left">
             <InputLabel htmlFor="date-picker">
-              Choose a date to end your campaign.
+              Choose a deadline date for your campaign.
             </InputLabel>
             <DatePicker
               className="datePicker"

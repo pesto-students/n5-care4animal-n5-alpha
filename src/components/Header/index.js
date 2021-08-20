@@ -16,6 +16,7 @@ import {
   ListItemText,
   Menu,
   IconButton,
+  Avatar,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
@@ -222,7 +223,17 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                         onClick={(event) => toggleMenu(event, "account")}
                       >
                         Welcome {user.firstName} &nbsp;
-                        <AccountCircle />
+                        <Avatar
+                          sx={{
+                            height: 34,
+                            width: 34,
+                          }}
+                          src={
+                            user.displayPic
+                              ? user.displayPic.url
+                              : "https://source.unsplash.com/900x600/?person"
+                          }
+                        />
                       </IconButton>
                     ) : (
                       <Link to="/signin">Sign In</Link>

@@ -188,8 +188,8 @@ const CampaignDetails = ({ isAuthenticated, user, dispatch, history }) => {
               width: 34,
             }}
             src={
-              userRef.image
-                ? userRef.image.url
+              userRef.displayPic
+                ? userRef.displayPic.url
                 : "https://source.unsplash.com/900x600/?person"
             }
           />
