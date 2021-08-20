@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "razorpay": "^2.0.6",
+    "crypto-js": "4.1.1"
+  }
+}

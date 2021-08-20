@@ -1,14 +1,24 @@
 import React, { useRef, useState } from "react";
 import "styles/header.scss";
-import { Drawer, Hidden, Button } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  Drawer,
+  Hidden,
+  Button,
+  AppBar,
+  Container,
+  Grid,
+  Box,
+  Collapse,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  IconButton,
+  Avatar,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import CloseIcon from "@material-ui/icons/Close";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import WebAssetIcon from "@material-ui/icons/WebAsset";
@@ -16,23 +26,37 @@ import Logo from "assets/images/Logo.png";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
-import Menu from "@material-ui/core/Menu";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { requestLogout } from "store/actions/AuthActions";
-import { useCookies } from "react-cookie";
+import Category from "components/Category";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { setCategory } from "store/actions/CategoryActions";
 
-function Header({ isAuthenticated, user, dispatch }) {
-  const anchor = useRef(null);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [cookies, removeCookie] = useCookies(["_userSession"]);
+function Header({ isAuthenticated, user, categories, dispatch }) {
+  const history = useHistory();
+
+  const [menuState, setAnchorEl] = useState({
+    anchorEl: "",
+    menuName: "",
+  });
 
   const [state, setState] = useState({
     openDrawer: false,
   });
 
+  const [openSubMenu, toggleSubmenu] = useState();
+
+  const onMobileMenuClick = (route) => {
+    history.push(route);
+  };
+
   const logoutUser = () => {
-    removeCookie("_userSession");
+    setAnchorEl({
+      anchorEl: "",
+      menuName: "",
+    });
     dispatch(requestLogout(user.sessionToken));
   };
 
@@ -43,12 +67,32 @@ function Header({ isAuthenticated, user, dispatch }) {
     });
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const toggleMenu = (event, menuName) => {
+    menuState.anchorEl
+      ? setAnchorEl({
+          anchorEl: null,
+          menuName: "",
+        })
+      : setAnchorEl({
+          anchorEl: event.currentTarget,
+          menuName: menuName,
+        });
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleSubMenu = () => {
+    toggleSubmenu(!openSubMenu);
+  };
+
+  const getCategories = () => {
+    return (
+      <Category
+        categoryList={categories}
+        callBack={(selectedCategory) => {
+          dispatch(setCategory(selectedCategory));
+          toggleMenu(false);
+        }}
+      />
+    );
   };
 
   const getSideMenu = () => {
@@ -58,7 +102,6 @@ function Header({ isAuthenticated, user, dispatch }) {
           edge="start"
           color="inherit"
           aria-label="menu"
-          ref={anchor}
           onClick={(event) => toggleDrawer(true)}
         >
           <MenuIcon />
@@ -78,44 +121,64 @@ function Header({ isAuthenticated, user, dispatch }) {
           </div>
           <Divider />
           <List className="sideheader">
-            <ListItem button>
+            <ListItem button onClick={() => onMobileMenuClick("/search")}>
               <ListItemIcon>
                 <WebAssetIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={<Link to="/search">Browse campaigns</Link>}
-              />
+              <ListItemText primary="Browse campaigns" />
             </ListItem>
             <Divider />
-            <ListItem button>
+            <ListItem button onClick={handleSubMenu}>
               <ListItemIcon>
                 <ArtTrackIcon />
               </ListItemIcon>
               <ListItemText primary="Campaign For" />
+              {openSubMenu ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Divider />
-            <ListItem button>
-              <ListItemIcon>
-                <LockOpenIcon />
-              </ListItemIcon>
-              <ListItemText primary={<Link to="/profile/1">Profile</Link>} />
-            </ListItem>
-            <Divider />
-
-            <ListItem button>
-              <ListItemIcon>
-                <LockOpenIcon />
-              </ListItemIcon>
-              <ListItemText primary={<Link to="/signin">Sign In</Link>} />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemIcon>
-                <LockIcon />
-              </ListItemIcon>
-              <ListItemText primary={<Link to="/signout">Sign Out</Link>} />
-            </ListItem>
-            <Divider />
+            <Collapse in={openSubMenu} timeout="auto" unmountOnExit>
+              <List
+                component="div"
+                disablePadding
+                className="mobile-cateogry-menu"
+              >
+                {getCategories()}
+              </List>
+            </Collapse>
+            {isAuthenticated ? (
+              <>
+                <ListItem
+                  button
+                  onClick={() => onMobileMenuClick(`/profile/${user.objectId}`)}
+                >
+                  <ListItemIcon>
+                    <LockOpenIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemIcon>
+                    <LockIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Link to="/" onClick={logoutUser}>
+                        Sign Out
+                      </Link>
+                    }
+                  />
+                </ListItem>
+                <Divider />
+              </>
+            ) : (
+              <ListItem button onClick={() => onMobileMenuClick("/signin")}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign In" />
+              </ListItem>
+            )}
           </List>
         </Drawer>
       </nav>
@@ -123,65 +186,110 @@ function Header({ isAuthenticated, user, dispatch }) {
   };
 
   return (
-    <React.Fragment key={anchor}>
-      <header className="header-fixed">
-        <div className="header-limiter">
-          <h1>
-            <Link to="/">
-              {" "}
-              <img className="logo" src={Logo} alt="Brand Logo" />{" "}
-            </Link>
-          </h1>
-          <Hidden mdUp>{getSideMenu()}</Hidden>
-          <Hidden smDown>
-            <nav>
-              <Link to="/search">Browse campaigns </Link>
-              <Button
-                component="a"
-                tabIndex={0}
-                disableRipple={true}
-                className="linkButton"
-                onClick={handleClick}
-                endIcon={<ArrowDropDown className="dropdownarrow" />}
-              >
-                Campaign For
-              </Button>
-              <Link to="/profile">Profile</Link>
-              {isAuthenticated ? (
-                <Link to="/" onClick={logoutUser}>
-                  Sign Out
-                </Link>
-              ) : (
-                <Link to="/signin">Sign In</Link>
-              )}
-            </nav>
-          </Hidden>
-        </div>
-      </header>
-      {anchorEl && (
+    <AppBar position="sticky" color="primary">
+      <Container maxWidth="lg">
+        <Box px="1rem">
+          <Grid container>
+            <Grid item lg={6} md={6} sm={8} xs={8}>
+              <Link to="/">
+                <img className="logo" src={Logo} alt="Brand Logo" />{" "}
+              </Link>
+            </Grid>
+            <Grid item lg={6} md={6} sm={4} xs={4}>
+              <Grid container justifyContent="flex-end">
+                <Hidden mdUp>{getSideMenu()}</Hidden>
+                <Hidden smDown>
+                  <nav>
+                    <Link to="/search">Browse campaigns </Link>
+                    <Button
+                      component={Link}
+                      to="/#"
+                      tabIndex={0}
+                      disableRipple={true}
+                      className="linkButton"
+                      onClick={(event) => toggleMenu(event, "campaigns")}
+                      endIcon={<ArrowDropDown className="dropdownarrow" />}
+                    >
+                      Campaign For
+                    </Button>
+
+                    {isAuthenticated ? (
+                      <IconButton
+                        component={Link}
+                        to="/#"
+                        tabIndex={0}
+                        disableRipple={true}
+                        className="linkButton"
+                        onClick={(event) => toggleMenu(event, "account")}
+                      >
+                        Welcome {user.firstName} &nbsp;
+                        <Avatar
+                          sx={{
+                            height: 34,
+                            width: 34,
+                          }}
+                          src={
+                            user.displayPic
+                              ? user.displayPic.url
+                              : "https://source.unsplash.com/900x600/?person"
+                          }
+                        />
+                      </IconButton>
+                    ) : (
+                      <Link to="/signin">Sign In</Link>
+                    )}
+                  </nav>
+                </Hidden>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+      {
         <Menu
           id="simple-menu"
           className="campaignfor-menu"
-          anchorEl={anchorEl}
+          anchorEl={menuState.anchorEl}
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           transformOrigin={{ vertical: "top", horizontal: "center" }}
           getContentAnchorEl={null}
           anchor="bottom"
           keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
+          open={menuState.menuName === "campaigns"}
+          onClose={toggleMenu}
         >
-          <Link to="/createcampaign/HealthCare">HealthCare</Link>
-          <Link to="/createcampaign/Feeding">Feeding</Link>
-          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
+          <div>{getCategories()}</div>
+        </Menu>
+      }
+      {isAuthenticated && menuState.anchorEl && (
+        <Menu
+          id="acount-menu"
+          className="campaignfor-menu"
+          anchorEl={menuState.anchorEl}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          transformOrigin={{ vertical: "top", horizontal: "center" }}
+          getContentAnchorEl={null}
+          anchor="bottom"
+          keepMounted
+          open={menuState.menuName === "account"}
+          onClose={toggleMenu}
+        >
+          <div>
+            <Link to={`/profile/${user.objectId}`} onClick={toggleMenu}>
+              Profile
+            </Link>
+            <Link to="/" onClick={logoutUser}>
+              Sign Out
+            </Link>
+          </div>
         </Menu>
       )}
-    </React.Fragment>
+    </AppBar>
   );
 }
 
-const mapStateToProps = ({ auth }) => {
-  return { ...auth };
+const mapStateToProps = ({ auth, category }) => {
+  return { ...auth, ...category };
 };
 
 export default connect(mapStateToProps)(Header);

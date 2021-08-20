@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { connect } from "react-redux";
 
 import "styles/Signin.scss";
@@ -11,30 +10,37 @@ import { Box } from "@material-ui/core";
 import { requestLogin } from "store/actions/AuthActions";
 import Loader from "components/Shared/Loader";
 import { Link } from "react-router-dom";
+import * as yup from "yup";
+import { useFormik } from "formik";
+
+const validationSchema = yup.object({
+  email: yup
+    .string("Enter your email")
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string("Enter your password")
+    .min(8, "Password should be of minimum 8 characters length")
+    .required("Password is required"),
+});
 
 const initialState = {
   email: "",
   password: "",
-  submitted: false,
 };
 
 const SignIn = ({ loading, dispatch }) => {
-  const [state, setLocalState] = useState(initialState);
-
-  const handleChange = (evnt) => {
-    const { name, value } = evnt.target;
-    setLocalState({ ...state, [name]: value });
-  };
-
-  const handleSubmit = (evnt) => {
-    evnt.preventDefault();
-    setLocalState({ ...state, submitted: true });
-
-    const { email, password } = state;
-    if (email && password) {
-      dispatch(requestLogin({ email, password }));
-    }
-  };
+  const formik = useFormik({
+    initialValues: initialState,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      if (values.email && values.password) {
+        dispatch(
+          requestLogin({ email: values.email, password: values.password })
+        );
+      }
+    },
+  });
 
   return (
     <Grid
@@ -52,31 +58,39 @@ const SignIn = ({ loading, dispatch }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form noValidate>
+          <form onSubmit={formik.handleSubmit}>
             <Grid container spacing={2}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                value={state.email}
-                id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={handleChange}
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                value={state.password}
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="off"
-                onChange={handleChange}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
             <Box my={3}>
@@ -86,7 +100,7 @@ const SignIn = ({ loading, dispatch }) => {
                 variant="contained"
                 color="primary"
                 className={""}
-                onClick={handleSubmit}
+                disabled={!formik.isValid}
               >
                 Sign In
               </Button>

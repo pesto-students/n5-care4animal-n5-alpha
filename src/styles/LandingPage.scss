@@ -1,3 +1,11 @@
+.countup-box {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
 .host {
   max-width: 1200px;
   text-align: left;
@@ -27,6 +35,7 @@
   background-size: cover;
   filter: brightness(60%);
 }
+
 .hero-content {
   position: relative;
   color: white;
@@ -46,8 +55,8 @@
   margin-top: 1rem;
 }
 .hero-button {
-  height: 70px;
-  width: 240px;
+  height: 70px !important;
+  width: 270px;
   font-size: large !important;
   font-weight: bolder !important;
 }
@@ -56,7 +65,7 @@
   margin: 0.25rem 0.25rem 0 0.25rem;
   position: relative;
   top: -5rem;
-  padding: 5rem 1rem;
+  padding:5rem 1rem 0rem 1rem;
 }
 
 @media (max-width: 600px) {

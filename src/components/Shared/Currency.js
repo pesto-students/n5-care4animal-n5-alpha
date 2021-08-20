@@ -1,9 +1,5 @@
-import { useSelector } from "react-redux";
-
- function Currency  ({value}) {
-    const currency = useSelector((state) => state.currency);
-  
-    return currency + value;
+function Currency({ value }) {
+  return "₹ " + (value ? value.toLocaleString("en-In") : 0);
 }
 
 export default Currency;

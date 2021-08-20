@@ -3,7 +3,7 @@ import "styles/LandingPage.scss";
 import { Box } from "@material-ui/core";
 import { HowItWorks } from "containers";
 import { InfoSection } from "containers";
-import { TrendingCampaigns } from "containers";
+import TrendingCampaigns from "containers/TrendingCampaignSection";
 import { Hero } from "containers";
 
 export const LandingPage = ({ history }) => {
@@ -13,6 +13,10 @@ export const LandingPage = ({ history }) => {
 
   const showStartCampaign = () => {
     history.push(`/createcampaign`);
+  };
+
+  const showSearchPage = () => {
+    history.push(`/search`);
   };
 
   return (
@@ -26,20 +30,31 @@ export const LandingPage = ({ history }) => {
           showStartCampaign={showStartCampaign}
         />
       </section>
+
       <div className="top-section">
         <section className="host">
-          <TrendingCampaigns showDetails={showDetails} />
+          <Box py={4}>
+            <TrendingCampaigns showDetails={showDetails} />
+          </Box>
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />
         </Box>
+
         <section className="host">
-          <InfoSection />
+          <Box py={4}>
+            <InfoSection
+              showStartCampaign={showStartCampaign}
+              showSearchPage={showSearchPage}
+            />
+          </Box>
         </section>
         <Box marginY={2}>
           <hr className="c4a-divider" />
         </Box>
-        <HowItWorks />
+        <Box py={4}>
+          <HowItWorks />
+        </Box>
       </div>
     </>
   );

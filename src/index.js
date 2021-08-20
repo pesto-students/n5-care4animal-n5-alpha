@@ -8,13 +8,20 @@ import "styles/App.scss";
 import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 
+import { theme } from "utils.js/theme";
+import { ThemeProvider } from "@material-ui/styles";
+import { CssBaseline } from "@material-ui/core";
+
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
       <BrowserRouter>
-        <Provider store={RootStore}>
-          <App />
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Provider store={RootStore}>
+            <App />
+          </Provider>
+        </ThemeProvider>
       </BrowserRouter>
     </CookiesProvider>
   </React.StrictMode>,

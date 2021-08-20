@@ -19,6 +19,20 @@ export const SearchBar = ({
   handleCriteriaChange,
   triggerSearch,
 }) => {
+  const getRenderValue = (selected) => {
+    let selectedValues = [];
+    if (selected) {
+      selectedCategories.forEach((selectedCategoryInstance) => {
+        const matchedategory = categories.find(
+          (categoryInstance) =>
+            categoryInstance.objectId === selectedCategoryInstance
+        );
+        return matchedategory ? selectedValues.push(matchedategory.name) : "";
+      });
+    }
+    return selectedValues.join(", ");
+  };
+
   return (
     <>
       <FormControl className="form-control">
@@ -51,12 +65,14 @@ export const SearchBar = ({
           value={selectedCategories}
           onChange={handleChange}
           input={<Input />}
-          renderValue={(selected) => selected.join(", ")}
+          renderValue={getRenderValue}
         >
-          {categories.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={selectedCategories.indexOf(name) > -1} />
-              <ListItemText primary={name} />
+          {categories.map((category) => (
+            <MenuItem key={category.objectId} value={category.objectId}>
+              <Checkbox
+                checked={selectedCategories.indexOf(category.objectId) > -1}
+              />
+              <ListItemText primary={category.name} />
             </MenuItem>
           ))}
         </Select>

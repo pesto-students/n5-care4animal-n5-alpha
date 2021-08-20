@@ -9,7 +9,7 @@ const HowItWorks = () => {
       <section className="section-title section-container">
         <SectionHeader
           data={{
-            h5: "START A CAMPAIGN IN THREE SIMPLE STEPS",
+            h4: "START A CAMPAIGN IN THREE SIMPLE STEPS",
           }}
         />
       </section>

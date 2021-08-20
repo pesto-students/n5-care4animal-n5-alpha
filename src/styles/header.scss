@@ -1,25 +1,19 @@
-.header-fixed {
-  box-shadow: 0 1px 1px #ccc;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  background: #fff;
-  z-index: 1;
-  padding-top: 0.5rem;
+header {
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgb(0, 0, 0 / 20%) !important;
+  background-color: #fff !important;
 }
 
-.header-limiter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-}
+nav {
+  margin-top: 0.5rem;
 
-.header-limiter a {
-  color: #000000;
-  text-decoration: none;
-  margin: 0px 10px;
-  line-height: 1;
+  * {
+    color: #000000 !important;
+    text-decoration: none;
+  }
+  a {
+    margin: 0px 1rem !important;
+  }
 }
 
 .linkButton {
@@ -73,32 +67,47 @@
   position: relative;
 }
 
-.campaignfor-menu ul {
+.campaignfor-menu ul div {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 0px 10px;
+  min-width: 150px;
 
   a {
     margin: 5px 0px;
     color: #000000;
     text-decoration: none;
+    min-width: 80px;
   }
 }
 
-@media screen and (max-width: 1400px) {
-  .header-limiter {
-    padding: 0.33rem;
+.mobile-cateogry-menu {
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+  justify-content: space-around;
+  width: calc(100% - 71px) !important;
+  margin-left: 70px !important;
+
+  a {
+    border-bottom: 1px solid #80808080;
+    padding: 12px 0px;
   }
 }
 
-@media screen and (max-width: 980px) {
-  .header-limiter {
-    padding: 0.16rem;
-  }
+.logo {
+  margin-top: 1.5rem;
+  height: 50px;
 }
 
-@media screen and (max-width: 680px) {
-  .header-limiter {
-    padding: 0px;
+@media screen and (max-width: 960px) {
+  nav {
+    margin-top: 0rem;
+  }
+
+  .headerTopRow {
+    .logo {
+      margin-top: 0rem;
+    }
   }
 }

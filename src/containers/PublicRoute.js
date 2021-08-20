@@ -1,16 +1,17 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 const PublicRoute = ({
   isAuthenticated,
   restricted = false,
   component: Component,
+  type,
   ...rest
 }) => {
   const render = (props) => {
-    if (isAuthenticated && restricted) {
-      return <Redirect to="/" />;
+    if (isAuthenticated && type === "guest") {
+      return props.history.goBack();
     }
 
     return <Component {...props} />;

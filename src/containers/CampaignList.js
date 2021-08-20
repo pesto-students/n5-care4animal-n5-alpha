@@ -6,7 +6,7 @@ const CampaignList = ({ list = [], showDetails }) => {
       {list.map((campaign, index) => {
         return (
           <Campaign
-            data={campaign}
+            campaign={campaign}
             key={campaign.name + index}
             showDetails={showDetails}
           />

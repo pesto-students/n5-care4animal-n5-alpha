@@ -2,17 +2,23 @@ import { userConstants } from "appconstants/actions";
 const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
+  LOGIN_FAILED,
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REGISTER_FAILURE,
+  REGISTER_FAILED,
   GET_USER_DETAILS,
+  UPDATE_USER_PROFILE,
+  UPLOAD_PROFILE_PIC,
+  UPDATE_USER_COMPLETE,
 } = userConstants;
-// temp - change it to cookie based auto login
-let user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = { isAuthenticated: false, loading: false, user };
+const initialState = {
+  isAuthenticated: false,
+  loading: false,
+  user: {},
+  updating: false,
+};
 
 export function AuthReducer(state = initialState, action) {
   switch (action.type) {
@@ -20,10 +26,6 @@ export function AuthReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        // isAuthenticated: false,
-        // user: {
-        //   ...action.payload,
-        // },
       };
 
     case LOGIN_REQUEST:
@@ -36,17 +38,19 @@ export function AuthReducer(state = initialState, action) {
       return {
         isAuthenticated: true,
         loading: false,
-        user: action.user,
+        user: action.payload,
       };
 
-    case LOGIN_FAILURE:
+    case LOGIN_FAILED:
       return {
         ...state,
         loading: false,
       };
 
     case LOGOUT:
-      return {};
+      return {
+        loggedOut: true,
+      };
 
     case REGISTER_REQUEST:
       return { loading: true, ...state };
@@ -55,14 +59,35 @@ export function AuthReducer(state = initialState, action) {
       return {
         loading: false,
         isAuthenticated: true,
-        user: action.user,
+        user: action.payload,
       };
 
-    case REGISTER_FAILURE:
+    case REGISTER_FAILED:
       return {
         ...state,
         loading: false,
       };
+
+    case UPLOAD_PROFILE_PIC:
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        updating: true,
+      };
+
+    case UPDATE_USER_COMPLETE:
+      if (!action.payload) {
+        return {
+          ...state,
+          updating: false,
+        };
+      } else {
+        return {
+          ...state,
+          updating: false,
+          user: action.payload,
+        };
+      }
 
     default:
       return state;

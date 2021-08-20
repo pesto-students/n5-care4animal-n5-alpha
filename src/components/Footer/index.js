@@ -4,46 +4,61 @@ import Logo from "assets/images/Logo.png";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Category from "components/Category";
+import { Box, Container, Grid } from "@material-ui/core";
+import { setCategory } from "store/actions/CategoryActions";
 
-export default function Footer() {
+function Footer({ categories, dispatch }) {
   return (
     <footer>
       <hr />
-      <div className="footercolumns">
-        <section className="footercolumn">
-          <div>
-            <img src={Logo} alt="logo" />
-          </div>
-          <div className="info">
-            Care4Animal is a unique platform for helping Voiceless animals when
-            they're in need of food, shelter or life-saving medical treatment
-          </div>
-          <div className="socialIcons">
-            <FacebookIcon />
-            <InstagramIcon />
-            <TwitterIcon />
-          </div>
-        </section>
-        <section className="footercolumn">
-          <div>
-            <h4>CAUSES</h4>
-          </div>
-          <Link to="/createcampaign/HealthCare">HealthCare</Link>
-          <Link to="/createcampaign/Feeding">Feeding</Link>
-          <Link to="/createcampaign/Animal_Shelter">Animal Shelter</Link>
-        </section>
+      <Box my={2}>
+        <Container maxWidth="lg">
+          <Grid container spacing={3}>
+            <Grid item lg={9} md={8} sm={8} xs={12}>
+              <Box py={2}>
+                <img src={Logo} alt="logo" />
+              </Box>
+              <Box py={2}>
+                Care4Animal is a unique platform for helping Voiceless animals
+                when they're in need of food, shelter or life-saving medical
+                treatment. Become a proud member of our rescue team by making a
+                donation, sponsoring an animal and more.
+              </Box>
+              <div className="socialIcons">
+                <FacebookIcon />
+                <InstagramIcon />
+                <TwitterIcon />
+              </div>
+            </Grid>
+            <Grid item lg={3} md={4} sm={4} xs={12} className="footercolumn">
+              <div>
+                <h4>CAUSES</h4>
+              </div>
+              <Category
+                categoryList={categories}
+                callBack={(selectedCategory) =>
+                  dispatch(setCategory(selectedCategory))
+                }
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
 
-        {/* <section className="footercolumn">
-          <div>
-            <h4>ENGAGE</h4>
-          </div>
-          <a href="#">Know More</a>
-          <a href="#">FAQ</a>
-        </section> */}
-      </div>
       <hr />
-      <p>Copyright © 2010-2021. All Rights Reserved by Care4Animal</p>
+      <Box my={4}>
+        <p>Copyright ©2021. All Rights Reserved by Care4Animal</p>
+      </Box>
     </footer>
   );
 }
+
+const mapStateToProps = ({ category }) => {
+  return {
+    ...category,
+  };
+};
+
+export default connect(mapStateToProps)(Footer);

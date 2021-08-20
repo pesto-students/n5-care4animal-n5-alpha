@@ -1,14 +1,13 @@
 .campaign-image {
-  grid-area: image1;
-  min-height: 400px;
+  min-height: 425px;
 
   & img {
-    height: 400px;
+    height: 500px;
     width: 90%;
   }
 }
 
-.camp-more p {
+.camp-more {
   font-size: 1.5rem;
   line-height: 3rem;
 }
@@ -37,6 +36,14 @@
 
 .donate-amount {
   width: 45%;
+}
+
+.cateogry-badge {
+  color: white;
+  padding: 10px;
+  background-color: #01bfbd;
+  float: left;
+  margin: -8px -5px;
 }
 
 @media screen and (max-width: 1400px) {

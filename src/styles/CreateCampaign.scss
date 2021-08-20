@@ -1,8 +1,6 @@
 .create-campaign {
-  margin: 20px auto auto auto;
+  margin: 4rem auto auto auto;
   max-width: 600px;
-  text-align: center;
-  justify-content: center;
 }
 
 .flex-bar {
@@ -15,10 +13,20 @@
   margin-right: 16px !important;
 }
 
-.add-icon {
-  text-align: left;
+.text-center {
+  text-align: center;
 }
 
 .stepper {
   background-color: transparent !important;
+}
+
+.datePicker {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 10px;
+  border-bottom: 1px solid gray;
+  background: transparent;
+  width: 100%;
 }

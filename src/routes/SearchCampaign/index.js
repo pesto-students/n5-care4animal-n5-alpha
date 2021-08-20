@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "styles/SearchCampaign.scss";
 
@@ -6,26 +6,58 @@ import { SearchBar } from "./SearchBar";
 import { Box, Container, Grid, Typography } from "@material-ui/core";
 import { CampaignList } from "containers";
 import { Hero } from "containers";
+import { connect } from "react-redux";
+import {
+  loadAllCampaignsAction,
+  searchCampaignsAction,
+} from "store/actions/CampaignActions";
+import Loader from "components/Shared/Loader";
 
-export const SearchCampagin = ({ history }) => {
+const SearchCampagin = ({
+  loading,
+  campaigns = [],
+  history,
+  categories,
+  dispatch,
+}) => {
+  useEffect(() => {
+    dispatch(loadAllCampaignsAction());
+  }, []);
   const [searchCriteria, setCriteria] = useState();
 
   const [selectedCategories, setCategories] = useState([]);
-  const categories = ["Healthcare", "Animal Shelter", "Feeding"];
 
   const handleChange = (event) => {
     setCategories(event.target.value);
+    triggerSearch();
   };
   const handleCriteriaChange = (event) => {
     setCriteria(event.target.value);
   };
 
   const triggerSearch = () => {
-    return false;
+    dispatch(
+      searchCampaignsAction({
+        searchKey: searchCriteria,
+        categories: selectedCategories,
+      })
+    );
   };
 
   const showDetails = (id) => {
     history.push(`/details/${id}`);
+  };
+
+  const renderCampaigns = () => {
+    return campaigns.length ? (
+      <CampaignList list={campaigns} showDetails={showDetails} />
+    ) : (
+      <Box textAlign="center" py={4}>
+        <Typography variant="h5">
+          No Campaigns Found. Modify the search query.
+        </Typography>
+      </Box>
+    );
   };
 
   return (
@@ -66,10 +98,16 @@ export const SearchCampagin = ({ history }) => {
           </Box>
 
           <Grid item xs={12}>
-            <CampaignList list={[0, 1, 2, 3, 4]} showDetails={showDetails} />
+            {loading ? <Loader /> : renderCampaigns()}
           </Grid>
         </Container>
       </Box>
     </>
   );
 };
+
+const mapStateToProps = ({ campaign, category }) => {
+  return { ...campaign, ...category };
+};
+
+export default connect(mapStateToProps)(SearchCampagin);

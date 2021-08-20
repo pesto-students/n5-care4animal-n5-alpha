@@ -1,55 +1,77 @@
 import {
   Avatar,
   Box,
-  Button,
-  Card,
   CardActions,
   CardContent,
   Divider,
+  TextField,
   Typography,
 } from "@material-ui/core";
+import { useRef } from "react";
+import "styles/profile.scss";
 
-const user = {
-  avatar: "/static/images/avatars/avatar_6.png",
-  city: "Bangalore",
-  country: "India",
-  jobTitle: "Senior Developer",
-  name: "Kishor Patil",
-};
+const AccountProfile = ({
+  user,
+  handleFileChange,
+  userImage,
+  ...remianingProps
+}) => {
+  let userImageUrl = user && user.displayPic ? user.displayPic.url : "";
+  if (userImage && userImage.url) {
+    userImageUrl = userImage.url;
+  }
+  const fileUploader = useRef(null);
 
-const AccountProfile = (props) => (
-  <Card {...props}>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Avatar
-          src={user.avatar}
+  return (
+    <Box {...remianingProps}>
+      <CardContent>
+        <Box
+          textAlign="center"
           sx={{
-            height: 100,
-            width: 100,
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
           }}
+        >
+          <Avatar
+            sx={{
+              height: 100,
+              width: 100,
+            }}
+            className="user-profile"
+            src={userImageUrl}
+          />
+          <Typography color="textPrimary" gutterBottom variant="h3">
+            {`${user.firstName} ${user.lastName}`}
+          </Typography>
+          <Typography color="textSecondary" variant="body1">
+            {user.city && user.city}
+            {user.country && user.country}
+          </Typography>
+          <Typography color="textSecondary" variant="body1"></Typography>
+        </Box>
+      </CardContent>
+      <Divider />
+      <CardActions className="profilepiccontainer">
+        <label htmlFor="profilePic">Upload Profile Pic</label>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          ref={fileUploader}
+          inputProps={{
+            accept: "image/*",
+          }}
+          type="file"
+          onChange={(event) => handleFileChange(event)}
+          className="hiddenfileinput"
+          id="profilePic"
+          name="profilePic"
+          autoFocus
         />
-        <Typography color="textPrimary" gutterBottom variant="h3">
-          {user.name}
-        </Typography>
-        <Typography color="textSecondary" variant="body1">
-          {`${user.city} ${user.country}`}
-        </Typography>
-        <Typography color="textSecondary" variant="body1"></Typography>
-      </Box>
-    </CardContent>
-    <Divider />
-    <CardActions>
-      <Button color="primary" fullWidth variant="text">
-        Upload picture
-      </Button>
-    </CardActions>
-  </Card>
-);
+      </CardActions>
+    </Box>
+  );
+};
 
 export default AccountProfile;
