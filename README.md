@@ -1,11 +1,10 @@
-![Author](https://img.shields.io/badge/author-@n5-care4animal-n5-alpha-blue.svg?style=for-the-badge)
 ![GitHub repo size](https://img.shields.io/github/repo-size/n5-care4animal-n5-alpha/hirebook-frontend?style=for-the-badge)
 ![Contributors](https://img.shields.io/github/contributors/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
 ![Stargazers](https://img.shields.io/github/stars/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
 ![Issues](https://img.shields.io/github/issues/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
 
 <p align="center">
-        <img src="./src/assets/images/LogoLight.png" height="130">
+        <img src="./src/assets/images/Logo.png" height="100">
 </p>
 
 ## Table of contents
@@ -72,8 +71,8 @@ You should be able to see the landing page.
 
 ## Resources
 
-<a href="https://drive.google.com/file/d/1Ab8ORPkrZJZ_in82XbpN8cbiblNGpSy3/view?usp=sharing">High Level Design</a>
-<a href="https://drive.google.com/file/d/1wMIJxOPeJjoOq6po2TqHuTcalEfV9ZBT/view?usp=sharing"> PRD </a>
+<a href="https://drive.google.com/file/d/1Ab8ORPkrZJZ_in82XbpN8cbiblNGpSy3/view?usp=sharing">High Level Design</a>\
+<a href="https://drive.google.com/file/d/1wMIJxOPeJjoOq6po2TqHuTcalEfV9ZBT/view?usp=sharing"> PRD </a>\
 <a href="https://drive.google.com/file/d/1u_vg7Khu_3Vhy2XMWvcBQwjrSkml8ZFJ/view?usp=sharing"> Wireframes</a>
 
 ## Contributors ✨
