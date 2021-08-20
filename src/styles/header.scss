@@ -111,3 +111,15 @@ nav {
     }
   }
 }
+
+@media screen and (max-width: 680px) {
+  .logo {
+    width: calc(max(50vw, 230px)) !important;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .logo {
+    width: calc(max(50vw, 210px)) !important;
+  }
+}

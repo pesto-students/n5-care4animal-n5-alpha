@@ -52,18 +52,20 @@ header {
 }
 
 .calltoAction {
-     text-decoration: none;
-    background: linear-gradient(
-45deg
-, rgba(22, 181, 191, 1) 30%, rgba(22, 181, 191, 1) 90%);
-    font-size: 16px;
-    border: 0;
-    color: #fffcfc !important;
-    height: 48px;
-    border-radius: 35px !important;
-    padding: 1.5rem 2rem;
-    font-size: x-large;
-    font-weight: bolder;
+  text-decoration: none;
+  background: linear-gradient(
+    45deg,
+    rgba(22, 181, 191, 1) 30%,
+    rgba(22, 181, 191, 1) 90%
+  );
+  font-size: 16px;
+  border: 0;
+  color: #fffcfc !important;
+  height: 48px;
+  border-radius: 35px !important;
+  padding: 1.5rem 2rem;
+  font-size: x-large;
+  font-weight: bolder;
 }
 
 .btn {

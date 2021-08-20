@@ -4,6 +4,8 @@ import Logo from "assets/images/Logo.png";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import PinterestIcon from "@material-ui/icons/Pinterest";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import { connect } from "react-redux";
 import Category from "components/Category";
 import { Box, Container, Grid } from "@material-ui/core";
@@ -27,9 +29,11 @@ function Footer({ categories, dispatch }) {
                 donation, sponsoring an animal and more.
               </Box>
               <div className="socialIcons">
-                <FacebookIcon />
-                <InstagramIcon />
-                <TwitterIcon />
+                <FacebookIcon style={{ color: "rgba(80, 124, 190)" }} />
+                <InstagramIcon style={{ color: "rgb(236, 20, 20)" }} />
+                <TwitterIcon style={{ color: "rgb(99, 205, 241)" }} />
+                <PinterestIcon style={{ color: "rgb(241, 98, 97)" }} />
+                <LinkedInIcon style={{ color: "rgb(144, 202, 221)" }} />
               </div>
             </Grid>
             <Grid item lg={3} md={4} sm={4} xs={12} className="footercolumn">
