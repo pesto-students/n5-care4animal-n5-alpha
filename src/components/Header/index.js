@@ -30,7 +30,6 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { requestLogout } from "store/actions/AuthActions";
 import Category from "components/Category";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { setCategory } from "store/actions/CategoryActions";
 
@@ -206,7 +205,6 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                     <Link to="/search">Browse campaigns </Link>
                     <Button
                       component={Link}
-                      to="/#"
                       tabIndex={0}
                       disableRipple={true}
                       className="linkButton"
@@ -219,7 +217,6 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                     {isAuthenticated ? (
                       <IconButton
                         component={Link}
-                        to="/#"
                         tabIndex={0}
                         disableRipple={true}
                         className="linkButton"

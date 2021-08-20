@@ -81,7 +81,6 @@ export default function PaymentDialog({
           <DialogContent>
             <form onSubmit={formik.handleSubmit}>
               <TextField
-                autoFocus
                 value={formik.values.amount}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

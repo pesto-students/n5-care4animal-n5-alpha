@@ -22,7 +22,6 @@ export const MoreDetailsForm = ({ formik }) => {
             id="goalAmount"
             label="How much you want to raise"
             name="goalAmount"
-            autoFocus
             value={formik.values.goalAmount}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

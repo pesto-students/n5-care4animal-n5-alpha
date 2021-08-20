@@ -66,7 +66,6 @@ const SignUp = ({ loading, dispatch }) => {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -101,7 +100,6 @@ const SignUp = ({ loading, dispatch }) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  autoFocus
                   id="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
