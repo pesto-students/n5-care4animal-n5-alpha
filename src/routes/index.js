@@ -21,5 +21,6 @@ export const Routes = () => (
       component={CreateCampaign}
     />
     <Route path="/" exact component={LandingPage} />
+    <Route path="*" component={LandingPage} />
   </Switch>
 );

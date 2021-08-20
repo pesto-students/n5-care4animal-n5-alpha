@@ -26,7 +26,6 @@ export const FileUploader = ({ handleFileChange }) => {
             onChange={(event) => handleFileChange(event)}
             id="campaignImage"
             name="campaignImage"
-            autoFocus
           />
           <FormHelperText>
             Add an image that clearly represents your campaign. Choose one that

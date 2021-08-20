@@ -67,7 +67,6 @@ const SignIn = ({ loading, dispatch }) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 id="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}

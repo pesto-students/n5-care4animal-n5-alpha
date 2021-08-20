@@ -67,7 +67,6 @@ const AccountProfile = ({
           className="hiddenfileinput"
           id="profilePic"
           name="profilePic"
-          autoFocus
         />
       </CardActions>
     </Box>

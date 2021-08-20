@@ -59,7 +59,7 @@ function App({ alert, loading, loggedOut, isAuthenticated, user, dispatch }) {
         }
       );
       history.push(location.search.replace("?loc", ""));
-    } else if (loggedOut) {
+    } else {
       removeCookie("_userSession", {
         path: "/",
       });
