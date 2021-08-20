@@ -9,12 +9,12 @@ import { ShareButtonRectangle, ShareBlockStandard } from "react-custom-share";
 
 const ShareThis = (props) => {
   const shareBlockProps = {
-    url: "http://localhost:3000/",
+    url: "https://upbeat-wilson-0d8b2a.netlify.app/",
     button: ShareButtonRectangle,
     buttons: [
       { network: "Twitter", icon: TwitterIcon },
       { network: "Facebook", icon: FacebookIcon },
-      { network: "GooglePlus", icon: EmailIcon },
+      { network: "Email", icon: EmailIcon },
       { network: "Linkedin", icon: LinkedInIcon },
       {
         network: "Pinterest",

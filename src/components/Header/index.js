@@ -116,9 +116,11 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
         >
           <div className="headerTopRow">
             <img className="logo" src={Logo} alt="Brand Logo" />
-            <IconButton edge="end" onClick={(event) => toggleDrawer(false)}>
-              <CloseIcon />
-            </IconButton>
+            <Box mr={1}>
+              <IconButton edge="end" onClick={(event) => toggleDrawer(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </div>
           <Divider />
           <List className="sideheader">
@@ -189,7 +191,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   return (
     <AppBar position="sticky" color="primary">
       <Container maxWidth="lg">
-        <Box px="1rem">
+        <Box>
           <Grid container>
             <Grid item lg={6} md={6} sm={8} xs={8}>
               <Link to="/">
