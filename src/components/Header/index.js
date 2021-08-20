@@ -49,6 +49,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   const [openSubMenu, toggleSubmenu] = useState();
 
   const onMobileMenuClick = (route) => {
+    toggleDrawer(false);
     history.push(route);
   };
 
@@ -68,13 +69,13 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
   };
 
   const toggleMenu = (event, menuName) => {
-    menuState.anchorEl
+    menuState.anchorEl || !event
       ? setAnchorEl({
           anchorEl: null,
           menuName: "",
         })
       : setAnchorEl({
-          anchorEl: event.currentTarget,
+          anchorEl: event ? event.currentTarget : false,
           menuName: menuName,
         });
   };
@@ -83,13 +84,13 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
     toggleSubmenu(!openSubMenu);
   };
 
-  const getCategories = () => {
+  const getCategories = (callback) => {
     return (
       <Category
         categoryList={categories}
         callBack={(selectedCategory) => {
           dispatch(setCategory(selectedCategory));
-          toggleMenu(false);
+          callback(false);
         }}
       />
     );
@@ -142,7 +143,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
                 disablePadding
                 className="mobile-cateogry-menu"
               >
-                {getCategories()}
+                {getCategories(toggleDrawer)}
               </List>
             </Collapse>
             {isAuthenticated ? (
@@ -258,7 +259,7 @@ function Header({ isAuthenticated, user, categories, dispatch }) {
           open={menuState.menuName === "campaigns"}
           onClose={toggleMenu}
         >
-          <div>{getCategories()}</div>
+          <div>{getCategories(toggleMenu)}</div>
         </Menu>
       }
       {isAuthenticated && menuState.anchorEl && (
