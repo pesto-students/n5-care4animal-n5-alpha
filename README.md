@@ -1,8 +1,3 @@
-![GitHub repo size](https://img.shields.io/github/repo-size/n5-care4animal-n5-alpha/hirebook-frontend?style=for-the-badge)
-![Contributors](https://img.shields.io/github/contributors/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
-![Stargazers](https://img.shields.io/github/stars/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
-![Issues](https://img.shields.io/github/issues/n5-care4animal-n5-alpha/hirebook-frontend.svg?style=for-the-badge)
-
 <p align="center">
         <img src="./src/assets/images/Logo.png" height="100">
 </p>
