@@ -29,4 +29,9 @@
   border-bottom: 1px solid gray;
   background: transparent;
   width: 100%;
+
+  &:focus-visible {
+    outline: none !important;
+    border-bottom: 2px solid black;
+  }
 }

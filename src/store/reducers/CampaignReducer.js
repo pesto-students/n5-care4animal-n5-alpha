@@ -15,6 +15,7 @@ const {
   GET_CAMPAIGN_DETAILS_COMPLETED,
 
   RESET_REDUCER,
+  SEARCH_CAMPAIGNS,
 } = campaignConstants;
 
 const initialState = {
@@ -96,6 +97,13 @@ const campaignReducer = (state = initialState, action) => {
         loading: false,
         campaign: "",
         submitted: false,
+      };
+
+    case SEARCH_CAMPAIGNS:
+      return {
+        ...state,
+        campaigns: [],
+        loading: true,
       };
     default:
       return state;
