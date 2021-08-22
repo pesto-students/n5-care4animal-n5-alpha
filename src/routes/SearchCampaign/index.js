@@ -27,9 +27,12 @@ const SearchCampagin = ({
 
   const [selectedCategories, setCategories] = useState([]);
 
+  useEffect(() => {
+    triggerSearch();
+  }, [selectedCategories]);
+
   const handleChange = (event) => {
     setCategories(event.target.value);
-    triggerSearch();
   };
   const handleCriteriaChange = (event) => {
     setCriteria(event.target.value);
