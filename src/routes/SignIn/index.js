@@ -25,8 +25,8 @@ const validationSchema = yup.object({
 });
 
 const initialState = {
-  email: "",
-  password: "",
+  email: "Advikp@gmail.com",
+  password: "Test@1234",
 };
 
 const SignIn = ({ loading, dispatch }) => {
