@@ -1,5 +1,8 @@
 import { API_ERROR_MSG } from "appconstants/messages";
-import { APPLICATION_ID, REST_KEY, HOST_URL } from "appconstants/_appkeys";
+
+const APPLICATION_ID = process.env.REACT_APP_APPLICATION_ID;
+const REST_KEY = process.env.REACT_APP_REST_KEY;
+const HOST_URL = process.env.REACT_APP_HOST_URL;
 
 const getDefaultHeader = () => {
   return {
