@@ -1,0 +1,18 @@
+.signin-form {
+  text-align: center;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #0a0a0a36;
+}
+
+@media screen and (max-width: 980px) {
+  .signin-form {
+    margin: 5rem 2rem !important;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .signin-form {
+    margin: 5rem 1rem !important;
+  }
+}

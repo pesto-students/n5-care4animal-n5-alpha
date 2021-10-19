@@ -1,0 +1,37 @@
+.create-campaign {
+  margin: 4rem auto auto auto;
+  max-width: 600px;
+}
+
+.flex-bar {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.backButton {
+  margin-right: 16px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.stepper {
+  background-color: transparent !important;
+}
+
+.datePicker {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 10px;
+  border-bottom: 1px solid gray;
+  background: transparent;
+  width: 100%;
+
+  &:focus-visible {
+    outline: none !important;
+    border-bottom: 2px solid black;
+  }
+}

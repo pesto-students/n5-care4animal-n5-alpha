@@ -1,5 +1,5 @@
 <p align="center">
-        <img src="./src/assets/images/Logo.png" height="100">
+        <img src="../src/assets/images/Logo.png" height="100">
 </p>
 
 ## Table of contents
@@ -35,18 +35,78 @@ Frontend and Backend are hosted on Netlify.
 
 ## Setup
 
-Requires [Node.js](https://nodejs.org/) to run (v14.15.0+).
+Sign up on <a href="https://www.back4app.com/">back4app</a>\
+Create a new app.\
+Create the following classes,
 
-Install the dependencies and open the terminal and then run the following command one by one.
+- User
 
-```sh
-$ git clone https://github.com/pesto-students/n5-care4animal-n5-alpha.git
-$ cd n5-care4animal-n5-alpha
-$ npm install
-$ npm run start
-```
+  - lastName(string)
+  - emailVerified(Boolean)
+  - displayPic(file)
+  - phone (string)
+  - state(string)
+  - status (string)
+  - username (string)
+  - country (string)
+  - firstName (string)
+  - password (string)
+  - email (string)
+  - totalDonations ( number)
+  - totalCampaigns (number)
 
-Verify by navigating to below address in your preferred browser.
+- CampaignCategory
+
+  - name (string)
+  - status (string)
+
+- CampaignInfo
+
+  - startTs (date)
+  - campaignStatus (string)
+  - noOfDonors (number)
+  - userRef (pointer to user)
+  - endDate (date)
+  - goalAmount (number)
+  - campaignImage (string)
+  - name (string)
+  - raisedAmount (number)
+  - categoryRef (Pointer to campaign Category)
+  - endTs (date)
+  - image(file)
+  - description (string)
+  - publishDate (date)
+
+- CampaignUpdates
+
+  - text (string)
+  - image (file)
+  - title (string)
+  - campaignInfoId (string)
+
+- Document
+
+  - campaignRef (pointer)
+  - name (string)
+  - document (file)
+
+- FundRaiserInfo
+  - paymentId(string)
+  - paymentMethod (string)
+  - orderId (string)
+  - donorsUserId (string)
+  - currency (string)
+  - status (string)
+  - campaignInfRef (pointer to campaignInfo)
+  - amount (number)
+  - paymentDetails (object)
+
+Go to Cloud Code and select the cloud folder\
+Upload the main.js and package.json and then click on deploy
+Now goto app settings and goto ecurity and keys section\
+Copy app id and rest api key and then assign those values to appropriate variables in .evv file.
+
+After deploying frontend and doing the above steps, Verify by navigating to below address in your preferred browser.
 
 ```sh
 localhost:[3000] or running port

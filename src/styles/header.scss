@@ -1,0 +1,125 @@
+header {
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgb(0, 0, 0 / 20%) !important;
+  background-color: #fff !important;
+}
+
+nav {
+  margin-top: 0.5rem;
+
+  * {
+    color: #000000 !important;
+    text-decoration: none;
+  }
+  a {
+    margin: 0px 1rem !important;
+  }
+}
+
+.linkButton {
+  text-transform: capitalize !important;
+  color: #000000 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+
+  padding: 0px !important;
+
+  .MuiButton-label {
+    margin-bottom: 3px;
+  }
+
+  .MuiButton-endIcon {
+    margin-left: 0px !important;
+  }
+
+  &:hover,
+  .MuiButton-root:hover {
+    background-color: transparent !important;
+    color: #608bd2;
+  }
+
+  &:focus-visible {
+    outline: -webkit-focus-ring-color auto 1px;
+    padding: 10px 8px !important;
+  }
+}
+
+.sideheader {
+  min-width: 17rem;
+  width: 100%;
+  height: 100%;
+
+  a {
+    color: #000000;
+    text-decoration: none;
+    line-height: 1;
+  }
+}
+
+.headerTopRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4rem;
+}
+
+.dropdownarrow {
+  position: relative;
+}
+
+.campaignfor-menu ul div {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  min-width: 150px;
+
+  a {
+    margin: 5px 0px;
+    color: #000000;
+    text-decoration: none;
+    min-width: 80px;
+  }
+}
+
+.mobile-cateogry-menu {
+  display: flex;
+  flex-direction: column;
+  height: 120px;
+  justify-content: space-around;
+  width: calc(100% - 71px) !important;
+  margin-left: 70px !important;
+
+  a {
+    border-bottom: 1px solid #80808080;
+    padding: 12px 0px;
+  }
+}
+
+.logo {
+  margin-top: 1.5rem;
+  height: 50px;
+}
+
+@media screen and (max-width: 960px) {
+  nav {
+    margin-top: 0rem;
+  }
+
+  .headerTopRow {
+    .logo {
+      margin-top: 0rem;
+    }
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .logo {
+    width: calc(max(50vw, 230px)) !important;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .logo {
+    width: calc(max(50vw, 210px)) !important;
+  }
+}

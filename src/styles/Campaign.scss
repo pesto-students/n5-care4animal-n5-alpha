@@ -1,0 +1,63 @@
+.progress-container {
+  height: 10px;
+  border-radius: 10px 10px;
+  background-color: rgba(4, 216, 213, 0.46);
+  margin: 10px auto;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  align-items: center;
+
+  .c-info {
+    text-align: center;
+  }
+}
+
+$time: 1s;
+
+@mixin item-transition {
+  transition: all $time ease;
+}
+// @include item-transition;
+
+.campaign-action {
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  display: none !important;
+
+  p {
+    color: black;
+    font-size: x-large;
+  }
+}
+
+.overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  animation: overlay-show $time;
+}
+
+@keyframes overlay-show {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.campaign-title {
+  line-height: 1.4rem !important;
+}
